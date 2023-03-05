@@ -1,6 +1,7 @@
 package com.mmaliga.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -21,4 +22,13 @@ public class FighterService {
         return list.stream().map(x-> new FighterDTO(x)).collect(Collectors.toList());
     }
 
+
+    @Transactional(readOnly = true)
+    public FighterDTO findById(Long id) throws Exception {
+        Optional<Fighter> obj = fighterRepository.findById(id);
+        Fighter entity = obj.orElseThrow(()-> new Exception("Entity not found"));
+        return new FighterDTO(entity);
+    }
+	
+    
 }
