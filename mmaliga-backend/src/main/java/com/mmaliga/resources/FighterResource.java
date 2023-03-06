@@ -19,11 +19,10 @@ public class FighterResource {
 	@Autowired
 	private FighterService fighterService;
 	
-	
     @GetMapping
     public ResponseEntity<List<FighterDTO>> findAll() {
-    	List<FighterDTO> page = fighterService.findAll();
-        return ResponseEntity.ok().body(page);
+    	List<FighterDTO> list = fighterService.findAll();
+        return ResponseEntity.ok().body(list);
     }
     
     @GetMapping(value = "/{id}")

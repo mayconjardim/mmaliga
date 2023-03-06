@@ -28,6 +28,9 @@ public class Fighter implements Serializable {
 	private String lastName;
 	private String nickname;
 	private Integer age;
+	private Integer win;
+	private Integer loss;
+	private Integer draw;
 	// private WeightClass weightClass;
 	// private fightingStyle fightingStyle;
 
@@ -66,15 +69,18 @@ public class Fighter implements Serializable {
 	private Integer stratLNP;
 	private Integer stratStandUp;
 
-	public Fighter(Long id, String firstName, String lastName, String nickname, Integer age, Integer boxing,
-			Integer clinch, Integer bjj, Integer kicking, Integer wrestling, Integer strength, Integer agility,
-			Integer conditioning, Integer toughness, Integer koResistance) {
+	public Fighter(Long id, String firstName, String lastName, String nickname, Integer age, Integer win, Integer loss,
+			Integer draw, Integer boxing, Integer clinch, Integer bjj, Integer kicking, Integer wrestling,
+			Integer strength, Integer agility, Integer conditioning, Integer toughness, Integer koResistance) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.nickname = nickname;
 		this.age = age;
+		this.win = win;
+		this.loss = loss;
+		this.draw = draw;
 		this.boxing = boxing;
 		this.clinch = clinch;
 		this.bjj = bjj;
@@ -102,4 +108,5 @@ public class Fighter implements Serializable {
 		stratLNP = 20;
 		stratStandUp = 20;
 	}
+
 }

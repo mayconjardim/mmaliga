@@ -24,7 +24,6 @@ public class FighterService {
         return list.stream().map(x-> new FighterDTO(x)).collect(Collectors.toList());
     }
 
-
     @Transactional(readOnly = true)
     public FighterDTO findById(Long id) throws Exception {
         Optional<Fighter> obj = fighterRepository.findById(id);
@@ -32,5 +31,4 @@ public class FighterService {
         return new FighterDTO(entity);
     }
 	
-    
 }
