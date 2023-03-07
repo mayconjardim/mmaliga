@@ -30,5 +30,5 @@ public class FightService {
 		Fight entity = obj.orElseThrow(() -> new Exception("Entity not found"));
 		return new FightDTO(entity);
 	}
-
+	
 }

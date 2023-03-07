@@ -135,5 +135,5 @@ public class Fighter implements Serializable {
 		stratLNP = 20;
 		stratStandUp = 20;
 	}
-	
+
 }

@@ -35,7 +35,8 @@ public class Fight implements Serializable {
 	private Integer rounds;
 	private String fightResult;
 	private String fightResultType;
-	
+	private Boolean titleBout;
+
 	@ManyToOne
 	@JoinColumn(name = "fighter1_id")
 	private Fighter fighter1;
@@ -43,23 +44,23 @@ public class Fight implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "fighter2_id")
 	private Fighter fighter2;
-	
+
 	@ElementCollection
 	@CollectionTable(name = "fight_pbp", joinColumns = @JoinColumn(name = "fight_id"))
 	@Column(name = "pbp", length = 2048)
 	private List<String> pbp = new ArrayList<>();
 
 	public Fight(Long id, String eventName, Integer rounds, String fightResult, String fightResultType,
-			Fighter fighter1, Fighter fighter2) {
+			Boolean titleBout, Fighter fighter1, Fighter fighter2) {
 		super();
 		this.id = id;
 		this.eventName = eventName;
 		this.rounds = rounds;
 		this.fightResult = fightResult;
 		this.fightResultType = fightResultType;
+		this.titleBout = titleBout;
 		this.fighter1 = fighter1;
 		this.fighter2 = fighter2;
 	}
-		
-}
 
+}

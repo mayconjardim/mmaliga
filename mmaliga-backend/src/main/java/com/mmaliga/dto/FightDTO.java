@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.mmaliga.entities.Fight;
 import com.mmaliga.entities.Fighter;
+import com.mmaliga.utils.Comments;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,22 +25,24 @@ public class FightDTO implements Serializable {
 	private Integer rounds;
 	private String fightResult;
 	private String fightResultType;
+	private Boolean titleBout;
 	private Fighter fighter1;
 	private Fighter fighter2;
 	private List<String> pbp = new ArrayList<>();
-	
+
 	public FightDTO(Long id, String eventName, Integer rounds, String fightResult, String fightResultType,
-			Fighter fighter1, Fighter fighter2) {
+			Boolean titleBout, Fighter fighter1, Fighter fighter2) {
 		super();
 		this.id = id;
 		this.eventName = eventName;
 		this.rounds = rounds;
 		this.fightResult = fightResult;
 		this.fightResultType = fightResultType;
+		this.titleBout = titleBout;
 		this.fighter1 = fighter1;
 		this.fighter2 = fighter2;
 	}
-	
+
 	public FightDTO(Fight entity) {
 		id = entity.getId();
 		eventName = entity.getEventName();
@@ -49,11 +52,20 @@ public class FightDTO implements Serializable {
 		fighter1 = entity.getFighter1();
 		fighter2 = entity.getFighter2();
 	}
-	
+
 	public void setPbp(String pbp) {
 		if (this.pbp == null) {
 			this.pbp = new ArrayList<String>();
 		}
 		this.pbp.add(pbp);
 	}
+
+	//Metodos de luta
+	
+	public void fightApresentation() {
+	
+		
+	}
+	
+
 }
