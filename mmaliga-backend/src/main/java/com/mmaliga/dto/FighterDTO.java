@@ -48,6 +48,12 @@ public class FighterDTO implements Serializable {
 	private Double koResistance;
 	private Double toughness;
 
+	// Atributos do lutadores na luta
+	private Double currentHP;
+	private Double currentStamina;
+	private Boolean onTheGround;
+	private Integer rush;
+
 	public FighterDTO(Long id, String firstName, String lastName, String nickname, Integer age, Integer win,
 			Integer loss, Integer draw, WeightClass weightClass, Double punching, Double kicking, Double clinchStriking,
 			Double clinchGrappling, Double takedowns, Double gnp, Double submission, Double groundGame, Double dodging,
@@ -113,6 +119,20 @@ public class FighterDTO implements Serializable {
 		conditioning = entity.getConditioning();
 		koResistance = entity.getKoResistance();
 		toughness = entity.getToughness();
+	}
+
+	// Metodos de luta
+
+	public void maxHPandStamina() {
+		this.setCurrentHP((toughness * 5 * 100) / 100);
+		this.setCurrentStamina((conditioning * 5 * 100) / 100);
+	}
+
+	public void recoverHP(double HPRecovered) {
+		currentHP += HPRecovered;
+		if (currentHP > toughness * 5) {
+			currentHP = toughness * 5;
+		}
 	}
 
 }

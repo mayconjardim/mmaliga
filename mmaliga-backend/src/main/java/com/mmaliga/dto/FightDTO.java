@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mmaliga.entities.Fight;
-import com.mmaliga.entities.Fighter;
 import com.mmaliga.enums.WeightClass;
 import com.mmaliga.utils.Comments;
 
@@ -28,12 +27,15 @@ public class FightDTO implements Serializable {
 	private String fightResult;
 	private String fightResultType;
 	private Boolean titleBout;
-	private Fighter fighter1;
-	private Fighter fighter2;
+	private FighterDTO fighter1;
+	private FighterDTO fighter2;
 	private List<String> pbp = new ArrayList<>();
 
+	//Atributos da luta
+	private Boolean InTheClinch;
+	
 	public FightDTO(Long id, String eventName, Integer rounds, WeightClass weightClass, String fightResult,
-			String fightResultType, Boolean titleBout, Fighter fighter1, Fighter fighter2) {
+			String fightResultType, Boolean titleBout, FighterDTO fighter1, FighterDTO fighter2) {
 		super();
 		this.id = id;
 		this.eventName = eventName;
@@ -54,8 +56,8 @@ public class FightDTO implements Serializable {
 		fightResult = entity.getFightResult();
 		fightResultType = entity.getFightResult();
 		titleBout = entity.getTitleBout();
-		fighter1 = entity.getFighter1();
-		fighter2 = entity.getFighter2();
+		fighter1 = new FighterDTO(entity.getFighter1());
+		fighter2 = new FighterDTO(entity.getFighter2());
 	}
 
 	public void setPbp(String pbp) {
@@ -76,5 +78,24 @@ public class FightDTO implements Serializable {
 
 		setPbp(presentation);
 	}
+	
+	public void prepareFight() {
+		this.fighter1.setOnTheGround(false);
+		this.fighter2.setOnTheGround(false);
+		this.fighter1.setRush(0);
+		this.fighter2.setRush(0);
+		this.fighter1.maxHPandStamina();
+		this.fighter2.maxHPandStamina();
+		setInTheClinch(false);
+		FightApresentation();
+	}
+	
+	public void FighterAction() {
+		
+	}
+	
+	
+	
+	
 
 }
