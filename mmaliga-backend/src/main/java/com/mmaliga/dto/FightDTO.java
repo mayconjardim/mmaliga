@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-
 import com.mmaliga.entities.Fight;
 import com.mmaliga.entities.Fighter;
 
@@ -18,7 +16,6 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@Entity
 public class FightDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 

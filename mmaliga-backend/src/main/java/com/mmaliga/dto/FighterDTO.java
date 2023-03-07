@@ -27,24 +27,31 @@ public class FighterDTO implements Serializable {
 	private Integer draw;
 	// private WeightClass weightClass;
 	// private fightingStyle fightingStyle;
-
-	// Habilidaddes
-	private Integer boxing;
-	private Integer clinch;
-	private Integer bjj;
-	private Integer kicking;
-	private Integer wrestling;
-
-	// Fisico
-	private Integer strength;
-	private Integer agility;
-	private Integer conditioning;
-	private Integer toughness;
-	private Integer koResistance;
-
+	private Double punching;
+	private Double kicking;
+	private Double clinchStriking;
+	private Double clinchGrappling;
+	private Double takedowns;
+	private Double gnp;
+	private Double submission;
+	private Double groundGame;
+	private Double dodging;
+	private Double subDefense;
+	private Double takedownsDef;
+	private Double aggressiveness;
+	private Double control;
+	private Double motivation;
+	private Double strength;
+	private Double agility;
+	private Double conditioning;
+	private Double koResistance;
+	private Double toughness;
+	
 	public FighterDTO(Long id, String firstName, String lastName, String nickname, Integer age, Integer win,
-			Integer loss, Integer draw, Integer boxing, Integer clinch, Integer bjj, Integer kicking, Integer wrestling,
-			Integer strength, Integer agility, Integer conditioning, Integer toughness, Integer koResistance) {
+			Integer loss, Integer draw, Double punching, Double kicking, Double clinchStriking, Double clinchGrappling,
+			Double takedowns, Double gnp, Double submission, Double groundGame, Double dodging, Double subDefense,
+			Double takedownsDef, Double aggressiveness, Double control, Double motivation, Double strength,
+			Double agility, Double conditioning, Double koResistance, Double toughness) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -54,18 +61,27 @@ public class FighterDTO implements Serializable {
 		this.win = win;
 		this.loss = loss;
 		this.draw = draw;
-		this.boxing = boxing;
-		this.clinch = clinch;
-		this.bjj = bjj;
+		this.punching = punching;
 		this.kicking = kicking;
-		this.wrestling = wrestling;
+		this.clinchStriking = clinchStriking;
+		this.clinchGrappling = clinchGrappling;
+		this.takedowns = takedowns;
+		this.gnp = gnp;
+		this.submission = submission;
+		this.groundGame = groundGame;
+		this.dodging = dodging;
+		this.subDefense = subDefense;
+		this.takedownsDef = takedownsDef;
+		this.aggressiveness = aggressiveness;
+		this.control = control;
+		this.motivation = motivation;
 		this.strength = strength;
 		this.agility = agility;
 		this.conditioning = conditioning;
-		this.toughness = toughness;
 		this.koResistance = koResistance;
+		this.toughness = toughness;
 	}
-
+	
 	public FighterDTO(Fighter entity) {
 		id = entity.getId();
 		firstName = entity.getFirstName();
@@ -75,16 +91,25 @@ public class FighterDTO implements Serializable {
 		win = entity.getWin();
 		loss = entity.getLoss();
 		draw = entity.getDraw();
-		boxing = entity.getBoxing();
-		clinch = entity.getClinch();
-		bjj = entity.getBjj();
+		punching = entity.getPunching();
 		kicking = entity.getKicking();
-		wrestling = entity.getWrestling();
+		clinchStriking = entity.getClinchStriking();
+		clinchGrappling = entity.getClinchGrappling();
+		takedowns = entity.getTakedowns();
+		gnp = entity.getGnp();
+		submission = entity.getSubmission();
+		groundGame = entity.getGroundGame();
+		dodging = entity.getDodging();
+		subDefense = entity.getSubDefense();
+		takedownsDef = entity.getTakedowns();
+		aggressiveness = entity.getAggressiveness();
+		control = entity.getControl();
+		motivation = entity.getMotivation();
 		strength = entity.getStrength();
 		agility = entity.getAgility();
 		conditioning = entity.getConditioning();
-		toughness = entity.getToughness();
 		koResistance = entity.getKoResistance();
+		toughness = entity.getToughness();
 	}
-
+	
 }

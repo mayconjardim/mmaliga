@@ -35,21 +35,37 @@ public class Fighter implements Serializable {
 	// private fightingStyle fightingStyle;
 
 	// Habilidaddes
-	private Integer boxing;
-	private Integer clinch;
-	private Integer bjj;
-	private Integer kicking;
-	private Integer wrestling;
+	// Luta em pé
+	private Double punching;
+	private Double kicking;
+	private Double clinchStriking;
+	private Double clinchGrappling;
+	private Double takedowns;
 
-	// Fisico
-	private Integer strength;
-	private Integer agility;
-	private Integer conditioning;
-	private Integer toughness;
-	private Integer koResistance;
+	// Luta no Chão
+	private Double gnp;
+	private Double submission;
+	private Double groundGame;
+
+	// Defesa
+	private Double dodging;
+	private Double subDefense;
+	private Double takedownsDef;
+	
+	// Mental
+	private Double aggressiveness;
+	private Double control;
+	private Double motivation;
+
+	// Fisicas
+	private Double strength;
+	private Double agility;
+	private Double conditioning;
+	private Double koResistance;
+	private Double toughness;
 
 	// Strategia
-
+	
 	// General
 	private Integer stratPunching;
 	private Integer stratKicking;
@@ -68,10 +84,12 @@ public class Fighter implements Serializable {
 	private Integer stratPositioning;
 	private Integer stratLNP;
 	private Integer stratStandUp;
-
+	
 	public Fighter(Long id, String firstName, String lastName, String nickname, Integer age, Integer win, Integer loss,
-			Integer draw, Integer boxing, Integer clinch, Integer bjj, Integer kicking, Integer wrestling,
-			Integer strength, Integer agility, Integer conditioning, Integer toughness, Integer koResistance) {
+			Integer draw, Double punching, Double kicking, Double clinchStriking, Double clinchGrappling,
+			Double takedowns, Double gnp, Double submission, Double groundGame, Double dodging, Double subDefense,
+			Double takedownsDef, Double aggressiveness, Double control, Double motivation, Double strength,
+			Double agility, Double conditioning, Double koResistance, Double toughness) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -81,16 +99,25 @@ public class Fighter implements Serializable {
 		this.win = win;
 		this.loss = loss;
 		this.draw = draw;
-		this.boxing = boxing;
-		this.clinch = clinch;
-		this.bjj = bjj;
+		this.punching = punching;
 		this.kicking = kicking;
-		this.wrestling = wrestling;
+		this.clinchStriking = clinchStriking;
+		this.clinchGrappling = clinchGrappling;
+		this.takedowns = takedowns;
+		this.gnp = gnp;
+		this.submission = submission;
+		this.groundGame = groundGame;
+		this.dodging = dodging;
+		this.subDefense = subDefense;
+		this.takedownsDef = takedownsDef;
+		this.aggressiveness = aggressiveness;
+		this.control = control;
+		this.motivation = motivation;
 		this.strength = strength;
 		this.agility = agility;
 		this.conditioning = conditioning;
-		this.toughness = toughness;
 		this.koResistance = koResistance;
+		this.toughness = toughness;
 		// Strats Geral
 		stratPunching = 25;
 		stratKicking = 25;
@@ -108,4 +135,5 @@ public class Fighter implements Serializable {
 		stratLNP = 20;
 		stratStandUp = 20;
 	}
+	
 }

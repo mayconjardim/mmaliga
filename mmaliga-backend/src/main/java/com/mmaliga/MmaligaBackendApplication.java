@@ -7,7 +7,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.mmaliga.entities.Fight;
 import com.mmaliga.entities.Fighter;
+import com.mmaliga.repositories.FightRepository;
 import com.mmaliga.repositories.FighterRepository;
 
 @SpringBootApplication
@@ -15,6 +17,9 @@ public class MmaligaBackendApplication implements CommandLineRunner {
 
 	@Autowired
 	private FighterRepository fighterRepository;
+	
+	@Autowired
+	private FightRepository fightRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(MmaligaBackendApplication.class, args);
@@ -32,6 +37,14 @@ public class MmaligaBackendApplication implements CommandLineRunner {
 	        Fighter f4 = new Fighter(4L, "Ana", "Rodrigues", "Aninha", 27, 0, 0, 0, 6, 7, 7, 8, 8, 6, 8, 7, 7, 6);
 	        
 	        fighterRepository.saveAll(Arrays.asList(f1,f2,f3,f4));
+	        
+	        Fight fht1 = new Fight(5L, "MMALIGA #1", 3, "N/A", "N/A", f3, f4);
+	        
+	        Fight fht2 = new Fight(6L, "MMALIGA #1", 3, "N/A", "N/A", f1, f2);
+	        
+	        fightRepository.saveAll(Arrays.asList(fht1,fht2));
+	        
+	        
 	}
 
 }
