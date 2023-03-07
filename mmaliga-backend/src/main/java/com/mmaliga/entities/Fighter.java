@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.mmaliga.enums.WeightClass;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +33,7 @@ public class Fighter implements Serializable {
 	private Integer win;
 	private Integer loss;
 	private Integer draw;
-	// private WeightClass weightClass;
+	private WeightClass weightClass;
 	// private fightingStyle fightingStyle;
 
 	// Habilidaddes
@@ -51,7 +53,7 @@ public class Fighter implements Serializable {
 	private Double dodging;
 	private Double subDefense;
 	private Double takedownsDef;
-	
+
 	// Mental
 	private Double aggressiveness;
 	private Double control;
@@ -65,7 +67,7 @@ public class Fighter implements Serializable {
 	private Double toughness;
 
 	// Strategia
-	
+
 	// General
 	private Integer stratPunching;
 	private Integer stratKicking;
@@ -84,12 +86,12 @@ public class Fighter implements Serializable {
 	private Integer stratPositioning;
 	private Integer stratLNP;
 	private Integer stratStandUp;
-	
+
 	public Fighter(Long id, String firstName, String lastName, String nickname, Integer age, Integer win, Integer loss,
-			Integer draw, Double punching, Double kicking, Double clinchStriking, Double clinchGrappling,
-			Double takedowns, Double gnp, Double submission, Double groundGame, Double dodging, Double subDefense,
-			Double takedownsDef, Double aggressiveness, Double control, Double motivation, Double strength,
-			Double agility, Double conditioning, Double koResistance, Double toughness) {
+			Integer draw, WeightClass weightClass, Double punching, Double kicking, Double clinchStriking,
+			Double clinchGrappling, Double takedowns, Double gnp, Double submission, Double groundGame, Double dodging,
+			Double subDefense, Double takedownsDef, Double aggressiveness, Double control, Double motivation,
+			Double strength, Double agility, Double conditioning, Double koResistance, Double toughness) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -99,6 +101,7 @@ public class Fighter implements Serializable {
 		this.win = win;
 		this.loss = loss;
 		this.draw = draw;
+		this.weightClass = weightClass;
 		this.punching = punching;
 		this.kicking = kicking;
 		this.clinchStriking = clinchStriking;

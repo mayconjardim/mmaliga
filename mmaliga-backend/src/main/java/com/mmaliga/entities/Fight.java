@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.mmaliga.enums.WeightClass;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +35,7 @@ public class Fight implements Serializable {
 	private Long id;
 	private String eventName;
 	private Integer rounds;
+	private WeightClass weightClass;
 	private String fightResult;
 	private String fightResultType;
 	private Boolean titleBout;
@@ -50,12 +53,13 @@ public class Fight implements Serializable {
 	@Column(name = "pbp", length = 2048)
 	private List<String> pbp = new ArrayList<>();
 
-	public Fight(Long id, String eventName, Integer rounds, String fightResult, String fightResultType,
-			Boolean titleBout, Fighter fighter1, Fighter fighter2) {
+	public Fight(Long id, String eventName, Integer rounds, WeightClass WeightClass, String fightResult,
+			String fightResultType, Boolean titleBout, Fighter fighter1, Fighter fighter2) {
 		super();
 		this.id = id;
 		this.eventName = eventName;
 		this.rounds = rounds;
+		this.weightClass = WeightClass;
 		this.fightResult = fightResult;
 		this.fightResultType = fightResultType;
 		this.titleBout = titleBout;

@@ -3,6 +3,7 @@ package com.mmaliga.dto;
 import java.io.Serializable;
 
 import com.mmaliga.entities.Fighter;
+import com.mmaliga.enums.WeightClass;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class FighterDTO implements Serializable {
 	private Integer win;
 	private Integer loss;
 	private Integer draw;
-	// private WeightClass weightClass;
+	private WeightClass weightClass;
 	// private fightingStyle fightingStyle;
 	private Double punching;
 	private Double kicking;
@@ -46,12 +47,12 @@ public class FighterDTO implements Serializable {
 	private Double conditioning;
 	private Double koResistance;
 	private Double toughness;
-	
+
 	public FighterDTO(Long id, String firstName, String lastName, String nickname, Integer age, Integer win,
-			Integer loss, Integer draw, Double punching, Double kicking, Double clinchStriking, Double clinchGrappling,
-			Double takedowns, Double gnp, Double submission, Double groundGame, Double dodging, Double subDefense,
-			Double takedownsDef, Double aggressiveness, Double control, Double motivation, Double strength,
-			Double agility, Double conditioning, Double koResistance, Double toughness) {
+			Integer loss, Integer draw, WeightClass weightClass, Double punching, Double kicking, Double clinchStriking,
+			Double clinchGrappling, Double takedowns, Double gnp, Double submission, Double groundGame, Double dodging,
+			Double subDefense, Double takedownsDef, Double aggressiveness, Double control, Double motivation,
+			Double strength, Double agility, Double conditioning, Double koResistance, Double toughness) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -61,6 +62,7 @@ public class FighterDTO implements Serializable {
 		this.win = win;
 		this.loss = loss;
 		this.draw = draw;
+		this.weightClass = weightClass;
 		this.punching = punching;
 		this.kicking = kicking;
 		this.clinchStriking = clinchStriking;
@@ -81,7 +83,7 @@ public class FighterDTO implements Serializable {
 		this.koResistance = koResistance;
 		this.toughness = toughness;
 	}
-	
+
 	public FighterDTO(Fighter entity) {
 		id = entity.getId();
 		firstName = entity.getFirstName();
@@ -91,6 +93,7 @@ public class FighterDTO implements Serializable {
 		win = entity.getWin();
 		loss = entity.getLoss();
 		draw = entity.getDraw();
+		weightClass = entity.getWeightClass();
 		punching = entity.getPunching();
 		kicking = entity.getKicking();
 		clinchStriking = entity.getClinchStriking();
@@ -111,5 +114,5 @@ public class FighterDTO implements Serializable {
 		koResistance = entity.getKoResistance();
 		toughness = entity.getToughness();
 	}
-	
+
 }

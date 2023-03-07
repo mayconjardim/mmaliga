@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.mmaliga.entities.Fight;
 import com.mmaliga.entities.Fighter;
+import com.mmaliga.enums.WeightClass;
 import com.mmaliga.utils.Comments;
 
 import lombok.EqualsAndHashCode;
@@ -23,6 +24,7 @@ public class FightDTO implements Serializable {
 	private Long id;
 	private String eventName;
 	private Integer rounds;
+	private WeightClass weightClass;
 	private String fightResult;
 	private String fightResultType;
 	private Boolean titleBout;
@@ -30,12 +32,13 @@ public class FightDTO implements Serializable {
 	private Fighter fighter2;
 	private List<String> pbp = new ArrayList<>();
 
-	public FightDTO(Long id, String eventName, Integer rounds, String fightResult, String fightResultType,
-			Boolean titleBout, Fighter fighter1, Fighter fighter2) {
+	public FightDTO(Long id, String eventName, Integer rounds, WeightClass weightClass, String fightResult,
+			String fightResultType, Boolean titleBout, Fighter fighter1, Fighter fighter2) {
 		super();
 		this.id = id;
 		this.eventName = eventName;
 		this.rounds = rounds;
+		this.weightClass = weightClass;
 		this.fightResult = fightResult;
 		this.fightResultType = fightResultType;
 		this.titleBout = titleBout;
@@ -47,8 +50,10 @@ public class FightDTO implements Serializable {
 		id = entity.getId();
 		eventName = entity.getEventName();
 		rounds = entity.getRounds();
+		weightClass = entity.getWeightClass();
 		fightResult = entity.getFightResult();
 		fightResultType = entity.getFightResult();
+		titleBout = entity.getTitleBout();
 		fighter1 = entity.getFighter1();
 		fighter2 = entity.getFighter2();
 	}
@@ -60,12 +65,16 @@ public class FightDTO implements Serializable {
 		this.pbp.add(pbp);
 	}
 
-	//Metodos de luta
-	
-	public void fightApresentation() {
-	
-		
+	// Metodos de luta
+
+	public void FightApresentation() {
+		int fightType = getTitleBout() ? 1 : 0;
+
+		String presentation = String.format(Comments.apresentation[fightType], getRounds(), getWeightClass().getName(),
+				fighter1.getWin(), fighter1.getLoss(), fighter1.getDraw(), fighter1.getFirstName(), fighter2.getWin(),
+				fighter2.getLoss(), fighter2.getDraw(), fighter2.getFirstName());
+
+		setPbp(presentation);
 	}
-	
 
 }
