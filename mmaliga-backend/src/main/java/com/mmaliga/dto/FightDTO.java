@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 
+import com.mmaliga.entities.Fight;
 import com.mmaliga.entities.Fighter;
 
 import lombok.EqualsAndHashCode;
@@ -40,6 +41,16 @@ public class FightDTO implements Serializable {
 		this.fightResultType = fightResultType;
 		this.fighter1 = fighter1;
 		this.fighter2 = fighter2;
+	}
+	
+	public FightDTO(Fight entity) {
+		id = entity.getId();
+		eventName = entity.getEventName();
+		rounds = entity.getRounds();
+		fightResult = entity.getFightResult();
+		fightResultType = entity.getFightResult();
+		fighter1 = entity.getFighter1();
+		fighter2 = entity.getFighter2();
 	}
 	
 	public void setPbp(String pbp) {
