@@ -61,13 +61,6 @@ public class Fight implements Serializable {
 		this.fighter2 = fighter2;
 		this.pbp = pbp;
 	}
-	
-	public void setPbp(String pbp) {
-		if (this.pbp == null) {
-			this.pbp = new ArrayList<String>();
-		}
-		this.pbp.add(pbp);
-	}
-	
+		
 }
 
