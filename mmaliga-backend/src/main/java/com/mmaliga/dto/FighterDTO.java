@@ -51,7 +51,7 @@ public class FighterDTO implements Serializable {
 	// Atributos do lutadores na luta
 	private Double currentHP;
 	private Double currentStamina;
-	private Boolean onTheGround;
+	private boolean onTheGround;
 	private Integer rush;
 
 	public FighterDTO(Long id, String firstName, String lastName, String nickname, Integer age, Integer win,
@@ -122,7 +122,6 @@ public class FighterDTO implements Serializable {
 	}
 
 	// Metodos de luta
-
 	public void maxHPandStamina() {
 		this.setCurrentHP((toughness * 5 * 100) / 100);
 		this.setCurrentStamina((conditioning * 5 * 100) / 100);
@@ -135,4 +134,41 @@ public class FighterDTO implements Serializable {
 		}
 	}
 
+	public double getInitiativeBonus() {
+		  double result = (getAgility() / 4) + (getAggressiveness() / 6) + getRush();
+		  result = result * 100 / 100;
+		  return result;
+		}
+	
+	public double getMean() {
+		  double result = (getDefenseMean() + getFitnessMean() + getGroundMean() + getMentalMean() + getStrikingMean()) / 5;
+		  return result;
+		}
+
+	public double getGroundMean() {
+		  double result = (getGroundGame() + getSubmission() + getGnp()) * 100 / 60;
+		  return result;
+		}
+
+		public double getMentalMean() {
+		  double result = (getAggressiveness() + getControl() + getMotivation()) * 100 / 60;
+		  return result;
+		}
+
+		public double getStrikingMean() {
+		  double result = (getPunching() + getKicking() + getClinchStriking() + getClinchGrappling() + getTakedowns()) * 100 / 100;
+		  return result;
+		}
+
+		public double getFitnessMean() {
+		  double result = getStrength() + getToughness() + getAgility() + getKoResistance() + getConditioning();
+		  return result;
+		}
+
+		public double getDefenseMean() {
+		  double result = (getDodging() + getTakedownsDef() + getSubDefense()) * 100 / 60;
+		  return result;
+		}
+
+	
 }
