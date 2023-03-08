@@ -87,6 +87,12 @@ public class Fighter implements Serializable {
 	private Integer stratLNP;
 	private Integer stratStandUp;
 
+	// Atributos do lutadores na luta
+	private Double currentHP = 0.0;
+	private Double currentStamina = 0.0;
+	private boolean onTheGround = false;
+	private Integer rush = 0;
+
 	public Fighter(Long id, String firstName, String lastName, String nickname, Integer age, Integer win, Integer loss,
 			Integer draw, WeightClass weightClass, Double punching, Double kicking, Double clinchStriking,
 			Double clinchGrappling, Double takedowns, Double gnp, Double submission, Double groundGame, Double dodging,
@@ -139,4 +145,55 @@ public class Fighter implements Serializable {
 		stratStandUp = 20;
 	}
 
+	// Metodos de luta
+
+	public void maxHPandStamina() {
+		this.setCurrentHP((toughness * 5 * 100) / 100);
+		this.setCurrentStamina((conditioning * 5 * 100) / 100);
+	}
+
+	public void recoverHP(double HPRecovered) {
+		currentHP += HPRecovered;
+		if (currentHP > toughness * 5) {
+			currentHP = toughness * 5;
+		}
+	}
+
+	public double getInitiativeBonus() {
+		double result = (getAgility() / 4) + (getAggressiveness() / 6) + getRush();
+		result = result * 100 / 100;
+		return result;
+	}
+
+	public double getMean() {
+		double result = (getDefenseMean() + getFitnessMean() + getGroundMean() + getMentalMean() + getStrikingMean())
+				/ 5;
+		return result;
+	}
+
+	public double getGroundMean() {
+		double result = (getGroundGame() + getSubmission() + getGnp()) * 100 / 60;
+		return result;
+	}
+
+	public double getMentalMean() {
+		double result = (getAggressiveness() + getControl() + getMotivation()) * 100 / 60;
+		return result;
+	}
+
+	public double getStrikingMean() {
+		double result = (getPunching() + getKicking() + getClinchStriking() + getClinchGrappling() + getTakedowns())
+				* 100 / 100;
+		return result;
+	}
+
+	public double getFitnessMean() {
+		double result = getStrength() + getToughness() + getAgility() + getKoResistance() + getConditioning();
+		return result;
+	}
+
+	public double getDefenseMean() {
+		double result = (getDodging() + getTakedownsDef() + getSubDefense()) * 100 / 60;
+		return result;
+	}
 }

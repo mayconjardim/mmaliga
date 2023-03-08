@@ -1,82 +1,65 @@
 package com.mmaliga.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.mmaliga.dto.FightDTO;
 import com.mmaliga.entities.Fight;
-import com.mmaliga.entities.Fighter;
 import com.mmaliga.repositories.FightRepository;
-import com.mmaliga.repositories.FighterRepository;
 
-@Service
+@RestController
+@RequestMapping(value = "/fight")
 public class FightService {
 
 	@Autowired
 	private FightRepository fightRepository;
 
-	@Autowired
-	private FighterRepository fighterRepository;
-
-	@Transactional(readOnly = true)
-	public List<FightDTO> findAll() {
-		List<Fight> list = fightRepository.findAll();
-		return list.stream().map(x -> new FightDTO(x)).collect(Collectors.toList());
+	@PostMapping
+	public ResponseEntity<Fight> saveFight(@RequestBody Fight fight) {
+		return new ResponseEntity<Fight>(fightRepository.save(fight), HttpStatus.OK);
 	}
 
-	@Transactional(readOnly = true)
-	public FightDTO findById(Long id) throws Exception {
-		Optional<Fight> obj = fightRepository.findById(id);
-		Fight entity = obj.orElseThrow(() -> new Exception("Entity not found"));
-		return new FightDTO(entity);
-	}
+	@GetMapping("/{id}")
+	public ResponseEntity<Fight> findById(@PathVariable Long id) {
+		Optional<Fight> fight = fightRepository.findById(id);
+		if (!fight.isPresent()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
 
-	@Transactional
-	public FightDTO update(Long id, FightDTO dto) {
-		try {
-			Fight entity = fightRepository.getReferenceById(id);
-
-			copyDtoToEntity(dto, entity);
-
-			
-			System.out.println(dto.getFighter1().getLastName());
-		
-
-			entity = fightRepository.save(entity);
-			return new FightDTO(entity);
-		} catch (EntityNotFoundException e) {
-			throw new EntityNotFoundException("Id Not Found " + id);
+			return new ResponseEntity<Fight>(fight.get(), HttpStatus.OK);
 		}
-
 	}
 
-	
+	@PutMapping("/{id}")
+	public ResponseEntity<Fight> updateFight(@PathVariable Long id, @RequestBody Fight fightBody) {
+		Optional<Fight> fight = fightRepository.findById(id);
+		if (!fight.isPresent()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
+			fightBody.setId(fight.get().getId());
 
-	private void copyDtoToEntity(FightDTO dto, Fight entity) {
-
-		Fighter fighetr1 = fighterRepository.getReferenceById(dto.getFighter1().getId());
-		Fighter fighetr2 = fighterRepository.getReferenceById(dto.getFighter2().getId());
-
-		entity.setEventName(dto.getEventName());
-		entity.setFighter1(fighetr1);
-		entity.setFighter2(fighetr2);
-		entity.setFightResult(dto.getFightResult());
-		entity.setFightResultType(dto.getFightResultType());
-		entity.setGeneratePBP(dto.getGeneratePBP());
-		entity.setHappened(dto.getHappened());
-		entity.setRounds(dto.getRounds());
-		entity.setTitleBout(dto.getTitleBout());
-		entity.setWeightClass(dto.getWeightClass());
-
-		entity.getPbp().add("Vasco");
-
+			if (fightBody.getHappened()) {
+				if (fightBody.getGeneratePBP()) {
+					bout(fightBody);
+				}
+			}
+			return new ResponseEntity<Fight>(fightRepository.save(fightBody), HttpStatus.OK);
+		}
 	}
 
+	private void bout(Fight obj) {
+		obj.setGeneratePBP(false);
+		obj.prepareFight();
+		obj.FightMethod();
+
+	}
 }
