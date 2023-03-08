@@ -49,10 +49,10 @@ public class FighterDTO implements Serializable {
 	private Double toughness;
 
 	// Atributos do lutadores na luta
-	private Double currentHP;
-	private Double currentStamina;
-	private boolean onTheGround;
-	private Integer rush;
+	private Double currentHP = 0.0;
+	private Double currentStamina = 0.0;
+	private boolean onTheGround = false;
+	private Integer rush = 0;
 
 	public FighterDTO(Long id, String firstName, String lastName, String nickname, Integer age, Integer win,
 			Integer loss, Integer draw, WeightClass weightClass, Double punching, Double kicking, Double clinchStriking,

@@ -28,6 +28,8 @@ public class FightDTO implements Serializable {
 	private String fightResult;
 	private String fightResultType;
 	private Boolean titleBout;
+	private Boolean generatePBP;
+	private Boolean happened;
 	private FighterDTO fighter1;
 	private FighterDTO fighter2;
 	private List<String> pbp = new ArrayList<>();
@@ -36,7 +38,7 @@ public class FightDTO implements Serializable {
 	private boolean inTheClinch;
 
 	public FightDTO(Long id, String eventName, Integer rounds, WeightClass weightClass, String fightResult,
-			String fightResultType, Boolean titleBout, FighterDTO fighter1, FighterDTO fighter2) {
+			String fightResultType, Boolean titleBout, FighterDTO fighter1, FighterDTO fighter2, Boolean generatePBP, Boolean happened) {
 		super();
 		this.id = id;
 		this.eventName = eventName;
@@ -47,6 +49,8 @@ public class FightDTO implements Serializable {
 		this.titleBout = titleBout;
 		this.fighter1 = fighter1;
 		this.fighter2 = fighter2;
+		this.generatePBP = generatePBP;
+		this.happened = happened;
 	}
 
 	public FightDTO(Fight entity) {
@@ -59,6 +63,8 @@ public class FightDTO implements Serializable {
 		titleBout = entity.getTitleBout();
 		fighter1 = new FighterDTO(entity.getFighter1());
 		fighter2 = new FighterDTO(entity.getFighter2());
+		generatePBP = entity.getGeneratePBP();
+		happened = entity.getHappened();
 	}
 
 	public void setPbp(String pbp) {
@@ -89,21 +95,8 @@ public class FightDTO implements Serializable {
 		this.fighter2.maxHPandStamina();
 		setInTheClinch(false);
 		FightApresentation();
-		
-		
-		
-	}
-
-	public void fight() {
-
-		
-		
-		
 	}
 	
-	
-	
-
 	public int fighterAction(FighterDTO act, FighterDTO pas) {
 		Random random = new Random();
 		int randomNumber = random.nextInt(19);

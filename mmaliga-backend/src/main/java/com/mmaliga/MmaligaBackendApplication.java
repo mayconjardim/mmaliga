@@ -43,9 +43,9 @@ public class MmaligaBackendApplication implements CommandLineRunner {
 
 		fighterRepository.saveAll(Arrays.asList(f1, f2, f3, f4));
 
-		Fight fht1 = new Fight(5L, "MMALIGA #1", 3, WeightClass.MEIO_PESADO, "N/A", "N/A", false, f3, f4);
+		Fight fht1 = new Fight(5L, "MMALIGA #1", 3, WeightClass.MEIO_PESADO, "N/A", "N/A", false, f3, f4, false, false);
 
-		Fight fht2 = new Fight(6L, "MMALIGA #1", 3, WeightClass.LEVE, "N/A", "N/A", true, f1, f2);
+		Fight fht2 = new Fight(6L, "MMALIGA #1", 3, WeightClass.LEVE, "N/A", "N/A", true, f1, f2, false, false);
 
 		fightRepository.saveAll(Arrays.asList(fht1, fht2));
 

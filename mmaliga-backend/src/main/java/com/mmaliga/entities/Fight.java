@@ -39,6 +39,8 @@ public class Fight implements Serializable {
 	private String fightResult;
 	private String fightResultType;
 	private Boolean titleBout;
+	private Boolean generatePBP;
+	private Boolean happened;
 
 	@ManyToOne
 	@JoinColumn(name = "fighter1_id")
@@ -54,7 +56,7 @@ public class Fight implements Serializable {
 	private List<String> pbp = new ArrayList<>();
 
 	public Fight(Long id, String eventName, Integer rounds, WeightClass WeightClass, String fightResult,
-			String fightResultType, Boolean titleBout, Fighter fighter1, Fighter fighter2) {
+			String fightResultType, Boolean titleBout, Fighter fighter1, Fighter fighter2, Boolean generatePBP, Boolean happened) {
 		super();
 		this.id = id;
 		this.eventName = eventName;
@@ -65,6 +67,8 @@ public class Fight implements Serializable {
 		this.titleBout = titleBout;
 		this.fighter1 = fighter1;
 		this.fighter2 = fighter2;
+		this.generatePBP = generatePBP;
+		this.happened = happened;
 	}
 
 }

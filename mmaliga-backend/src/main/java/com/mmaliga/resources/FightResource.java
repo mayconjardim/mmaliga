@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,4 +33,10 @@ public class FightResource {
 		return ResponseEntity.ok().body(dto);
 	}
 
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<FightDTO> update(@PathVariable Long id, @RequestBody FightDTO dto){
+		dto = fightService.update(id, dto);
+		return ResponseEntity.ok().body(dto);
+	}
+	
 }
