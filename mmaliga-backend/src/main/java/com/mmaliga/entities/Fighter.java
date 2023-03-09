@@ -34,7 +34,6 @@ public class Fighter implements Serializable {
 	private Integer loss;
 	private Integer draw;
 	private WeightClass weightClass;
-	// private fightingStyle fightingStyle;
 
 	// Habilidaddes
 	// Luta em pé
@@ -87,10 +86,19 @@ public class Fighter implements Serializable {
 	private Integer stratLNP;
 	private Integer stratStandUp;
 
+	// Estilos
+	private Integer fancyPunches;
+	private Integer fightingStyle;
+	private Integer tacticalStyle;
+	private Integer fancyKicks;
+	private Integer fancySubmissions;
+	private Integer dirtyFighting;
+
 	// Atributos do lutadores na luta
 	private Double currentHP = 0.0;
 	private Double currentStamina = 0.0;
 	private boolean onTheGround = false;
+	private boolean dazed = false;
 	private Integer rush = 0;
 
 	public Fighter(Long id, String firstName, String lastName, String nickname, Integer age, Integer win, Integer loss,
@@ -157,6 +165,29 @@ public class Fighter implements Serializable {
 		if (currentHP > toughness * 5) {
 			currentHP = toughness * 5;
 		}
+	}
+
+	public boolean checkDirtyMove() {
+		final int MAX_RANDOM = 120;
+		int modifiers = 0;
+
+		if (getCurrentHP() < 50) {
+			modifiers += 1;
+		} else if (getCurrentHP() < 20) {
+			modifiers += 2;
+		}
+
+		if (getCurrentStamina() < 50) {
+			modifiers += 1;
+		} else if (getCurrentStamina() < 20) {
+			modifiers += 2;
+		}
+
+		modifiers += Math.round(getAggressiveness() / 7);
+
+		modifiers *= getDirtyFighting();
+
+		return (Math.random() * MAX_RANDOM <= modifiers);
 	}
 
 	public double getInitiativeBonus() {

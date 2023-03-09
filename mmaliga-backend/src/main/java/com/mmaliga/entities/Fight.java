@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 
 import com.mmaliga.enums.WeightClass;
 import com.mmaliga.utils.Comments;
+import com.mmaliga.utils.Moves;
+import com.mmaliga.utils.Sim;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -59,6 +61,7 @@ public class Fight implements Serializable {
 
 	/// Atributos de luta
 	private boolean inTheClinch;
+	private Integer timeCurrent;
 
 	public Fight(Long id, String eventName, Integer rounds, WeightClass WeightClass, String fightResult,
 			String fightResultType, Boolean titleBout, Fighter fighter1, Fighter fighter2, Boolean generatePBP,
@@ -109,16 +112,15 @@ public class Fight implements Serializable {
 
 	public void FightMethod() {
 		int result = getStandUpInitiative(fighter1, fighter2);
-		
+
 		if (result == 0) {
 			setPbp(fighter1.getNickname() + " tomou a iniciativa ");
 		} else {
 			setPbp(fighter2.getNickname() + " tomou a iniciativa ");
 		}
-		
+
 	}
-	
-	
+
 	public int fighterAction(Fighter act, Fighter pas) {
 		Random random = new Random();
 		int randomNumber = random.nextInt(19);
@@ -154,7 +156,7 @@ public class Fight implements Serializable {
 
 	public int getStandUpInitiative(Fighter act, Fighter pas) {
 
-		//Fighter1 Iniciativa
+		// Fighter1 Iniciativa
 		double fighter1Ini = getBalancedRandom(act.getAggressiveness() + act.getControl() / 4);
 		fighter1Ini += getBalancedRandom(act.getAgility() / 2);
 		fighter1Ini += getBalancedRandom(act.getCurrentStamina() / 10);
@@ -163,7 +165,7 @@ public class Fight implements Serializable {
 		fighter1Ini += act.getMean() / 8;
 		fighter1Ini -= getHurtFactor(act);
 
-		//Fighter2 Iniciativa
+		// Fighter2 Iniciativa
 		double fighter2Ini = getBalancedRandom(act.getAggressiveness() + act.getControl() / 4);
 		fighter2Ini += getBalancedRandom(act.getAgility() / 2);
 		fighter2Ini += getBalancedRandom(act.getCurrentStamina() / 10);
@@ -191,55 +193,65 @@ public class Fight implements Serializable {
 	}
 
 	public int getStandUpAction(Fighter Act, Fighter Pas) {
-	    int prob = (int)(Math.random() * 100) + 1;
+		int prob = (int) (Math.random() * 100) + 1;
+		int result = 0;
+		int punchProb = Act.getStratPunching();
+		int kickProb = punchProb + Act.getStratKicking();
+		int clinchProb = kickProb + Act.getStratClinching();
 
-	    int punchProb = Act.getStratPunching();
-	    int kickProb = punchProb + Act.getStratKicking();
-	    int clinchProb = kickProb + Act.getStratClinching();
+		if (prob <= punchProb) {
+			result = Moves.ACT_PUNCHES;
+		} else if (prob <= kickProb) {
+			result = Moves.ACT_KICKS;
+		} else if (prob <= clinchProb) {
+			result = Moves.ACT_CLINCH;
+		} else {
+			result = Moves.ACT_TAKEDOWNS;
+		}
 
-	    if (prob <= punchProb) {
-	        return 1; //ACT_PUNCHES;
-	    } else if (prob <= kickProb) {
-	        return 2; //ACT_KICKS;
-	    } else if (prob <= clinchProb) {
-	        return 3; //ACT_CLINCH;
-	    } else {
-	        return 4; //ACT_TAKEDOWNS;
-	    }
+		if (Act.checkDirtyMove()) {
+			result = Moves.ACT_POKE;
+		}
+
+		if ((Act.getFancyPunches() > 0) && (result == Moves.ACT_PUNCHES)) {
+			if ((Math.random() < Act.getAgility()) && (Math.random() < Act.getPunching())
+					&& (Math.random() < Act.getFancyPunches() * Sim.FANCYMOVEPROB)) {
+				result = Moves.ACT_FANCYPUNCH;
+			}
+		} else if ((Act.getFancyKicks() > 0) && (result == Moves.ACT_KICKS)) {
+			if ((Math.random() < Act.getAgility()) && (Math.random() < Act.getKicking())
+					&& (Math.random() < Act.getFancyKicks() * Sim.FANCYMOVEPROB)) {
+				result = Moves.ACT_FANCYKICK;
+			}
+		} else if ((Act.getFancySubmissions() > 0)) {
+			if ((Math.random() < Act.getAgility()) && (Math.random() < Act.getSubmission())
+					&& (Math.random() < Act.getFancySubmissions() * Sim.FANCYMOVEPROB)) {
+				result = Moves.ACT_FANCYSUB;
+			}
+		} else if (result == Moves.ACT_TAKEDOWNS) {
+			if ((Act.getStrength() > Sim.SLAMSTRENGTH) && (Math.random() < Sim.SLAMPROB)) {
+				result = Moves.ACT_SLAM;
+			} else if ((Act.getStrength() > Sim.SUPPLEXSTRENGHT) && (Math.random() < Sim.SUPPLEXPROB)) {
+				result = Moves.ACT_SUPPLEX;
+			}
+		}
+
+		if (Math.random() * 100 < Sim.RESTFREQUENCY) {
+			if ((Math.random() > Act.getControl()) && (Math.random() * 5 > Act.getCurrentStamina())
+					&& (getTimeCurrent() > 100)) {
+				result = Moves.ACT_REST;
+			}
+		}
+
+		if (Pas.isDazed()) {
+			if (getFixedRandom(Act.getAggressiveness()) > Sim.CAPITALIZEPROB) {
+				result = Moves.ACT_CAPITALIZESTAND;
+			}
+		}
+
+		return result;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public int getBalancedRandom(double value) {
 		if (value < 0) {
 			return 0;
@@ -254,6 +266,15 @@ public class Fight implements Serializable {
 		}
 
 		return sum / NUM_ROUNDS;
+	}
+
+	public double getFixedRandom(double value) {
+		if (value < 0) {
+			return 0;
+		}
+		int aux = (int) value;
+		double doubleValue = value - aux;
+		return Math.round(aux / 2 + (new Random().nextInt(aux / 2)) + 1 + doubleValue);
 	}
 
 	public int getRandom() {
