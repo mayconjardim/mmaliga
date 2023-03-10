@@ -86,7 +86,7 @@ public class Fight implements Serializable {
 		this.happened = happened;
 	}
 
-	Fighter[] fighters = { fighter1, fighter2 };
+	
 
 	public void setPbp(String pbp) {
 		if (this.pbp == null) {
@@ -98,6 +98,8 @@ public class Fight implements Serializable {
 	// Metodos de luta
 
 	public void FightApresentation() {
+	
+
 		int fightType = getTitleBout() ? 1 : 0;
 
 		String presentation = String.format(Comments.apresentation[fightType], getRounds(), getWeightClass().getName(),
@@ -118,15 +120,73 @@ public class Fight implements Serializable {
 		FightApresentation();
 	}
 
-	public void FightMethod() {
-		int result = getStandUpInitiative(fighter1, fighter2);
+	public void fightController() {
 
-		if (result == 0) {
-			setPbp(fighter1.getNickname() + " tomou a iniciativa ");
-		} else {
-			setPbp(fighter2.getNickname() + " tomou a iniciativa ");
+		
+		int fighterAction1 = getStandUpInitiative(fighter1, fighter2, 0, 0);
+		int fighterAction2 = getStandUpInitiative(fighter2, fighter2, 0, 0);
+		;
+
+		int fighterActive, fighterPassive;
+
+		for (int i = 1; i <= rounds; i++) {
+
+			setPbp("------- Round " + i + " -------");
+
+			for (int j = 0; j <= 300; j += 15) {
+
+				if (fighterAction1 > fighterAction2) {
+					fighterActive = 0;
+					fighterPassive = 1;
+				} else {
+					fighterActive = 1;
+					fighterPassive = 0;
+				}
+
+				setPbp("Acao " + fighterActive);
+
+			}
+
 		}
 
+	}
+
+	public boolean checkPunchesExchange(Fighter act, Fighter pas) {
+		final int PUNCHES_EXC_PROB = 8;
+
+		boolean result = false;
+		if (!act.isOnTheGround() && !pas.isOnTheGround() && !inTheClinch) {
+			if (getRandom() < PUNCHES_EXC_PROB) {
+				if (getRandom() < Math.round(act.getAggressiveness() - act.getControl() / 2)
+						|| getRandom() < Math.round(pas.getAggressiveness() - pas.getControl() / 2)) {
+					result = true;
+				}
+			}
+		}
+		return result;
+	}
+
+	/*
+	 * public int getDeltaTime() { int rushSum = fighters[0].getRush() +
+	 * fighters[1].getRush(); int timeAdvance = getFixedRandomInt(Sim.TIMEADVANCE);
+	 * int result = timeAdvance - rushSum / 2; if (result < 1) { result = 1; }
+	 * return result; }
+	 */
+
+	public int getActionBonus(int action) {
+		final int PUNCHES_BONUS = 5;
+		final int KICK_BONUS = -1;
+		final int CLINCH_BONUS = -2;
+
+		int result = 0;
+		if (action == Moves.ACT_PUNCHES) {
+			result = PUNCHES_BONUS;
+		} else if (action == Moves.ACT_KICKS) {
+			result = KICK_BONUS;
+		} else if (action == Moves.ACT_CLINCH) {
+			result = CLINCH_BONUS;
+		}
+		return result;
 	}
 
 	public int fighterAction(Fighter act, Fighter pas) {
@@ -162,7 +222,7 @@ public class Fight implements Serializable {
 		}
 	}
 
-	public int getStandUpInitiative(Fighter act, Fighter pas) {
+	public int getStandUpInitiative(Fighter act, Fighter pas, Integer bonus1, Integer bonus2) {
 
 		// Fighter1 Iniciativa
 		double fighter1Ini = getBalancedRandom(act.getAggressiveness() + act.getControl() / 4);
@@ -200,7 +260,39 @@ public class Fight implements Serializable {
 		return result;
 	}
 
+	public int getGroundInitiative(Fighter act, Fighter pas, int bonus1, int bonus2) {
+		double fighter1Ini, fighter2Ini;
 
+		// Get Fighter 1 initiative
+		fighter1Ini = getBalancedRandom(act.getAggressiveness() + act.getControl() / 4);
+		fighter1Ini += getBalancedRandom(act.getCurrentStamina() / 10);
+		fighter1Ini += getBalancedRandom(act.getGroundGame() / 2);
+		fighter1Ini += getRandom() * 1.5;
+		fighter1Ini += act.getInitiativeBonus();
+		fighter1Ini -= getHurtFactor(act);
+
+		// Get Fighter 2 initiative
+		fighter2Ini = getBalancedRandom(pas.getAggressiveness() + pas.getControl() / 4);
+		fighter2Ini += getBalancedRandom(pas.getCurrentStamina() / 10);
+		fighter2Ini += getBalancedRandom(pas.getGroundGame() / 2);
+		fighter2Ini += getRandom() * 1.5;
+		fighter2Ini += pas.getInitiativeBonus();
+		fighter2Ini -= getHurtFactor(pas);
+
+		if (fighter1Ini > fighter2Ini) {
+			if (act.getRush() < Sim.MAXRUSH) {
+				act.setRush(act.getRush() + 1);
+			}
+			pas.setRush(0);
+			return 0;
+		} else {
+			if (pas.getRush() < Sim.MAXRUSH) {
+				pas.setRush(pas.getRush() + 1);
+			}
+			act.setRush(0);
+			return 1;
+		}
+	}
 
 	public int getGroundAction(Fighter act, Fighter pas) {
 		int prob, gnPProb, subProb, posProb, lnPProb, standProb;
@@ -353,168 +445,166 @@ public class Fight implements Serializable {
 	}
 
 	public static int getGroundToStandAction(Fighter act, Fighter pas) {
-	    int standupProb = getFixedRandomInt(act.getStratStandUp());
-	    int kickProb = getFixedRandomInt((act.getStratKicking()) / 2);
+		int standupProb = getFixedRandomInt(act.getStratStandUp());
+		int kickProb = getFixedRandomInt((act.getStratKicking()) / 2);
 
-	    int result;
-	    if (standupProb > kickProb) {
-	        result = Moves.ACT_STANDUP;
-	    } else {
-	        result = Moves.ACT_GROUNDKICK;
-	    }
+		int result;
+		if (standupProb > kickProb) {
+			result = Moves.ACT_STANDUP;
+		} else {
+			result = Moves.ACT_GROUNDKICK;
+		}
 
-	    return result;
+		return result;
 	}
-	
+
 	public int getClinchAction(Fighter act, Fighter pas) {
-	    int prob = ThreadLocalRandom.current().nextInt(1, 101);
+		int prob = ThreadLocalRandom.current().nextInt(1, 101);
 
-	    int dirtyBoxing =  act.getStratDirtyBoxing();
-	    int thai = dirtyBoxing + act.getStratThaiClinch();
-	    int avoidProb = thai + act.getStratAvoidClinch();
+		int dirtyBoxing = act.getStratDirtyBoxing();
+		int thai = dirtyBoxing + act.getStratThaiClinch();
+		int avoidProb = thai + act.getStratAvoidClinch();
 
-	    int result;
-	    if (prob <= dirtyBoxing) {
-	        result = getDirtyBoxingAction(act);
-	    } else if (prob <= thai) {
-	        result = getThaiAction(act);
-	    } else if (prob <= avoidProb) {
-	        result = Moves.ACT_BREAKCLINCH;
-	    } else {
-	        result = Moves.ACT_TAKEDOWNCLINCH;
-	    }
+		int result;
+		if (prob <= dirtyBoxing) {
+			result = getDirtyBoxingAction(act);
+		} else if (prob <= thai) {
+			result = getThaiAction(act);
+		} else if (prob <= avoidProb) {
+			result = Moves.ACT_BREAKCLINCH;
+		} else {
+			result = Moves.ACT_TAKEDOWNCLINCH;
+		}
 
-	    if (act.getActionsInClinch() > 0 && act.getActionsInClinch() < Sim.MINACTIONSFORSWITCHING
-	            && result == Moves.ACT_BREAKCLINCH) {
-	        result = Moves.ACT_DIRTYBOXING;
-	        if (act.getActionsInClinch() >= Sim.MINACTIONSFORSWITCHING) {
-	            act.setActionsInClinch(-1);
-	        }
-	    }
+		if (act.getActionsInClinch() > 0 && act.getActionsInClinch() < Sim.MINACTIONSFORSWITCHING
+				&& result == Moves.ACT_BREAKCLINCH) {
+			result = Moves.ACT_DIRTYBOXING;
+			if (act.getActionsInClinch() >= Sim.MINACTIONSFORSWITCHING) {
+				act.setActionsInClinch(-1);
+			}
+		}
 
-	    act.setActionsInClinch(act.getActionsInClinch() + 1);
+		act.setActionsInClinch(act.getActionsInClinch() + 1);
 
-	    if (act.checkDirtyMove()) {
-	        result = Moves.ACT_GROINKICK;
-	    }
+		if (act.checkDirtyMove()) {
+			result = Moves.ACT_GROINKICK;
+		}
 
-	    if (result == Moves.ACT_TAKEDOWNCLINCH && act.isPullsGuard()) {
-	        if (getRandom() < ((act.getAgility() + act.getTakedowns()) / Sim.PULLGUARDCUT)) {
-	            result = Moves.ACT_PULLGUARD;
-	        }
-	    }
+		if (result == Moves.ACT_TAKEDOWNCLINCH && act.isPullsGuard()) {
+			if (getRandom() < ((act.getAgility() + act.getTakedowns()) / Sim.PULLGUARDCUT)) {
+				result = Moves.ACT_PULLGUARD;
+			}
+		}
 
-	    /*
-	    if (Bout.getStatistics()[getFighterNumber(act)].getTempDamageClinch()
-	            > act.getToughness() * Sim.MAXDAMAGEFORCHANGINGGAMEPLAN) {
-	        if (getRandom() < act.getControl()) {
-	            result = Moves.ACT_BREAKCLINCH;
-	        }
-	    }
-	    */
-	    
-	    if (ThreadLocalRandom.current().nextInt(1, 101) < Sim.RESTFREQUENCY) {
-	        if (getRandom() > act.getControl() && getRandom() * 5 > act.getCurrentStamina()) {
-	            result = Moves.ACT_RESTCLINCH;
-	        }
-	    }
+		/*
+		 * if (Bout.getStatistics()[getFighterNumber(act)].getTempDamageClinch() >
+		 * act.getToughness() * Sim.MAXDAMAGEFORCHANGINGGAMEPLAN) { if (getRandom() <
+		 * act.getControl()) { result = Moves.ACT_BREAKCLINCH; } }
+		 */
 
-	    if ((result == Moves.ACT_THAICLINCH_PUNCHES && !act.isThaiClinch()) ||
-	            (result == Moves.ACT_THAICLINCH_KNEES && !act.isThaiClinch()) ||
-	            (result == Moves.ACT_DIRTYBOXING && !act.isDirtyBoxing())) {
-	        result = Moves.ACT_GRAPPLING_PUNCH;
-	    }
+		if (ThreadLocalRandom.current().nextInt(1, 101) < Sim.RESTFREQUENCY) {
+			if (getRandom() > act.getControl() && getRandom() * 5 > act.getCurrentStamina()) {
+				result = Moves.ACT_RESTCLINCH;
+			}
+		}
 
-	    return result;
+		if ((result == Moves.ACT_THAICLINCH_PUNCHES && !act.isThaiClinch())
+				|| (result == Moves.ACT_THAICLINCH_KNEES && !act.isThaiClinch())
+				|| (result == Moves.ACT_DIRTYBOXING && !act.isDirtyBoxing())) {
+			result = Moves.ACT_GRAPPLING_PUNCH;
+		}
+
+		return result;
 	}
-	
+
 	public int getStandUpAction(Fighter act, Fighter pas) {
-	    int Prob = (int) (Math.random() * 100) + 1;
+		int Prob = (int) (Math.random() * 100) + 1;
 
-	    int PunchProb =  act.getStratPunching();
-	    int KickProb = PunchProb +  act.getStratKicking();
-	    int ClinchProb = KickProb + act.getStratClinching();
+		int PunchProb = act.getStratPunching();
+		int KickProb = PunchProb + act.getStratKicking();
+		int ClinchProb = KickProb + act.getStratClinching();
 
-	    int Result;
+		int Result;
 
-	    if (Prob <= PunchProb) {
-	        Result = Moves.ACT_PUNCHES;
-	    } else if (Prob <= KickProb) {
-	        Result = Moves.ACT_KICKS;
-	    } else if (Prob <= ClinchProb) {
-	        Result = Moves.ACT_CLINCH;
-	    } else {
-	        Result = Moves.ACT_TAKEDOWNS;
-	    }
+		if (Prob <= PunchProb) {
+			Result = Moves.ACT_PUNCHES;
+		} else if (Prob <= KickProb) {
+			Result = Moves.ACT_KICKS;
+		} else if (Prob <= ClinchProb) {
+			Result = Moves.ACT_CLINCH;
+		} else {
+			Result = Moves.ACT_TAKEDOWNS;
+		}
 
-	    if (act.checkDirtyMove()) {
-	        Result = Moves.ACT_POKE;
-	    }
+		if (act.checkDirtyMove()) {
+			Result = Moves.ACT_POKE;
+		}
 
-	    if (act.getFancyPunches() > 0 && Result == Moves.ACT_PUNCHES) {
-	        double rand = Math.random();
-	        if (rand < act.getAgility() && rand < act.getPunching() && rand < act.getFancyPunches() * Sim.FANCYMOVEPROB) {
-	            Result = Moves.ACT_FANCYPUNCH;
-	        }
-	    } else if (act.getFancyKicks() > 0 && Result == Moves.ACT_KICKS) {
-	        double rand = Math.random();
-	        if (rand < act.getAgility() && rand < act.getKicking() && rand < act.getFancyKicks() * Sim.FANCYMOVEPROB) {
-	            Result = Moves.ACT_FANCYKICK;
-	        }
-	    } else if (act.getFancySubmissions() > 0) {
-	        double rand = Math.random();
-	        if (rand < act.getAgility() && rand < act.getSubmission() && rand < act.getFancySubmissions() * Sim.FANCYMOVEPROB) {
-	            Result = Moves.ACT_FANCYSUB;
-	        }
-	    } else if (Result == Moves.ACT_TAKEDOWNS) {
-	        if (act.getStrength() > Sim.SLAMSTRENGTH && Math.random() < Sim.SLAMPROB) {
-	            Result = Moves.ACT_SLAM;
-	        } else if (act.getStrength() > Sim.SUPPLEXSTRENGHT && Math.random() < Sim.SUPPLEXPROB) {
-	            Result = Moves.ACT_SUPPLEX;
-	        }
-	    }
+		if (act.getFancyPunches() > 0 && Result == Moves.ACT_PUNCHES) {
+			double rand = Math.random();
+			if (rand < act.getAgility() && rand < act.getPunching()
+					&& rand < act.getFancyPunches() * Sim.FANCYMOVEPROB) {
+				Result = Moves.ACT_FANCYPUNCH;
+			}
+		} else if (act.getFancyKicks() > 0 && Result == Moves.ACT_KICKS) {
+			double rand = Math.random();
+			if (rand < act.getAgility() && rand < act.getKicking() && rand < act.getFancyKicks() * Sim.FANCYMOVEPROB) {
+				Result = Moves.ACT_FANCYKICK;
+			}
+		} else if (act.getFancySubmissions() > 0) {
+			double rand = Math.random();
+			if (rand < act.getAgility() && rand < act.getSubmission()
+					&& rand < act.getFancySubmissions() * Sim.FANCYMOVEPROB) {
+				Result = Moves.ACT_FANCYSUB;
+			}
+		} else if (Result == Moves.ACT_TAKEDOWNS) {
+			if (act.getStrength() > Sim.SLAMSTRENGTH && Math.random() < Sim.SLAMPROB) {
+				Result = Moves.ACT_SLAM;
+			} else if (act.getStrength() > Sim.SUPPLEXSTRENGHT && Math.random() < Sim.SUPPLEXPROB) {
+				Result = Moves.ACT_SUPPLEX;
+			}
+		}
 
-	    if (Math.random() * 100 < Sim.RESTFREQUENCY) {
-	        if (Math.random() > act.getControl() && Math.random() * 5 > act.getCurrentStamina() && getTimeCurrent() > 100) {
-	            Result = Moves.ACT_REST;
-	        }
-	    }
+		if (Math.random() * 100 < Sim.RESTFREQUENCY) {
+			if (Math.random() > act.getControl() && Math.random() * 5 > act.getCurrentStamina()
+					&& getTimeCurrent() > 100) {
+				Result = Moves.ACT_REST;
+			}
+		}
 
-	    if (pas.isDazed()) {
-	        if (getFixedRandomInt(act.getAggressiveness()) > Sim.CAPITALIZEPROB) {
-	            Result = Moves.ACT_CAPITALIZESTAND;
-	        }
-	    }
+		if (pas.isDazed()) {
+			if (getFixedRandomInt(act.getAggressiveness()) > Sim.CAPITALIZEPROB) {
+				Result = Moves.ACT_CAPITALIZESTAND;
+			}
+		}
 
-	    return Result;
+		return Result;
 	}
 
 	public int getDirtyBoxingAction(Fighter act) {
-	    final double PUNCH_PROB = 1.25;
-	    double kneeProb = act.getStratKicking() + getRandom();
-	    double punchProb = (act.getStratPunching() + getRandom()) * PUNCH_PROB;
-	    
-	    if (kneeProb > punchProb) {
-	        return Moves.ACT_GRAPPLING_KNEE;
-	    } else {
-	        return Moves.ACT_DIRTYBOXING;
-	    }
+		final double PUNCH_PROB = 1.25;
+		double kneeProb = act.getStratKicking() + getRandom();
+		double punchProb = (act.getStratPunching() + getRandom()) * PUNCH_PROB;
+
+		if (kneeProb > punchProb) {
+			return Moves.ACT_GRAPPLING_KNEE;
+		} else {
+			return Moves.ACT_DIRTYBOXING;
+		}
 	}
 
 	public int getThaiAction(Fighter act) {
-	    final double KNEE_PROB = 1.25;
-	    double kneeProb = (act.getStratKicking() + getRandom()) * KNEE_PROB;
-	    double punchProb = act.getStratPunching() + getRandom();
-	    
-	    if (kneeProb > punchProb) {
-	        return Moves.ACT_THAICLINCH_KNEES;
-	    } else {
-	        return Moves.ACT_THAICLINCH_PUNCHES;
-	    }
+		final double KNEE_PROB = 1.25;
+		double kneeProb = (act.getStratKicking() + getRandom()) * KNEE_PROB;
+		double punchProb = act.getStratPunching() + getRandom();
+
+		if (kneeProb > punchProb) {
+			return Moves.ACT_THAICLINCH_KNEES;
+		} else {
+			return Moves.ACT_THAICLINCH_PUNCHES;
+		}
 	}
 
-	
-	
 	public int getSubmissionProbByPosition(Fighter act) {
 		double FULL_MOUNT = 1.15;
 		double CLOSED_GUARD = 0.7;
@@ -564,6 +654,27 @@ public class Fight implements Serializable {
 		return result;
 	}
 
+	public int getHurtFactor(Fighter act) {
+		double hurtFactor = act.getCurrentHP() / act.getToughness();
+		if (hurtFactor <= 0.1) {
+			return 10;
+		} else if (hurtFactor <= 0.15) {
+			return 5;
+		} else if (hurtFactor <= 0.2) {
+			return 4;
+		} else if (hurtFactor <= 0.25) {
+			return 3;
+		} else if (hurtFactor <= 0.3) {
+			return 2;
+		} else if (hurtFactor <= 0.45) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	// Gerar numeros randomicos
+
 	public int getBalancedRandom(double value) {
 		if (value < 0) {
 			return 0;
@@ -605,25 +716,6 @@ public class Fight implements Serializable {
 		final int BIGRANDOM = 1000;
 		final int Randomness = 1000;
 		return (int) (Math.random() * (BIGRANDOM + Randomness)) + 1;
-	}
-
-	public int getHurtFactor(Fighter act) {
-		double hurtFactor = act.getCurrentHP() / act.getToughness();
-		if (hurtFactor <= 0.1) {
-			return 10;
-		} else if (hurtFactor <= 0.15) {
-			return 5;
-		} else if (hurtFactor <= 0.2) {
-			return 4;
-		} else if (hurtFactor <= 0.25) {
-			return 3;
-		} else if (hurtFactor <= 0.3) {
-			return 2;
-		} else if (hurtFactor <= 0.45) {
-			return 1;
-		} else {
-			return 0;
-		}
 	}
 
 }

@@ -59,7 +59,7 @@ public class FightService {
 	private void bout(Fight obj) {
 		obj.setGeneratePBP(false);
 		obj.prepareFight();
-		obj.FightMethod();
+		obj.fightController();
 
 	}
 }
