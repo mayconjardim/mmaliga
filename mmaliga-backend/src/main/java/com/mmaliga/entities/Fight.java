@@ -65,6 +65,8 @@ public class Fight implements Serializable {
 	private Integer guardType;
 	private Integer fighterOnTop;
 	private boolean elbows = false;
+	private boolean stomps = false;
+	private boolean soccerKicks = false;
 
 	public Fight(Long id, String eventName, Integer rounds, WeightClass WeightClass, String fightResult,
 			String fightResultType, Boolean titleBout, Fighter fighter1, Fighter fighter2, Boolean generatePBP,
@@ -83,8 +85,8 @@ public class Fight implements Serializable {
 		this.happened = happened;
 	}
 
-	Fighter[] fighters = {fighter1, fighter2};
-	
+	Fighter[] fighters = { fighter1, fighter2 };
+
 	public void setPbp(String pbp) {
 		if (this.pbp == null) {
 			this.pbp = new ArrayList<String>();
@@ -134,7 +136,7 @@ public class Fight implements Serializable {
 				|| (pas.isOnTheGround())) {
 			if (act.isOnTheGround() && pas.isOnTheGround()) {
 
-				return 1; // getGroundAction(act, pas);
+				return getGroundAction(act, pas);
 
 			} else if ((!act.isOnTheGround()) && pas.isOnTheGround()) {
 
@@ -249,7 +251,7 @@ public class Fight implements Serializable {
 		}
 
 		if (Pas.isDazed()) {
-			if (getFixedRandom(Act.getAggressiveness()) > Sim.CAPITALIZEPROB) {
+			if (getFixedRandomInt(Act.getAggressiveness()) > Sim.CAPITALIZEPROB) {
 				result = Moves.ACT_CAPITALIZESTAND;
 			}
 		}
@@ -257,18 +259,12 @@ public class Fight implements Serializable {
 		return result;
 	}
 
-	
-	
 	public int getGroundAction(Fighter act, Fighter pas) {
 		int prob, gnPProb, subProb, posProb, lnPProb, standProb;
 		int result = 0;
-		
-		
-		
-		
+
 		prob = (int) (Math.random() * 100) + 1;
 
-		
 		gnPProb = act.getStratGNP();
 
 		if (isSubmissionAvailable(act)) {
@@ -285,9 +281,8 @@ public class Fight implements Serializable {
 
 		lnPProb = posProb + act.getStratLNP();
 
-		if (((guardType == 3 || guardType == 4)
-				|| (act.getLastName().equals(fighters[fighterOnTop].getLastName()) && (guardType == 2 || guardType == 4)))
-				&& (act.getRoundsInTheGround() <= 0)) {
+		if (((guardType == 3 || guardType == 4) || (act.getLastName().equals(fighters[fighterOnTop].getLastName())
+				&& (guardType == 2 || guardType == 4))) && (act.getRoundsInTheGround() <= 0)) {
 			standProb = lnPProb + act.getStratStandUp();
 		} else {
 			standProb = 0;
@@ -319,7 +314,7 @@ public class Fight implements Serializable {
 
 		if (result == Moves.ACT_GNP && act.getLastName().equals(fighters[fighterOnTop].getLastName())
 				&& (guardType == 2 || guardType == 3 || guardType == 7 || guardType == 8) && act.isUseKneesGround()) {
-			if ((getFixedRandom(act.getAggressiveness()) + Sim.KNEESFREQUENCY > 20)) {
+			if ((getFixedRandomInt(act.getAggressiveness()) + Sim.KNEESFREQUENCY > 20)) {
 				result = Moves.ACT_KNEESONGROUND;
 			}
 		}
@@ -352,15 +347,14 @@ public class Fight implements Serializable {
 			}
 		}
 
-		if (act.getTempDamageGround() > act.getToughness()
-				* Sim.MAXDAMAGEFORCHANGINGGAMEPLAN) {
+		if (act.getTempDamageGround() > act.getToughness() * Sim.MAXDAMAGEFORCHANGINGGAMEPLAN) {
 			if (getRandom() < act.getControl()) {
 				result = Moves.ACT_STANDUP;
 			}
 		}
 
 		if (pas.isDazed()) {
-			if (getFixedRandom(act.getAggressiveness()) > Sim.CAPITALIZEPROB) {
+			if (getFixedRandomInt(act.getAggressiveness()) > Sim.CAPITALIZEPROB) {
 				result = Moves.ACT_CAPITALIZEGROUND;
 			}
 		}
@@ -371,7 +365,50 @@ public class Fight implements Serializable {
 		return result;
 	}
 
-	
+	public int getStandToGroundAction(Fighter act, Fighter pas) {
+		int goToGroundProb = getFixedRandomInt(act.getStratTakedowns());
+		int kickProb = getFixedRandomInt((act.getStratKicking() + act.getStratStandUp() / 2));
+
+		int result;
+		if (goToGroundProb > kickProb) {
+			result = Moves.ACT_MOVETOGROUND;
+		} else {
+			result = Moves.ACT_STANDKICK;
+		}
+
+		if (getRandom() > act.getAggressiveness()) {
+			result = Moves.ACT_ALLOWSTAND;
+		}
+
+		int soccerKickProb = 0;
+		if (result == Moves.ACT_STANDKICK && isSoccerKicks() && act.isUseSoccerKicks()
+				&& getFixedRandomInt(act.getAggressiveness()) + Sim.SOCCERKICKSFREQUENCY > 20) {
+			soccerKickProb = getFixedRandomInt(act.getKicking());
+		}
+
+		int stompProb = 0;
+		if (result == Moves.ACT_STANDKICK && isStomps() && act.isUseStomps()
+				&& getFixedRandomInt(act.getAggressiveness()) + Sim.STOPMSFREQUENCY > 20) {
+			stompProb = getFixedRandomInt(act.getKicking());
+		}
+
+		if (result == Moves.ACT_STANDKICK) {
+			if (soccerKickProb > stompProb) {
+				result = Moves.ACT_SOCCERKICKS;
+			} else if (stompProb > soccerKickProb) {
+				result = Moves.ACT_STOMPS;
+			}
+		}
+
+		if (pas.isDazed()) {
+			if (getFixedRandomInt(act.getAggressiveness()) > Sim.CAPITALIZEPROB) {
+				result = Moves.ACT_CAPITALIZEGROUND;
+			}
+		}
+
+		return result;
+	}
+
 	public int getSubmissionProbByPosition(Fighter act) {
 		double FULL_MOUNT = 1.15;
 		double CLOSED_GUARD = 0.7;
@@ -437,13 +474,25 @@ public class Fight implements Serializable {
 		return sum / NUM_ROUNDS;
 	}
 
-	public double getFixedRandom(double value) {
+	public double getFixedRandomDouble(double value) {
 		if (value < 0) {
 			return 0;
 		}
 		int aux = (int) value;
 		double doubleValue = value - aux;
 		return Math.round(aux / 2 + (new Random().nextInt(aux / 2)) + 1 + doubleValue);
+	}
+
+	public static int getFixedRandomInt(double value) {
+		if (value < 0) {
+			return 0;
+		}
+
+		int aux = (int) value;
+		double doubleValue = value - aux;
+		int result = (int) (aux / 2 + (Math.random() * (aux / 2)) + 1 + doubleValue);
+
+		return result;
 	}
 
 	public int getRandom() {

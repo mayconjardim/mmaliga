@@ -96,7 +96,9 @@ public class Fighter implements Serializable {
 	private boolean easySubs;
     private boolean techSubs;
     private boolean useKneesGround;
-
+    private boolean useStomps;
+    private boolean useSoccerKicks;
+    
 	// Atributos do lutadores na luta
 	private Double currentHP = 0.0;
 	private Double currentStamina = 0.0;
