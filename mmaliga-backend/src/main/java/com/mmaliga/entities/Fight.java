@@ -140,7 +140,7 @@ public class Fight implements Serializable {
 
 			} else if ((!act.isOnTheGround()) && pas.isOnTheGround()) {
 
-				return 2; // getStandToGroundAction(act, pas);
+				return getStandToGroundAction(act, pas);
 
 			} else if (act.isOnTheGround() && (!pas.isOnTheGround())) {
 
@@ -409,6 +409,21 @@ public class Fight implements Serializable {
 		return result;
 	}
 
+	public static int getGroundToStandAction(Fighter act, Fighter pas) {
+	    int standupProb = getFixedRandomInt(act.getStratStandUp());
+	    int kickProb = getFixedRandomInt((act.getStratKicking()) / 2);
+
+	    int result;
+	    if (standupProb > kickProb) {
+	        result = Moves.ACT_STANDUP;
+	    } else {
+	        result = Moves.ACT_GROUNDKICK;
+	    }
+
+	    return result;
+	}
+	
+	
 	public int getSubmissionProbByPosition(Fighter act) {
 		double FULL_MOUNT = 1.15;
 		double CLOSED_GUARD = 0.7;
