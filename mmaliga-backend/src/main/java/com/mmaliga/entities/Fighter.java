@@ -93,13 +93,25 @@ public class Fighter implements Serializable {
 	private Integer fancyKicks;
 	private Integer fancySubmissions;
 	private Integer dirtyFighting;
+	private boolean easySubs;
+    private boolean techSubs;
+    private boolean useKneesGround;
 
 	// Atributos do lutadores na luta
 	private Double currentHP = 0.0;
 	private Double currentStamina = 0.0;
 	private boolean onTheGround = false;
 	private boolean dazed = false;
+	private boolean useElbows;
 	private Integer rush = 0;
+    private Integer actionsInGround;
+    private Integer actionsInClinch;
+    private Integer actionsInStandUp;
+    private Double tempDamageGround;
+    private Double tempDamageClinch;
+    private Integer roundsInTheGround;
+    
+   
 
 	public Fighter(Long id, String firstName, String lastName, String nickname, Integer age, Integer win, Integer loss,
 			Integer draw, WeightClass weightClass, Double punching, Double kicking, Double clinchStriking,

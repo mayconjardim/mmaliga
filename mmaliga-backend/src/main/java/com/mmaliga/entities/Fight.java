@@ -62,6 +62,9 @@ public class Fight implements Serializable {
 	/// Atributos de luta
 	private boolean inTheClinch;
 	private Integer timeCurrent;
+	private Integer guardType;
+	private Integer fighterOnTop;
+	private boolean elbows = false;
 
 	public Fight(Long id, String eventName, Integer rounds, WeightClass WeightClass, String fightResult,
 			String fightResultType, Boolean titleBout, Fighter fighter1, Fighter fighter2, Boolean generatePBP,
@@ -80,6 +83,8 @@ public class Fight implements Serializable {
 		this.happened = happened;
 	}
 
+	Fighter[] fighters = {fighter1, fighter2};
+	
 	public void setPbp(String pbp) {
 		if (this.pbp == null) {
 			this.pbp = new ArrayList<String>();
@@ -249,6 +254,170 @@ public class Fight implements Serializable {
 			}
 		}
 
+		return result;
+	}
+
+	
+	
+	public int getGroundAction(Fighter act, Fighter pas) {
+		int prob, gnPProb, subProb, posProb, lnPProb, standProb;
+		int result = 0;
+		
+		
+		
+		
+		prob = (int) (Math.random() * 100) + 1;
+
+		
+		gnPProb = act.getStratGNP();
+
+		if (isSubmissionAvailable(act)) {
+			subProb = gnPProb + getSubmissionProbByPosition(act);
+		} else {
+			subProb = 0;
+		}
+
+		if (act.getLastName().equals(fighters[fighterOnTop].getLastName()) && (guardType == 0 || guardType == 1)) {
+			posProb = 0;
+		} else {
+			posProb = subProb + act.getStratPositioning();
+		}
+
+		lnPProb = posProb + act.getStratLNP();
+
+		if (((guardType == 3 || guardType == 4)
+				|| (act.getLastName().equals(fighters[fighterOnTop].getLastName()) && (guardType == 2 || guardType == 4)))
+				&& (act.getRoundsInTheGround() <= 0)) {
+			standProb = lnPProb + act.getStratStandUp();
+		} else {
+			standProb = 0;
+			posProb += act.getStratStandUp();
+			lnPProb = posProb + act.getStratLNP();
+		}
+
+		if (prob <= gnPProb) {
+			result = Moves.ACT_GNP;
+		} else if (prob <= subProb) {
+			result = Moves.ACT_SUBMISSION;
+		} else if (prob <= posProb) {
+			result = Moves.ACT_POSITIONING;
+		} else if (prob <= lnPProb) {
+			result = Moves.ACT_LNP;
+		} else if ((prob <= standProb) && (standProb > 0)) {
+			result = Moves.ACT_STANDUP;
+		} else {
+			result = Moves.ACT_POSITIONING;
+
+		}
+
+		if (act.getFancySubmissions() > 0 && result == Moves.ACT_SUBMISSION) {
+			if (getRandom() < act.getAgility() && getRandom() < act.getSubmission()
+					&& getRandom() < act.getFancySubmissions() * Sim.FANCYMOVEPROB) {
+				result = Moves.ACT_FANCYSUB;
+			}
+		}
+
+		if (result == Moves.ACT_GNP && act.getLastName().equals(fighters[fighterOnTop].getLastName())
+				&& (guardType == 2 || guardType == 3 || guardType == 7 || guardType == 8) && act.isUseKneesGround()) {
+			if ((getFixedRandom(act.getAggressiveness()) + Sim.KNEESFREQUENCY > 20)) {
+				result = Moves.ACT_KNEESONGROUND;
+			}
+		}
+
+		if (act.checkDirtyMove()) {
+			result = Moves.ACT_POKE;
+		}
+
+		if (act.checkDirtyMove()) {
+			result = Moves.ACT_HEADBUTT;
+		}
+
+		if (act.getActionsInGround() > 0 && act.getActionsInGround() < Sim.MINACTIONSFORSWITCHING
+				&& result == Moves.ACT_STANDUP) {
+			result = Moves.ACT_LNP;
+			if (act.getActionsInGround() >= Sim.MINACTIONSFORSWITCHING) {
+				act.setActionsInGround(-1);
+			}
+		}
+
+		act.setActionsInGround(act.getActionsInGround() + 1);
+
+		if (!act.getLastName().equals(fighters[fighterOnTop].getLastName()) && result == Moves.ACT_GNP) {
+			result = Moves.ACT_STRIKESFROMGUARD;
+		}
+
+		if (result == Moves.ACT_GNP && act.isUseElbows() && isElbows()) {
+			if (getRandom() < act.getAggressiveness()) {
+				result = Moves.ACT_GNPELBOWS;
+			}
+		}
+
+		if (act.getTempDamageGround() > act.getToughness()
+				* Sim.MAXDAMAGEFORCHANGINGGAMEPLAN) {
+			if (getRandom() < act.getControl()) {
+				result = Moves.ACT_STANDUP;
+			}
+		}
+
+		if (pas.isDazed()) {
+			if (getFixedRandom(act.getAggressiveness()) > Sim.CAPITALIZEPROB) {
+				result = Moves.ACT_CAPITALIZEGROUND;
+			}
+		}
+
+		int actions = Sim.setLimits(act.getActionsInGround() - 1, Sim.MINSROUNDSINTHEGROUND, 0);
+		act.setActionsInGround(actions);
+
+		return result;
+	}
+
+	
+	public int getSubmissionProbByPosition(Fighter act) {
+		double FULL_MOUNT = 1.15;
+		double CLOSED_GUARD = 0.7;
+		double SIDE_MOUNT = 0.9;
+		double OPEN_GUARD = 0.75;
+		double HALF_GUARD = 0.75;
+
+		double prob = act.getStratSub();
+		switch (guardType) {
+		case 1:
+			prob *= FULL_MOUNT;
+			break;
+		case 2:
+			prob *= SIDE_MOUNT;
+			break;
+		case 3:
+			prob *= HALF_GUARD;
+			break;
+		case 4:
+			prob *= OPEN_GUARD;
+			break;
+		case 5:
+			prob *= CLOSED_GUARD;
+			break;
+		}
+		return (int) Math.round(prob);
+	}
+
+	public boolean isSubmissionAvailable(Fighter act) {
+		if (act.isTechSubs()) {
+			return true;
+		} else if (act.isEasySubs() && (getFighterNumber(act) == fighterOnTop)
+				&& (guardType == Sim.FULL_MOUNT || guardType == Sim.REAR_MOUNT)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public int getFighterNumber(Fighter act) {
+		int result = -1;
+		if (act == fighter1) {
+			result = 0;
+		} else if (act == fighter2) {
+			result = 1;
+		}
 		return result;
 	}
 
