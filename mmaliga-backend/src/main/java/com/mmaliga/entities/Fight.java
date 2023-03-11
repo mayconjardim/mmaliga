@@ -86,8 +86,6 @@ public class Fight implements Serializable {
 		this.happened = happened;
 	}
 
-	
-
 	public void setPbp(String pbp) {
 		if (this.pbp == null) {
 			this.pbp = new ArrayList<String>();
@@ -98,7 +96,6 @@ public class Fight implements Serializable {
 	// Metodos de luta
 
 	public void FightApresentation() {
-	
 
 		int fightType = getTitleBout() ? 1 : 0;
 
@@ -122,12 +119,9 @@ public class Fight implements Serializable {
 
 	public void fightController() {
 
-		
-		int fighterAction1 = getStandUpInitiative(fighter1, fighter2, 0, 0);
-		int fighterAction2 = getStandUpInitiative(fighter2, fighter2, 0, 0);
-		;
-
-		int fighterActive, fighterPassive;
+		int fighterAction1 = fighterAction(fighter1, fighter2);
+		int fighterAction2 = fighterAction(fighter1, fighter2);
+		int fighterActive,  fighterPassive, fighterAction;
 
 		for (int i = 1; i <= rounds; i++) {
 
@@ -135,19 +129,40 @@ public class Fight implements Serializable {
 
 			for (int j = 0; j <= 300; j += 15) {
 
-				if (fighterAction1 > fighterAction2) {
-					fighterActive = 0;
-					fighterPassive = 1;
-				} else {
-					fighterActive = 1;
-					fighterPassive = 0;
+				if (fighter1.isDazed() == fighter2.isDazed()) {
+					if ((!fighter1.isOnTheGround()) && (!fighter2.isOnTheGround())) {
+						fighterActive = getStandUpInitiative(fighter1, fighter2, getActionBonus(fighterAction1),
+								getActionBonus(fighterAction2));
+					} else {
+						fighterActive = getGroundInitiative(fighter1, fighter2, getActionBonus(fighterAction1),
+								getActionBonus(fighterAction2));
+					}
 				}
+
+				else {
+					if (fighter1.isDazed()) {
+						fighterActive = 1;
+					} else {
+						fighterActive = 0;
+					}
+				}
+
+				if (fighterActive == 1) {
+					fighterPassive = 0;
+					fighterAction = fighterAction2;
+				} else {
+					fighterPassive = 1;
+					fighterAction = fighterAction1;
+				}
+				
 
 				setPbp("Acao " + fighterActive);
 
 			}
 
 		}
+
+		
 
 	}
 
@@ -260,6 +275,14 @@ public class Fight implements Serializable {
 		return result;
 	}
 
+	public Fighter fighterGet(int number) {
+		if (number == 0) {
+			return fighter1;
+		} else {
+			return fighter2;
+		}
+	}
+
 	public int getGroundInitiative(Fighter act, Fighter pas, int bonus1, int bonus2) {
 		double fighter1Ini, fighter2Ini;
 
@@ -308,7 +331,7 @@ public class Fight implements Serializable {
 			subProb = 0;
 		}
 
-		if (act.getLastName().equals(fighters[fighterOnTop].getLastName()) && (guardType == 0 || guardType == 1)) {
+		if (act.getLastName().equals(fighterGet(fighterOnTop).getLastName()) && (guardType == 0 || guardType == 1)) {
 			posProb = 0;
 		} else {
 			posProb = subProb + act.getStratPositioning();
@@ -316,7 +339,7 @@ public class Fight implements Serializable {
 
 		lnPProb = posProb + act.getStratLNP();
 
-		if (((guardType == 3 || guardType == 4) || (act.getLastName().equals(fighters[fighterOnTop].getLastName())
+		if (((guardType == 3 || guardType == 4) || (act.getLastName().equals(fighterGet(fighterOnTop).getLastName())
 				&& (guardType == 2 || guardType == 4))) && (act.getRoundsInTheGround() <= 0)) {
 			standProb = lnPProb + act.getStratStandUp();
 		} else {
@@ -347,7 +370,7 @@ public class Fight implements Serializable {
 			}
 		}
 
-		if (result == Moves.ACT_GNP && act.getLastName().equals(fighters[fighterOnTop].getLastName())
+		if (result == Moves.ACT_GNP && act.getLastName().equals(fighterGet(fighterOnTop).getLastName())
 				&& (guardType == 2 || guardType == 3 || guardType == 7 || guardType == 8) && act.isUseKneesGround()) {
 			if ((getFixedRandomInt(act.getAggressiveness()) + Sim.KNEESFREQUENCY > 20)) {
 				result = Moves.ACT_KNEESONGROUND;
@@ -372,7 +395,7 @@ public class Fight implements Serializable {
 
 		act.setActionsInGround(act.getActionsInGround() + 1);
 
-		if (!act.getLastName().equals(fighters[fighterOnTop].getLastName()) && result == Moves.ACT_GNP) {
+		if (!act.getLastName().equals(fighterGet(fighterOnTop).getLastName()) && result == Moves.ACT_GNP) {
 			result = Moves.ACT_STRIKESFROMGUARD;
 		}
 
