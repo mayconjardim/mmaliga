@@ -161,7 +161,7 @@ public class Fight implements Serializable {
 
 				if (checkPunchesExchange(fighterActiveOrPassive(fighterActive),
 						fighterActiveOrPassive(fighterPasive))) {
-					fighterAction = ACT_PUNCHEXCHANGE;
+					fighterAction = Moves.ACT_PUNCHEXCHANGE;
 				}
 
 				f1Ground = fighterActiveOrPassive(fighterActive).isOnTheGround();
@@ -169,129 +169,129 @@ public class Fight implements Serializable {
 
 				switch (fightAction(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive))) {
 				case Moves.ACT_PUNCHES:
-					ActPunch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+					setPbp("ActPunch");//ActPunch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_KICKS:
-					ActKick(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_KICKS:
+					setPbp("ActKick");//ActKick(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_CLINCH:
-					ActClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_CLINCH:
+					setPbp("ACT_CLINCH");//ActClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_TAKEDOWNS:
-					ActTakedown(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_TAKEDOWNS:
+					setPbp("ACT_TAKEDOWNS");//ActTakedown(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_DIRTYBOXING:
-					ActPunchClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive),
-							DIRTY_BOXING);
+				case Moves.ACT_DIRTYBOXING:
+					setPbp("ACT_DIRTYBOXING");//ActPunchClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive),
+							//DIRTY_BOXING);
 					break;
-				case ACT_TAKEDOWNCLINCH:
-					ActClinchTakedown(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_TAKEDOWNCLINCH:
+					setPbp("ACT_TAKEDOWNCLINCH");//ActClinchTakedown(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_BREAKCLINCH:
-					ActBreakClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_BREAKCLINCH:
+					setPbp("ACT_BREAKCLINCH");//ActBreakClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_GNP:
-					ActGnP(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_GNP:
+					setPbp("ACT_GNP");//	ActGnP(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_POSITIONING:
-					ActPositioning(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_POSITIONING:
+					setPbp("ACT_POSITIONING");//	ActPositioning(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_SUBMISSION:
-					ActSubmission(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_SUBMISSION:
+					setPbp("ACT_SUBMISSION");//	ActSubmission(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_STANDUP:
-					ActStandUp(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_STANDUP:
+					setPbp("ACT_STANDUP");//	ActStandUp(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_LNP:
-					ActLnP(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_LNP:
+					setPbp("ACT_LNP");//	ActLnP(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_FANCYPUNCH:
-					ActFancyPunch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_FANCYPUNCH:
+					setPbp("ACT_FANCYPUNCH");//	ActFancyPunch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_FANCYKICK:
-					ActFancyKick(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_FANCYKICK:
+					setPbp("ACT_FANCYKICK");//	ActFancyKick(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_HEADBUTT:
-					ActHeadButt(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_HEADBUTT:
+					setPbp("ACT_HEADBUTT");//	ActHeadButt(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_POKE:
-					ActPoke(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_POKE:
+					setPbp("ACT_POKE");//	ActPoke(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_REST:
-					ActRest(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_REST:
+					setPbp("ACT_REST");//	ActRest(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_GROINKICK:
-					ActGroinKick(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_GROINKICK:
+					setPbp("ACT_GROINKICK");//	ActGroinKick(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_SLAM:
-					ActSlam(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_SLAM:
+					setPbp("ACT_SLAM");//	ActSlam(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_SUPPLEX:
-					ActSupplex(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_SUPPLEX:
+					setPbp("ACT_SUPPLEX");//	ActSupplex(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_SOCCERKICKS:
-					ActSoccerKicks(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_SOCCERKICKS:
+					setPbp("ACT_SOCCERKICKS");//	ActSoccerKicks(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_STOMPS:
-					ActStomps(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_STOMPS:
+					setPbp("ACT_STOMPS");//	ActStomps(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_STANDKICK:
-					ActStandKickToGround(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_STANDKICK:
+					setPbp("ACT_STANDKICK");//ActStandKickToGround(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_MOVETOGROUND:
-					ActMoveToGround(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_MOVETOGROUND:
+					setPbp("ACT_MOVETOGROUND");//	ActMoveToGround(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_STRIKESFROMGUARD:
-					ActStrikesFromGuard(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_STRIKESFROMGUARD:
+					setPbp("ACT_STRIKESFROMGUARD");//ActStrikesFromGuard(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_GROUNDKICK:
-					ActGroundKicksToStand(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_GROUNDKICK:
+					setPbp("ACT_GROUNDKICK");//ActGroundKicksToStand(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_RESTCLINCH:
-					ActRestInClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_RESTCLINCH:
+					setPbp("ACT_RESTCLINCH");//ActRestInClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_NOACTION:
-					ActNoAction(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_NOACTION:
+					setPbp("ACT_NOACTION");//ActNoAction(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_ALLOWSTAND:
-					ActAllowToStand(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_ALLOWSTAND:
+					setPbp("ACT_ALLOWSTAND");//	ActAllowToStand(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_PUNCHEXCHANGE:
-					ActPunchesExchange(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_PUNCHEXCHANGE:
+					setPbp("ACT_PUNCHEXCHANGE");//	ActPunchesExchange(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_PULLGUARD:
-					ActPullGuard(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_PULLGUARD:
+					setPbp("ACT_PULLGUARD");//	ActPullGuard(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_GNPELBOWS:
-					ActGnPElbows(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_GNPELBOWS:
+					setPbp("ACT_GNPELBOWS");//ActGnPElbows(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_CAPITALIZESTAND:
-					ActCapitalizeStanding(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_CAPITALIZESTAND:
+					setPbp("ACT_CAPITALIZESTAND");//	ActCapitalizeStanding(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_CAPITALIZEGROUND:
-					ActCapitalizeGround(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_CAPITALIZEGROUND:
+					setPbp("ACT_CAPITALIZEGROUND");//	ActCapitalizeGround(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_KNEESONGROUND:
-					ActKneesOnGround(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_KNEESONGROUND:
+					setPbp("ACT_KNEESONGROUND");//ActKneesOnGround(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_FANCYSUB:
-					ActFancySubmission(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+				case Moves.ACT_FANCYSUB:
+					setPbp("ACT_FANCYSUB");//ActFancySubmission(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
-				case ACT_THAICLINCH_PUNCHES:
-					ActPunchClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive),
-							THAI_ATTACK);
+				case Moves.ACT_THAICLINCH_PUNCHES:
+					setPbp("ACT_THAICLINCH_PUNCHES");//ActPunchClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive),
+							//THAI_ATTACK);
 					break;
-				case ACT_THAICLINCH_KNEES:
-					ActKickClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive),
-							THAI_ATTACK);
+				case Moves.ACT_THAICLINCH_KNEES:
+					setPbp("ACT_THAICLINCH_KNEES");//ActKickClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive),
+							//THAI_ATTACK);
 					break;
-				case ACT_GRAPPLING_PUNCH:
-					ActPunchClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive),
-							GRAPPLING_ATTACK);
+				case Moves.ACT_GRAPPLING_PUNCH:
+					setPbp("ACT_GRAPPLING_PUNCH");//ActPunchClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive),
+							//GRAPPLING_ATTACK);
 					break;
-				case ACT_GRAPPLING_KNEE:
-					ActKickClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive),
-							GRAPPLING_ATTACK);
+				case Moves.ACT_GRAPPLING_KNEE:
+					setPbp("ACT_GRAPPLING_KNEE");//ActKickClinch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive),
+							//GRAPPLING_ATTACK);
 					break;
 				}
 
@@ -300,6 +300,24 @@ public class Fight implements Serializable {
 		}
 	}
 
+
+	//Movimentos
+	
+	
+	
+	
+	
+	//Fim Movimentos
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public boolean checkPunchesExchange(Fighter act, Fighter pas) {
 		final int PUNCHES_EXC_PROB = 8;
 		boolean result = false;
@@ -418,7 +436,7 @@ public class Fight implements Serializable {
 	public int fightAction(Fighter act, Fighter pas) {
 
 		Random random = new Random();
-		int randomNumber = random.nextInt(19) + 1;
+		int randomNumber = random.nextInt(19);
 		int result = 0;
 
 		if ((randomNumber < act.getAggressiveness() + act.getRush()) || act.isOnTheGround() || pas.isOnTheGround()
@@ -533,7 +551,7 @@ public class Fight implements Serializable {
 
 				int actions = Sim.setLimits(act.getActionsInGround() - 1, Sim.MINSROUNDSINTHEGROUND, 0);
 
-				setPbp("getGroundAction " + result + " " + act.getLastName());
+				//setPbp("getGroundAction " + result + " " + act.getLastName());
 
 				/* Fim GroundAction */
 
@@ -580,7 +598,7 @@ public class Fight implements Serializable {
 					}
 				}
 
-				setPbp("getStandToGroundAction " + result + " " + act.getLastName());
+				//setPbp("getStandToGroundAction " + result + " " + act.getLastName());
 				/* Fim StandToGroundAction */
 
 			} else if (act.isOnTheGround() && !pas.isOnTheGround()) {
@@ -596,7 +614,7 @@ public class Fight implements Serializable {
 					result = Moves.ACT_GROUNDKICK;
 				}
 
-				setPbp("getGroundToStandAction " + result + " " + act.getLastName());
+				//setPbp("getGroundToStandAction " + result + " " + act.getLastName());
 				/* Fim getGroundToStandAction */
 
 			} else if (isInTheClinch()) {
@@ -656,15 +674,17 @@ public class Fight implements Serializable {
 					result = Moves.ACT_GRAPPLING_PUNCH;
 				}
 
-				setPbp("getClinchAction " + result + " " + act.getLastName());
+				//setPbp("getClinchAction " + result + " " + act.getLastName());
 
 				/* Fim getClinchAction */
 
 			} else {
 
 				/* getStandUpAction */
-
-				int Prob = (int) (Math.random() * 100) + 1;
+				
+			
+				Random randomico = new Random();
+			    int Prob = randomico.nextInt(100) + 1;
 
 				int PunchProb = act.getStratPunching();
 				int KickProb = PunchProb + act.getStratKicking();
@@ -672,12 +692,15 @@ public class Fight implements Serializable {
 
 				if (Prob <= PunchProb) {
 					result = Moves.ACT_PUNCHES;
+		
+					
 				} else if (Prob <= KickProb) {
 					result = Moves.ACT_KICKS;
 				} else if (Prob <= ClinchProb) {
 					result = Moves.ACT_CLINCH;
 				} else {
 					result = Moves.ACT_TAKEDOWNS;
+					setPbp("valor " + act.getStratTakedowns() + " - prob " + Prob);
 				}
 
 				if (act.checkDirtyMove()) {
@@ -723,13 +746,13 @@ public class Fight implements Serializable {
 					}
 				}
 
-				setPbp("getStandUpAction " + result + " " + act.getLastName());
+			//	setPbp("getStandUpAction " + result + " " + act.getLastName());
 				/* Fim getStandUpAction */
 
 			}
 		} else {
 
-			setPbp("ACT_NOACTION");
+			//setPbp("ACT_NOACTION");
 			return Moves.ACT_NOACTION;
 		}
 		return result;

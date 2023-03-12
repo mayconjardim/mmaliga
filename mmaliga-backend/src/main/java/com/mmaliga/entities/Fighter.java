@@ -153,10 +153,10 @@ public class Fighter implements Serializable {
 		this.koResistance = koResistance;
 		this.toughness = toughness;
 		// Strats Geral
-		stratPunching = 1;
-		stratKicking = 1;
-		stratClinching = 1;
-		stratTakedowns = 97;
+		stratPunching = 50;
+		stratKicking = 30;
+		stratClinching = 20;
+		stratTakedowns = 0;
 		// Strats Clinch
 		stratDirtyBoxing = 25;
 		stratThaiClinch = 25;
