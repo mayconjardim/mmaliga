@@ -87,12 +87,12 @@ public class Fighter implements Serializable {
 	private Integer stratStandUp;
 
 	// Estilos
-	private Integer fancyPunches;
+	private Integer fancyPunches = 0;
 	private Integer fightingStyle;
 	private Integer tacticalStyle;
-	private Integer fancyKicks;
-	private Integer fancySubmissions;
-	private Integer dirtyFighting;
+	private Integer fancyKicks = 0;
+	private Integer fancySubmissions = 0;
+	private Integer dirtyFighting = 0;
 	private boolean easySubs;
     private boolean techSubs;
     private boolean useKneesGround = false;
@@ -153,10 +153,10 @@ public class Fighter implements Serializable {
 		this.koResistance = koResistance;
 		this.toughness = toughness;
 		// Strats Geral
-		stratPunching = 25;
-		stratKicking = 25;
-		stratClinching = 25;
-		stratTakedowns = 25;
+		stratPunching = 1;
+		stratKicking = 1;
+		stratClinching = 1;
+		stratTakedowns = 97;
 		// Strats Clinch
 		stratDirtyBoxing = 25;
 		stratThaiClinch = 25;

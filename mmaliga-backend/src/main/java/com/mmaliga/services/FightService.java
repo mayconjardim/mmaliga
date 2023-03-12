@@ -60,6 +60,7 @@ public class FightService {
 		obj.setGeneratePBP(false);
 		obj.prepareFight();
 		obj.fightController();
-
+		
 	}
+
 }
