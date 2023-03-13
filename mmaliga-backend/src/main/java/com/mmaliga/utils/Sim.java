@@ -362,7 +362,9 @@ public abstract class Sim {
 	//Clinch
 	public static final int CLINCH_DIRTY_BOXING = 0;
 	public static final int THAI_CLINCH = 1;
-	public static final int SIMPLE_GRAPPLING = 2;
+	public static final int SIMPLE_GRAPPLING = 2; 
+	
+	public static String UNKNOWN_STR = "Unknown";
 	
 	public static int setLimits(int actual, int max, int min) {
 	    if (actual > max) {
