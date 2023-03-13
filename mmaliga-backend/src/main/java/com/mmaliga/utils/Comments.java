@@ -20,48 +20,66 @@ public abstract class Comments {
 					+ "Com um cartel de %s-%s-%s, %s! %n"));
 
 	public static final ArrayList<String> punch1 = new ArrayList<String>(Arrays.asList(
-			"%a1 tries a hook to the body;and hits %d2's ribs hard;but %d2 manages to dodge it",
-
-			"%a1 fakes a move and launches a nice uppercut;it lands on %d2's chin;%d2 blocks that. It was easy!",
-
-			"Brilliant combination from %a1;that forces %d2 to try and defend better.;%d2 is showing some dodging skills avoiding that ones.",
-
-			"Bone shattering straight right hand from %a1!;%d2 is going to have a big headache after that blow!;%d2 ducks under...",
-
-			"Bone shattering straight left hand from %a1!;%d2 is going to have a big headache after that blow!;%d2 ducks under...",
-
-			"Tremendous strikes from %a2!;Some big punches are landing!;%d2 blocks with confidence",
-
-			"%a2 launches a hook to the body;Bang! %d2 stops that one with his ribs!;%d1 moves aside looking for a counter...",
-
-			"%a1 throws a punch;that finds an opening in the defense of %d2.;that gets deflected.",
-
-			"Solid jabs from %a1.;Nice punches.;%d2 defends.",
-
-			"A solid combination from %a1;connects with %d2.;mostly hits air.",
-
-			"%a1 is measuring %d2 with his jab.;Good accuracy on his part.;%d2 isn't fazed.",
-
-			"Solid shot from %a1 to the body.;%d2 didn't like that.;%d2 blocks in time.",
-
-			"Some counter punches against %d1; land while he's on his bicycle.;almost hit him as he moves away.",
-
-			"Good movement from %a2;moving in to strike and moving away afterwards.;who is bobbing and weaving.",
-
-			"%a1 fires an unorthodox punch to %d2's torso;that hits its mark.;that goes wide.",
-
-			"A punch from %a1;grazes %d2's left cheek.;whizzes past %d2.",
-
-			"A punch from %a1;grazes %d2's right cheek.;gets blocked by %d2.",
-
-			"%a1 jabs at %d2;hitting his chest.;to no visible effect.",
-
-			"%a2 launches a flurry of punches;but only manages to land glancing blows.;%d2 slips out of danger."
-
+			"%act tries a hook to the body;and hits %pas's ribs hard;but %pas manages to dodge it;10;1;2;3;Hook to the body;1;1;-10;0;-5;1;1",
+			"%act fakes a move and launches a nice uppercut;it lands on %pas's chin;%pas blocks that. It was easy!;8;2;3;2;Uppercut;1;1;0;0;2;1;1;",
+			"Brilliant combination from %act;that forces %pas to try and defend better.;%pas is showing some dodging skills avoiding that ones.;7;2;1;3;Punches;4;3;2;2;1;1;1",
+			"Bone shattering straight right hand from %act!;%pas is going to have a big headache after that blow!;%pas ducks under...;4;1;2;4;Punch;1;1;1;1;1;1;1",
+			"Bone shattering straight left hand from %act!;%pas is going to have a big headache after that blow!;%pas ducks under...;5;1;2;4;Punch;1;1;1;1;1;1;1",
+			"Tremendous strikes from %act!;Some big punches are landing!;%pas blocks with confidence;8;3;1;2;Punches;3;3;2;2;3;1;1",
+			"%act launches a hook to the body;Bang! %pas stops that one with his ribs!;%pas moves aside looking for a counter...;10;4;1;2;Punch;1;1;0;2;0;1;1",
+			"%act throws a punch;that finds an opening in the defense of %pas.;that gets deflected.;0;2;1;2;Punch;1;1;0;0;0;1;1",
+			"Solid jabs from %act.;Nice punches.;%pas defends.;0;1;1;2;Jabs;2;2;-1;-2;-1;1;1",
+			"A solid combination from %act;connects with %pas.;mostly hits air.;0;2;1;2;Punches;2;2;1;0;0;1;1",
+			"%act is measuring %pas with his jab.;Good accuracy on his part.;%pas isn't fazed.;0;1;1;2;Jabs;2;2;-1;-2;-1;1;1",
+			"Solid shot from %act to the body.;%pas didn't like that.;%pas blocks in time.;9;2;1;4;Body punch;1;1;-5;1;0;1;1",
+			"Some counter punches against %pas; land while he's on his bicycle.;almost hit him as he moves away.;0;1;4;1;Punches;2;2;0;-1;0;1;1",
+			"Good movement from %act;moving in to strike and moving away afterwards.;who is bobbing and weaving.;0;0;1;3;Punches;2;2;1;0;0;1;1",
+			"%act fires an unorthodox punch to %pas's torso;that hits its mark.;that goes wide.;11;2;1;2;Body punch;1;1;-5;-1;-3;1;1",
+			"A punch from %act;grazes %pas's left cheek.;whizzes past %pas.;4;2;1;4;Punch;1;1;0;-1;0;1;1",
+			"A punch from %act;grazes %pas's right cheek.;gets blocked by %pas.;5;2;1;4;Punch;1;1;0;-1;0;1;1",
+			"%act jabs at %pas;hitting his chest.;to no visible effect.;9;2;1;2;Jab;1;1;-5;-1;-2;1;1",
+			"%act launches a flurry of punches;but only manages to land glancing blows.;%pas slips out of danger.;0;3;1;3;Punches;3;2;0;-1;0;1;1"
 	));
 
 	public static final ArrayList<String> punch2 = new ArrayList<String>(Arrays.asList(
+			"%act tries a hook to the body;and hits %pas's ribs hard;but %pas manages to dodge it",
 
+			"%act fakes a move and launches a nice uppercut;it lands on %pas's chin;%pas blocks that. It was easy!",
+
+			"Brilliant combination from %act;that forces %pas to try and defend better.;%pas is showing some dodging skills avoiding that ones.",
+
+			"Bone shattering straight right hand from %act!;%pas is going to have a big headache after that blow!;%pas ducks under...",
+
+			"Bone shattering straight left hand from %act!;%pas is going to have a big headache after that blow!;%pas ducks under...",
+
+			"Tremendous strikes from %act!;Some big punches are landing!;%pas blocks with confidence",
+
+			"%act launches a hook to the body;Bang! %pas stops that one with his ribs!;%pas moves aside looking for a counter...",
+
+			"%act throws a punch;that finds an opening in the defense of %pas.;that gets deflected.",
+
+			"Solid jabs from %act.;Nice punches.;%pas defends.",
+
+			"A solid combination from %act;connects with %pas.;mostly hits air.",
+
+			"%act is measuring %pas with his jab.;Good accuracy on his part.;%pas isn't fazed.",
+
+			"Solid shot from %act to the body.;%pas didn't like that.;%pas blocks in time.",
+
+			"Some counter punches against %pas; land while he's on his bicycle.;almost hit him as he moves away.",
+
+			"Good movement from %act;moving in to strike and moving away afterwards.;who is bobbing and weaving.",
+
+			"%act fires an unorthodox punch to %pas's torso;that hits its mark.;that goes wide.",
+
+			"A punch from %act;grazes %pas's left cheek.;whizzes past %pas.",
+
+			"A punch from %act;grazes %pas's right cheek.;gets blocked by %pas.",
+
+			"%act jabs at %pas;hitting his chest.;to no visible effect.",
+
+			"%act launches a flurry of punches;but only manages to land glancing blows.;%pas slips out of danger."
+	
 	));
 
 	public static final ArrayList<String> punch3 = new ArrayList<String>(Arrays.asList(
@@ -87,7 +105,7 @@ public abstract class Comments {
 			"%act is trying to counter now!", "%pas clumsily fails here and it's time for %act to fight back!",
 			"%act tries to get some advantage after his opponent miss move...",
 			"%pas gets sloppy and %act tries to take advantage...", "Poorly executed technique. %act looks to counter!",
-			"%act misses a step and %act sees an opportunity to counter him!"));
+			"%act misses a step and %pas sees an opportunity to counter him!"));
 
 	public static final ArrayList<String> groundKO = new ArrayList<String>(
 			Arrays.asList("This is over! That impact from %act has left %pas laying flat on the mat!",
@@ -124,13 +142,13 @@ public abstract class Comments {
 			"(T)KOs", "Injuries", "Decisions", "Disqualification", "Average Duration", "Most used referee",
 			"Most used organization", "Total Duration", "Any organization", "Unknown", "%act has broken the record of",
 			"most damage caused in a fight", "most damage cause by a single attack", "fastest KO", "fastest submission",
-			"Round", "%act has fight %d1 %param1 times.", "He has won %param2 of them.",
+			"Round", "%act has fight %pas %param1 times.", "He has won %param2 of them.",
 			"This is the first time they meet inside the %site", "He has lost %param2 of them.", "Towel Throw",
 			"groin kick", "eye poke", "headbutt", "strangle", "%act defends the %param1 title!",
 			"%act wins the %param1 title!", "Fighters will fight a tie break round.",
 			"%act wins %param1 ranking points after the fight.", "%act loses %param1 ranking points after the fight.",
-			"%act and %d1 had today the best fight of this organization!",
-			"%act and %d1 had today the worst fight of this organization!",
+			"%act and %pas had today the best fight of this organization!",
+			"%act and %pas had today the worst fight of this organization!",
 			"%act comes with a %param1 fight winning streak.", "%act comes with a %param1 fight losing streak.",
 			"Very Boring", "Dull", "Average", "Promising", "Exciting"));
 
@@ -141,6 +159,6 @@ public abstract class Comments {
 
 	public static final ArrayList<String> faceCut0 = new ArrayList<String>(
 			Arrays.asList("%pas has a small cut in his %location;Small cut %location",
-					"There is a small laceration on %d1's %location;Small cut %location"));
+					"There is a small laceration on %pas's %location;Small cut %location"));
 
 }

@@ -84,6 +84,8 @@ public class Fight implements Serializable {
 	private Integer fighterWinner;
 	private String moveName;
 	private String fullComment;
+	private String   side;
+	private String    location;
 	private String injuryComment;
 	private Integer injuryFreq = 0;
 	private Integer numHooks = 0;
@@ -731,10 +733,10 @@ public class Fight implements Serializable {
 			generateComment(Comments.punch1);
 			break;
 		case 2:
-			generateComment(Comments.punch2);
+			generateComment(Comments.punch1);
 			break;
 		case 3:
-			generateComment(Comments.punch3);
+			generateComment(Comments.punch1);
 			break;
 		}
 
@@ -1660,7 +1662,6 @@ public class Fight implements Serializable {
 		return (int) (Math.random() * (BIGRANDOM + Randomness)) + 1;
 	}
 
-	
 	public int fixedRandomInt(double value) {
 		if (value < 0) {
 			return 0;
@@ -1671,7 +1672,6 @@ public class Fight implements Serializable {
 
 		return (int) (aux / 2 + (Math.random() * (aux / 2)) + 1 + doubleValue);
 	}
-	
 	
 	public int balancedRandom(double value) {
 		if (value < 0) {
@@ -1688,8 +1688,7 @@ public class Fight implements Serializable {
 
 		return sum / NUM_ROUNDS;
 	}
-	
-	
+
 	public int smallRandom() {
 		final int SMALL_RANDOM = 10;
 		return new Random().nextInt(SMALL_RANDOM) + 1;
@@ -1701,14 +1700,145 @@ public class Fight implements Serializable {
 	
 	/* Geração de comentarios */
 
-	public void doComment(Fighter act, Fighter pas, String comment) {
+	public String extractComment(String comment) {
+	    String[] splitFullString = comment.split(";");
+	    String unknownStr = "unknown";
+	    String result = unknownStr;
 
-		String updatedComment = comment.replaceAll("%a1", act.getName())
-				.replaceAll("%d1", pas.getName().replaceAll("%a2", act.getNickname().replaceAll("%d2", pas.getNickname())));
+	    if (splitFullString.length > 1) {
+	        result = splitFullString[1];
+	    }
 
-		setPbp(updatedComment);
+	    return result;
+	}
+	
+	public String extractMoveName(String comment) {
+	    String[] splitFullString = comment.split(";");
+	    String unknownStr = "unknown";
+	    String result = unknownStr;
+
+	    if (splitFullString.length > 7) {
+	        result = splitFullString[7];
+	    }
+
+	    return result;
+	}
+	
+	public int extractCounterMove1(String comment) {
+	    int result = 0;
+	    List<String> splitFullString = Arrays.asList(comment.split(";"));
+	    if (splitFullString.size() > 5) {
+	        result = Integer.parseInt(splitFullString.get(5));
+	    }
+	    return result;
 	}
 
+	public int extractCounterMove2(String comment) {
+	    int result = 0;
+	    List<String> splitFullString = Arrays.asList(comment.split(";"));
+	    if (splitFullString.size() > 6) {
+	        result = Integer.parseInt(splitFullString.get(6));
+	    }
+	    return result;
+	}
+	
+	public String extractFailureComment(String comment) {
+	    // Split the comment using the ';' separator and return the third part
+	    List<String> splitFullString = splitString(comment);
+	    if (splitFullString.size() > 2) {
+	        return splitFullString.get(2);
+	    } else {
+	        return Sim.UNKNOWN_STR;
+	    }
+	}
+
+	public int extractFinalFailurePosition(String comment) {
+	    // Split the comment using the ';' separator and try to extract the 15th part as an integer
+	    List<String> splitFullString = splitString(comment);
+	    if (splitFullString.size() > 14) {
+	        try {
+	            return Integer.parseInt(splitFullString.get(14));
+	        } catch (NumberFormatException e) {
+	            // Handle the exception, e.g. log an error message
+	            e.printStackTrace();
+	        }
+	    }
+	    return 0;
+	}
+
+	public int extractFinalSuccessPosition(String comment) {
+	    // Split the comment using the ';' separator and try to extract the 14th part as an integer
+	    List<String> splitFullString = splitString(comment);
+	    if (splitFullString.size() > 13) {
+	        try {
+	            return Integer.parseInt(splitFullString.get(13));
+	        } catch (NumberFormatException e) {
+	            // Handle the exception, e.g. log an error message
+	            e.printStackTrace();
+	        }
+	    }
+	    return 0;
+	}
+
+	public  String extractInjuryCutComment(String comment) {
+	    // Split the comment using the ';' separator and return the first part
+	    List<String> splitFullString = splitString(comment);
+	    return splitFullString.get(0);
+	}
+
+	public  String extractInjuryCutName(String comment) {
+	    // Split the comment using the ';' separator and return the second part
+	    List<String> splitFullString = splitString(comment);
+	    return splitFullString.get(1);
+	}
+
+	public  int extractInjuryProb(String comment) {
+	    // Split the comment using the ';' separator and try to extract the 12th part as an integer
+	    List<String> splitFullString = splitString(comment);
+	    if (splitFullString.size() > 11) {
+	        try {
+	            return Integer.parseInt(splitFullString.get(11));
+	        } catch (NumberFormatException e) {
+	            // Handle the exception, e.g. log an error message
+	            e.printStackTrace();
+	        }
+	    }
+	    return 0;
+	}
+
+	public static String returnComment(List<String> commentList) {
+	    String comment = "";
+	    int listSize = commentList.size();
+
+	    // If commentList has more than 0 elements
+	    if (listSize > 0) {
+	        // Get a random comment from the list
+	        while (comment.isEmpty()) {
+	            comment = commentList.get((int) (Math.random() * listSize));
+	        }
+	    }
+
+	    return comment;
+	}
+
+	public List<String> splitString(String comment) {
+	    List<String> splitFullComment = new ArrayList<>();
+
+	    try {
+	        // Split the comment using the ';' separator
+	        String[] parts = comment.split(";");
+	        // Add each part to the list
+	        for (String part : parts) {
+	            splitFullComment.add(part);
+	        }
+	    } catch (Exception e) {
+	        // Handle the exception, e.g. log an error message
+	        e.printStackTrace();
+	    }
+
+	    return splitFullComment;
+	}
+	
 	public void generateComment(List<String> CommentList) {
 		int listSize = CommentList.size();
 		fullComment = "";
@@ -1722,94 +1852,72 @@ public class Fight implements Serializable {
 		}
 
 		// Extract necessary values
-		// side = GetLeftRight(FullComment);
-		// location = GetLocationName(ExtractHitLocation(FullComment));
+		 side = leftRight(fullComment);
+		location = locationName(extractHitLocation(fullComment));
 	}
 	
-	public String extractFailureComment(String comment) {
-	    String[] parts = comment.split(";");
-	    return parts[2].trim();
-	}
-	
-	public int extractCounterMove1(String comment) {
-		List<String> splitFullString = splitString(comment);
-		if (splitFullString.size() > 5) {
-			return 1;
-		}
-		return 0;
-	}
-	
-	public int extractCounterMove2(String comment) {
-		List<String> splitFullString = splitString(comment);
-		if (splitFullString.size() > 6) {
-			return 1;
-		}
-		return 0;
-	}
-
-	private List<String> splitString(String comment) {
-		return Arrays.asList(comment.split("\\s+"));
-	}
-	
-	public int extractFinalFailurePosition(String comment) {
-		int result = 0;
-		String[] splitFullString = comment.split("\\s+");
-		if (splitFullString.length > 14) {
-			result = 1;
-		}
-		return result;
-	}
-	
-	public String extractComment(String comment) {
-		String[] parts = comment.split(";");
-	    return parts[0].trim();
-	}
-	
-	public int extractFinalSuccessPosition(String comment) {
-	    String[] splitFullString = splitString2(comment);
-	    int result = 0;
-
-	    if (splitFullString.length > 13) {
-	        result = 1;
+	public String locationName(int location) {
+	   	 String result = "";
+	    // Location 0 is Head, so we get a random part of the head
+	    if (location == 0) {
+	        location = (int) (Math.random() * 8) + 1;
 	    }
-
+	    switch (location) {
+	        case 1:
+	            result = Comments.misc.get(Sim.FOREHEAD);
+	            break;
+	        case 2:
+	            result = Comments.misc.get(Sim.LEFT_EYE);
+	            break;
+	        case 3:
+	            result = Comments.misc.get(Sim.RIGHT_EYE);
+	            break;
+	        case 4:
+	            result = Comments.misc.get(Sim.LEFT_CHEEK);
+	            break;
+	        case 5:
+	            result = Comments.misc.get(Sim.RIGHT_CHEEK);
+	            break;
+	        case 6:
+	            result = Comments.misc.get(Sim.NOSE);
+	            break;
+	        case 7:
+	            result = Comments.misc.get(Sim.MOUTH);
+	            break;
+	        case 8:
+	            result = Comments.misc.get(Sim.CHIN);
+	            break;
+	    }
 	    return result;
 	}
 	
-	private String[] splitString2(String str) {
-	    return str.split("\\s+");
+	public String leftRight(String comment) {
+	    String result = "";
+	    if (!comment.isEmpty()) {
+	        int loc = extractHitLocation(comment);
+	        if (Arrays.asList(2, 4, 13, 15, 17, 19).contains(loc)) {
+	            result = Sim.LEFT;
+	        } else if (!Arrays.asList(2, 4, 13, 15, 17, 19).contains(loc)) {
+	            result = Sim.RIGHT;
+	        }
+	    }
+	    return result;
 	}
 	
-	public String returnComment(ArrayList<String> commentList) {
-		String comment = "";
-		int listSize = commentList.size();
-
-		if (listSize > 0) {
-			while (comment.equals("")) {
-				comment = commentList.get((int) (Math.random() * listSize));
-			}
-		}
-
-		return comment;
+	public int extractHitLocation(String comment) {
+	    int result = 0;
+	    List<String> splitFullString = splitString(comment);
+	    if (splitFullString.size() > 3) {
+	        result = Integer.parseInt(splitFullString.get(3));
+	    }
+	    return result;
 	}
 	
-	public String extractMoveName(String comment) {
-		String[] splitFullString = comment.split(" ");
-		String result = Sim.UNKNOWN_STR;
-		if (splitFullString.length > 7) {
-			result = splitFullString[7];
-		}
-		return result;
-	}
-	
-	public String extractInjuryCutComment(String comment) {
-		String[] splitFullString = comment.split(" ");
-		return splitFullString[0];
-	}
+	public void doComment(Fighter act, Fighter pas, String comment) {
 
-	public String extractInjuryCutName(String comment) {
+		String updatedComment = comment.replaceAll("%act", act.getName()).replaceAll("%pas", pas.getName());
 
-		return comment;
+		setPbp(updatedComment);
 	}
 	
 	/* Fim geração de comentarios */

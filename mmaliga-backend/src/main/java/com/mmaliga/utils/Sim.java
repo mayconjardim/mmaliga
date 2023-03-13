@@ -297,7 +297,7 @@ public abstract class Sim {
 	public static final int PROMISING = 119;
 	public static final int EXCITING = 120;
 
-	//Fight
+	// Fight
 	public static final int ACT_PUNCHES = 1;
 	public static final int ACT_KICKS = 2;
 	public static final int ACT_CLINCH = 3;
@@ -341,7 +341,7 @@ public abstract class Sim {
 	public static final int ACT_GRAPPLING_KNEE = 41;
 	public static final int ACT_GRAPPLING_PUNCH = 42;
 
-	//Takedowns
+	// Takedowns
 	public static final int JUDO = 1;
 	public static final int WRESTLING = 2;
 
@@ -350,7 +350,7 @@ public abstract class Sim {
 	public static final int DIRTY_BOXING = 2;
 	public static final int GRAPPLING_ATTACK = 3;
 
-	//Guards
+	// Guards
 	public static final int REAR_MOUNT = 0;
 	public static final int FULL_MOUNT = 1;
 	public static final int SIDE_MOUNT = 2;
@@ -359,20 +359,30 @@ public abstract class Sim {
 	public static final int CLOSED_GUARD = 5;
 	public static final int BUTTERFLY_GUARD = 6;
 
-	//Clinch
+	// Clinch
 	public static final int CLINCH_DIRTY_BOXING = 0;
 	public static final int THAI_CLINCH = 1;
-	public static final int SIMPLE_GRAPPLING = 2; 
-	
+	public static final int SIMPLE_GRAPPLING = 2;
+
 	public static String UNKNOWN_STR = "Unknown";
-	
+	public static String RING = "ring";
+	public static String CAGE = "cage";
+	public static String OCTAGON = "octagon";
+	public static String ROPES = "ropes";
+	public static String FENCE = "fence";
+	public static String ELBOW = "elbow";
+	public static String ELBOWS = "elbows";
+	public static String REF = "referee";
+	public static String LEFT = "left";
+	public static String RIGHT = "right";
+
 	public static int setLimits(int actual, int max, int min) {
-	    if (actual > max) {
-	        actual = max;
-	    } else if (actual < min) {
-	        actual = min;
-	    }
-	    return actual;
+		if (actual > max) {
+			actual = max;
+		} else if (actual < min) {
+			actual = min;
+		}
+		return actual;
 	}
-	
+
 }
