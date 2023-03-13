@@ -196,8 +196,7 @@ public class Fight implements Serializable {
 					actPunch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_KICKS:
-					// actKick(fighterActiveOrPassive(fighterActive),
-					// fighterActiveOrPassive(fighterPasive));
+					actKick(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_CLINCH:
 					setPbp("ACT_CLINCH");// ActClinch(fighterActiveOrPassive(fighterActive),
@@ -827,6 +826,122 @@ public class Fight implements Serializable {
 
 	}
 
+	public void actKick(Fighter act, Fighter pas) {
+		double damageDone;
+		int injuryType;
+		int attackLevel = attackLevel(act, pas, act.getKicking(), pas.getDodging());
+
+		switch (attackLevel) {
+		case 1:
+			generateComment(Comments.kicks1);
+			break;
+		case 2:
+			generateComment(Comments.kicks1);
+			break;
+		case 3:
+			generateComment(Comments.kicks1);
+			break;
+		}
+
+		// Initial comment
+		doComment(act, pas, extractInitComment(fullComment));
+
+		// Attacking value
+		double at = fixedRandomInt(act.getKicking()) + act.getAttackBonus();
+		at -= Sim.KICKMALUS * attackLevel;
+		int rndatk = new Random().nextInt(4);
+		switch (rndatk) {
+		case 0:
+			at += fixedRandomInt(act.getStrength() / 2);
+			break;
+		case 1:
+			at += fixedRandomInt(act.getAgility() / 2);
+			break;
+		case 2:
+			at += fixedRandomInt(act.getDodging() / 2);
+			break;
+		case 3:
+			at += fixedRandomInt(act.getAggressiveness() / 2);
+			break;
+		}
+
+		at += smallRandom();
+		at = gasTankFactor(act, at);
+		at -= hurtFactor(act);
+
+		// Defensive value
+		double def = fixedRandomInt(pas.getDodging()) + pas.getDefenseBonus();
+
+		int rnddfs = new Random().nextInt(4);
+		switch (rnddfs) {
+		case 0:
+			def += fixedRandomInt(pas.getStrength() / 2);
+			break;
+		case 1:
+			def += fixedRandomInt(pas.getAgility() / 2);
+			break;
+		case 2:
+			def += fixedRandomInt(pas.getDodging() / 2);
+			break;
+		case 3:
+			def += fixedRandomInt(pas.getControl() / 2);
+			break;
+		}
+
+		def += smallRandom();
+		def = gasTankFactor(pas, def);
+		def -= hurtFactor(pas);
+
+		if (def >= at) {
+			doComment(act, pas, extractFailureComment(fullComment));
+
+			// Counter attack
+			if (!isCounter) {
+				isCounter = checkCounterAttack(act, pas, counterProb);
+				if (isCounter) {
+					doCounterAttack(pas, act);
+				} else {
+					processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+				}
+			} else {
+				isCounter = false;
+				processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+			}
+		} else {
+			// Do comments
+			switch (attackLevel) {
+			case 1:
+			case 2:
+			case 3:
+				doComment(act, pas, extractComment(fullComment));
+				break;
+			}
+		}
+
+		// Damage
+		damageDone = (at - def) * act.getDamageBonus() * attackLevel * Sim.KICKDAMAGEBONUS;
+		damageFighter(act, pas, damageDone);
+
+		processAfterMovePosition(act, pas, extractFinalSuccessPosition(fullComment));
+
+		// Check KO
+		if (checkKO(act, pas, damageDone, kOSubProb)) {
+			processKO(act, pas);
+		}
+
+		injuryType = checkInjury(act, pas, damageDone, injuryProb);
+		if (!(Sim.INJURYORCUTFALSE == injuryType)) {
+			// processInjury(act, pas, injuryType);
+		}
+
+		// Check Cut
+		injuryType = checkCut(act, pas, damageDone, cutProb);
+		if (!(Sim.INJURYORCUTFALSE == injuryType)) {
+			processCut(act, pas, injuryType);
+		}
+
+	}
+
 	public int dirtyBoxingAction(Fighter act) {
 		final double PUNCH_PROB = 1.25;
 		double kneeProb = act.getStratKicking() + randomGenerator();
@@ -1201,8 +1316,9 @@ public class Fight implements Serializable {
 			case 8:
 				injuryComment = returnComment(Comments.faceInjuries1);
 				doComment(act, pas, extractInjuryCutComment(injuryComment));
-				//pas.addInjuryToList(ReplaceTokkens(act, pas, extractInjuryCutName(injuryComment)));
-			  	pas.setFaceInjury(pas.getFaceInjury() + 4);
+				// pas.addInjuryToList(ReplaceTokkens(act, pas,
+				// extractInjuryCutName(injuryComment)));
+				pas.setFaceInjury(pas.getFaceInjury() + 4);
 				break;
 			case 9:
 			case 10:
@@ -1210,18 +1326,20 @@ public class Fight implements Serializable {
 			case 12:
 				injuryComment = returnComment(Comments.bodyInjuries1);
 				doComment(act, pas, extractInjuryCutComment(injuryComment));
-				//pas.addInjuryToList(ReplaceTokkens(act, pas, extractInjuryCutName(injuryComment)));
+				// pas.addInjuryToList(ReplaceTokkens(act, pas,
+				// extractInjuryCutName(injuryComment)));
 				if (hitLocation == 9 || hitLocation == 10) {
 					pas.setTorsoInjury(pas.getTorsoInjury() + 4);
 				} else {
-					 pas.setBackInjury(pas.getBackInjury() + 4);
+					pas.setBackInjury(pas.getBackInjury() + 4);
 				}
 				break;
 			case 13:
 			case 14:
 				injuryComment = returnComment(Comments.armInjuries1);
 				doComment(act, pas, extractInjuryCutComment(injuryComment));
-				//pas.addInjuryToList(ReplaceTokkens(act, pas, extractInjuryCutName(injuryComment)));
+				// pas.addInjuryToList(ReplaceTokkens(act, pas,
+				// extractInjuryCutName(injuryComment)));
 				if (hitLocation == 13) {
 					pas.setLeftArmInjury(pas.getLeftArmInjury() + 4);
 				} else {
@@ -1236,17 +1354,19 @@ public class Fight implements Serializable {
 			case 20:
 				injuryComment = returnComment(Comments.legInjuries1);
 				doComment(act, pas, extractInjuryCutComment(injuryComment));
-				//pas.addInjuryToList(ReplaceTokkens(act, pas, extractInjuryCutName(injuryComment)));
+				// pas.addInjuryToList(ReplaceTokkens(act, pas,
+				// extractInjuryCutName(injuryComment)));
 				if (hitLocation == 15 || hitLocation == 17 || hitLocation == 19) {
-					pas.setLeftLegInjury(pas.getLeftLegInjury() + 4); 
+					pas.setLeftLegInjury(pas.getLeftLegInjury() + 4);
 				} else {
-					pas.setRightLegInjury(pas.getRightLegInjury() + 4) ;
+					pas.setRightLegInjury(pas.getRightLegInjury() + 4);
 				}
 				break;
 			}
 
 			if (finishedByInj) {
-				//finishedDescription = ReplaceTokkens(act, pas, extractInjuryCutName(injuryComment));
+				// finishedDescription = ReplaceTokkens(act, pas,
+				// extractInjuryCutName(injuryComment));
 			}
 
 			else {
@@ -1260,11 +1380,12 @@ public class Fight implements Serializable {
 				case 6:
 				case 7:
 				case 8: {
-					 injuryComment = returnComment(Comments.faceInjuries0);
+					injuryComment = returnComment(Comments.faceInjuries0);
 					doComment(act, pas, extractInjuryCutComment(injuryComment));
 					pas.setControlMod(pas.getControlMod() - 0.5);
 					pas.setMoral(pas.getMoral() - 0.5);
-					//pas.addInjuryToList(ReplaceTokens(act, pas, extractInjuryCutName(injuryComment)));
+					// pas.addInjuryToList(ReplaceTokens(act, pas,
+					// extractInjuryCutName(injuryComment)));
 					pas.setFaceInjury(pas.getFaceInjury() + 1);
 				}
 					break;
@@ -1272,12 +1393,13 @@ public class Fight implements Serializable {
 				case 10:
 				case 11:
 				case 12: {
-					 injuryComment = returnComment(Comments.bodyInjuries0);
+					injuryComment = returnComment(Comments.bodyInjuries0);
 					doComment(act, pas, extractInjuryCutComment(injuryComment));
 					pas.setAgilityMod(pas.getAgilityMod() - 0.5);
 					pas.setStrengthMod(pas.getStrengthMod() - 0.5);
 					pas.setDodgingMod(pas.getDodgingMod() - 0.5);
-					//pas.addInjuryToList(ReplaceTokens(act, pas, extractInjuryCutName(injuryComment)));
+					// pas.addInjuryToList(ReplaceTokens(act, pas,
+					// extractInjuryCutName(injuryComment)));
 					if (hitLocation == 9 || hitLocation == 10) {
 						pas.setTorsoInjury(pas.getTorsoInjury() + 1);
 					} else {
@@ -1289,10 +1411,11 @@ public class Fight implements Serializable {
 				case 14: {
 					injuryComment = returnComment(Comments.armInjuries0);
 					doComment(act, pas, extractInjuryCutComment(injuryComment));
-					
+
 					pas.setPunchingMod(pas.getPunchingMod() - 0.5);
 					pas.setStrengthMod(pas.getStrengthMod() - 0.5);
-					//pas.addInjuryToList(ReplaceTokens(act, pas, extractInjuryCutName(injuryComment)));
+					// pas.addInjuryToList(ReplaceTokens(act, pas,
+					// extractInjuryCutName(injuryComment)));
 					if (hitLocation == 13) {
 						pas.setLeftArmInjury(pas.getLeftArmInjury() + 1);
 					} else {
@@ -1306,11 +1429,12 @@ public class Fight implements Serializable {
 				case 18:
 				case 19:
 				case 20: {
-				 injuryComment = returnComment(Comments.legInjuries0);
+					injuryComment = returnComment(Comments.legInjuries0);
 					doComment(act, pas, extractInjuryCutComment(injuryComment));
 					pas.setKickingMod(pas.getKicking() - 0.5);
 					pas.setAgilityMod(pas.getAgility() - 0.5);
-					//pas.addInjuryToList(ReplaceTokens(act, pas, extractInjuryCutName(injuryComment)));
+					// pas.addInjuryToList(ReplaceTokens(act, pas,
+					// extractInjuryCutName(injuryComment)));
 					if (hitLocation == 15 || hitLocation == 17 || hitLocation == 19) {
 						pas.setLeftLegInjury(pas.getLeftLegInjury() + 1);
 					} else {
@@ -1832,6 +1956,15 @@ public class Fight implements Serializable {
 	/* Fim gera numeros randomicos */
 
 	/* Geração de comentarios */
+
+	public String extractInitComment(String comment) {
+		String unknownStr = "UNKNOWN";
+		String[] splitFullString = comment.split(";"); // splitting by whitespace
+		if (splitFullString.length > 0) {
+			return splitFullString[0];
+		}
+		return unknownStr;
+	}
 
 	public String extractComment(String comment) {
 		String[] splitFullString = comment.split(";");
