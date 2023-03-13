@@ -90,6 +90,19 @@ public class Fight implements Serializable {
 	private Integer injuryFreq = 0;
 	private Integer numHooks = 0;
 
+	//Constantes
+	
+	  //Clinch
+	   private Integer CLINCH_DIRTY_BOXING = 0;
+	   private Integer THAI_CLINCH = 1;
+	   private Integer SIMPLE_GRAPPLING = 2;
+	  // Clinch Attack
+	   private Integer THAI_ATTACK = 1;
+	   private Integer DIRTY_BOXING = 2;
+	   private Integer GRAPPLING_ATTACK = 3;
+	   
+	   
+
 	public Fight(Long id, String eventName, Integer rounds, WeightClass WeightClass, String fightResult,
 			String fightResultType, Boolean titleBout, Fighter fighter1, Fighter fighter2, Boolean generatePBP,
 			Boolean happened) {
@@ -199,8 +212,8 @@ public class Fight implements Serializable {
 					actKick(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_CLINCH:
-					setPbp("ACT_CLINCH");// ActClinch(fighterActiveOrPassive(fighterActive),
-											// fighterActiveOrPassive(fighterPasive));
+					actClinch(fighterActiveOrPassive(fighterActive),
+					fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_TAKEDOWNS:
 					setPbp("ACT_TAKEDOWNS");// ActTakedown(fighterActiveOrPassive(fighterActive),
@@ -942,6 +955,101 @@ public class Fight implements Serializable {
 
 	}
 
+	public void actClinch(Fighter act, Fighter pas) {
+	
+	    // Get clinch type and display comment
+	    Integer clinchType = getClinchType(act);
+	    switch (clinchType) {
+	        case DIRTY_BOXING:
+	            getComment(ApplicationUtils.dirtyClinch);
+	            break;
+	        case THAI_CLINCH:
+	            getComment(ApplicationUtils.thaiClinch);
+	            break;
+	        case SIMPLE_GRAPPLING:
+	            getComment(ApplicationUtils.clinch);
+	            break;
+	    }
+
+	    // Initial comment
+	    doComment(act, pas, extractInitComment(fullComment));
+
+	    // Modify statistics
+	  //  bout.updateStatistic(getFighterNumber(act), StatisticType.GRAPPLING,
+	    //    extractHitsLaunched(fullComment), 0);
+
+	    // Attacking value
+	    double at = fixedRandomInt(act.getClinchGrappling()) +
+	        act.getAttackBonus() + Sim.CLINCHMALUS;
+	    int randomIndex = new Random().nextInt(4);
+	    switch (randomIndex) {
+	        case 0:
+	            at += fixedRandomInt(act.getStrength() / 2);
+	            break;
+	        case 1:
+	            at += fixedRandomInt(act.getAgility() / 2);
+	            break;
+	        case 2:
+	            at += fixedRandomInt(act.getDodging() / 2);
+	            break;
+	        case 3:
+	            at += fixedRandomInt(act.getClinchGrappling() / 2);
+	            break;
+	    }
+	    at += smallRandom();
+	    at = gasTankFactor(act, at);
+	    at -= hurtFactor(act);
+
+	    // Defensive value
+	    double def = fixedRandomInt(pas.getClinchGrappling()) +
+	        pas.getDefenseBonus();
+	    randomIndex = new Random().nextInt(4);
+	    switch (randomIndex) {
+	        case 0:
+	            def += fixedRandomInt(pas.getStrength() / 2);
+	            break;
+	        case 1:
+	            def += fixedRandomInt(pas.getAgility() / 2);
+	            break;
+	        case 2:
+	            def += fixedRandomInt(pas.getDodging() / 2);
+	            break;
+	        case 3:
+	            def += fixedRandomInt(pas.getClinchGrappling() / 2);
+	            break;
+	    }
+	    def += smallRandom();
+	    def = gasTankFactor(pas, def);
+	    def -= hurtFactor(pas);
+
+	    // Check damage
+	    if (def >= at) {
+	        // Do failure comments
+	        doComment(act, pas, extractFailureComment(fullComment));
+
+	        // Counter attack
+	        if (!isCounter) {
+	            isCounter = checkCounterAttack(act, pas, counterProb);
+	            if (isCounter) {
+	                doCounterAttack(pas, act);
+	            } else {
+	                processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+	            }
+	        } else {
+	            isCounter = false;
+	            processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+	        }
+	    } else {
+	        // Do success comments
+	        doComment(act, pas, extractComment(fullComment));
+
+	        processAfterMovePosition(act, pas, extractFinalSuccessPosition(fullComment));
+
+	        //bout.updateStatistic(getFighterNumber(act), StatisticType.GRAPPLING, 0,
+	          //  extractHitsLaunched(fullComment));
+	    }
+	}
+	
 	public int dirtyBoxingAction(Fighter act) {
 		final double PUNCH_PROB = 1.25;
 		double kneeProb = act.getStratKicking() + randomGenerator();
@@ -1563,6 +1671,32 @@ public class Fight implements Serializable {
 		}
 	}
 
+	public int getClinchType(Fighter Act) {
+	    final double NO_SKILL_PROB = 0.5;
+	    double thaiClinch = randomGenerator();
+	    double dirtyClinch = randomGenerator();
+	    double grapplingClinch = randomGenerator();
+
+	    if (!Act.isThaiClinch()) {
+	        thaiClinch *= NO_SKILL_PROB;
+	    }
+
+	    if (!Act.isDirtyBoxing()) {
+	        dirtyClinch *= NO_SKILL_PROB;
+	    }
+
+	    int result = SIMPLE_GRAPPLING;
+	    if ((grapplingClinch > thaiClinch) && (grapplingClinch > dirtyClinch)) {
+	        result = SIMPLE_GRAPPLING;
+	    } else if ((dirtyClinch > thaiClinch) && (dirtyClinch > grapplingClinch)) {
+	        result = CLINCH_DIRTY_BOXING;
+	    } else if ((thaiClinch > dirtyClinch) && (thaiClinch > grapplingClinch)) {
+	        result = THAI_CLINCH;
+	    }
+
+	    return result;
+	}
+	
 	/* Fim checar ações de luta */
 
 	/* Processar movimentos */

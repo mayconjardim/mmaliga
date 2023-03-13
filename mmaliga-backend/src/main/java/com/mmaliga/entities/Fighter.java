@@ -99,6 +99,8 @@ public class Fighter implements Serializable {
 	private boolean useStomps = false;
 	private boolean useSoccerKicks = false;
 	private boolean pullsGuard;
+	
+	//Criacao
 	private boolean dirtyBoxing;
 	private boolean thaiClinch;
 

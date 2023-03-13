@@ -147,7 +147,6 @@ public abstract class Comments {
 			"%act moves aside and launches a furious low kick!;Hard blow to %pas's thigh!;%pas checks the kick.;16;0;1;2;"
 			+ "Kicks;1;1;0;1;-1;0;0;"
 			));
-
 	
 	public static final ArrayList<String> kicks3 = new ArrayList<String>(Arrays.asList(
 			"%act moves forward and launches a high kick!;Vicious high kick!;%pas ducks under.;4;-2;1;3;High kick;1;1;3;3;5;1;1",
@@ -184,13 +183,24 @@ public abstract class Comments {
 			"Incredible high kick!;%pas is worried!;%pas deflects and sidesteps.;9;0;1;2;High kick;1;1;3;3;4;1;1"
 			));
 
+	public static final ArrayList<String> dirtyClinch = new ArrayList<String>(Arrays.asList(
+			"%act wants to close the range and tries to grapple...;Nice move. He shoves himself over his opponent "
+			+ "and secure a single collar tie.;%pas doesn't want anything like this as he moves backwards;0;0;0;0;Dirty Boxing;0;0;0;0;0;12;0;",
+
+			"%act tries to take the action to his favourite field as he tries to grapple;Great move by %act who pushes "
+			+ "his opponent forward with a double underhooks.;%pas swings and %act has to retreat;0;0;0;0;Dirty Boxing;0;0;0;0;0;12;0;",
+
+			"%act moves forward looking for some action;He surprises %pas with a double overhooks!;%pas doesn't "
+			+ "want to engage and backpedals;0;0;0;0;Dirty Boxing;0;0;0;0;0;0;0;"
+			
+			));
 	
 	public static final ArrayList<String> counter = new ArrayList<String>(Arrays.asList(
 			"%act is trying to counter now!", "%pas clumsily fails here and it's time for %act to fight back!",
 			"%act tries to get some advantage after his opponent miss move...",
 			"%pas gets sloppy and %act tries to take advantage...", "Poorly executed technique. %act looks to counter!",
 			"%act misses a step and %pas sees an opportunity to counter him!"));
-
+	
 	public static final ArrayList<String> groundKO = new ArrayList<String>(
 			Arrays.asList("This is over! That impact from %act has left %pas laying flat on the mat!",
 					"%act turns out the lights for %pas! What an astonishing KO by %act!",
@@ -245,6 +255,11 @@ public abstract class Comments {
 			Arrays.asList("%pas has a small cut in his %location;Small cut %location",
 					"There is a small laceration on %pas's %location;Small cut %location"));
 
+	public static final ArrayList<String> faceInjuries0 = new ArrayList<String>(Arrays.asList(
+			"%pas's %location is beginning to swell;%location swelling",
+			"%pas's %location is bruised after the punishement he's received!;%location bruising"
+			));
+	
 	public static final ArrayList<String> faceInjuries1 = new ArrayList<String>(Arrays.asList(
 			"%pas can't see anything with that swollen left eye.;Swollen Eye",
 
@@ -257,6 +272,12 @@ public abstract class Comments {
 			"%pas can't continue fighting. %ref doesn't allow him to continue fighting with his swollen right eye!;Swollen eye",
 
 			"%pas can't continue fighting. %ref doesn't allow him to continue fighting with his swollen left eye!;Swollen eye"
+			));
+	
+	public static final ArrayList<String> bodyInjuries0 = new ArrayList<String>(Arrays.asList(
+			"Crushing shot to %pas's body! He's holding his side;Contused side",
+			"Hard blow to %pas's mid-section, he seems hurt;Contused side",
+			"%pas ribs are getting hammered, they look bad!;Hammered ribs"
 			));
 	
 	public static final ArrayList<String> bodyInjuries1 = new ArrayList<String>(Arrays.asList(
@@ -284,17 +305,6 @@ public abstract class Comments {
 			"Bad leg defense, %pas broke his [SIDE] ankle with that defense, this fight is over;Leg injury"
 			));
 	
-	public static final ArrayList<String> faceInjuries0 = new ArrayList<String>(Arrays.asList(
-			"%pas's %location is beginning to swell;%location swelling",
-			"%pas's %location is bruised after the punishement he's received!;%location bruising"
-			));
-
-	public static final ArrayList<String> bodyInjuries0 = new ArrayList<String>(Arrays.asList(
-			"Crushing shot to %pas's body! He's holding his side;Contused side",
-			"Hard blow to %pas's mid-section, he seems hurt;Contused side",
-			"%pas ribs are getting hammered, they look bad!;Hammered ribs"
-			));
-
 	public static final ArrayList<String> armInjuries0 = new ArrayList<String>(Arrays.asList(
 			"%pas Hyper-extended his [SIDE] arm;Hyper-extended arm",
 			"%pas's [SIDE] arm is getting wrenched, it appears to be injured;contused left arm"
@@ -303,10 +313,6 @@ public abstract class Comments {
 	public static final ArrayList<String> legInjuries0 = new ArrayList<String>(Arrays.asList(
 			"%pas hyper-extended his [SIDE] leg;hyper-extended [SIDE] leg"
 			));
-
-	
-	
-	
 
 	
 }
