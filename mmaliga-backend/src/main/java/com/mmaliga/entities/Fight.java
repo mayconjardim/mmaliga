@@ -1703,7 +1703,8 @@ public class Fight implements Serializable {
 
 	public void doComment(Fighter act, Fighter pas, String comment) {
 
-		String updatedComment = comment.replaceAll("%act", act.getName()).replaceAll("%pas", pas.getLastName());
+		String updatedComment = comment.replaceAll("%a1", act.getName())
+				.replaceAll("%d1", pas.getName().replaceAll("%a2", act.getNickname().replaceAll("%d2", pas.getNickname())));
 
 		setPbp(updatedComment);
 	}
