@@ -20,29 +20,44 @@ public abstract class Comments {
 		    + "Com um cartel de %s-%s-%s, %s! %n"));
 	
 	public static final ArrayList<String> punch1 = new ArrayList<String>(Arrays.asList(
-	"%act tries a hook to the body;and hits %pas's ribs hard;but %pas manages to dodge it;10;1;2;3;Hook to the body;1;1;-10;0;-5;1;1;"
+	"%act tries a hook to the body;and hits %pas's ribs hard;but %pas manages to dodge it"
 ));
 	
 	public static final ArrayList<String> punch2 = new ArrayList<String>(Arrays.asList(
-	"%act tries a hook to the body;and hits %pas ribs hard;but %pas manages to dodge it"
+	"%act tries a hook to the body; and hits %pas ribs hard ; but %pas manages to dodge it"
 ));
 	
 	public static final ArrayList<String> punch3 = new ArrayList<String>(Arrays.asList(
-	"%a2 begins to launch a barrage of punches over %pas;this is getting worse and worse for %pas, %d1 is smart enough to duck backwards"));
+	"%act begins to launch a barrage of punches over %pas ; this is getting worse and worse for %pas ; %pas is smart enough to duck backwards"));
+	
+	public static final ArrayList<String> kicks1 = new ArrayList<String>(Arrays.asList(
+	"Low kick by %act to maintain his distance.;That hits %pas's ankle;Bad move. That was far from landing.",
+	"Low kick by %act to maintain his distance.;That hits %pas's ankle;Bad move. That was far from landing",
+	"%act moves forward and launches a low kick.;Hard blow to %pas's left thigh;%pas blocks that",
+	"%act moves forward and launches a low kick.;Hard blow to %pas's right thigh;%pas blocks that",
+	"%act is not showing a great technique with that low kick...;That one finds %pas's thigh;%pas is smart enough to block that one",
+	"Body kick by %act...;just grazes his opponent.",
+	"A high kick from %act;grazes %pas's head, but he seems okay.;falls short of the mark",
+	"A high kick from %act;glances off %pas.;misses badly. %act slips and falls!",
+	"A bunch of leg kicks from %act;are bothering his opponent.;are blocked by %pas.",
+	"%act throws a body kick.;Solid shot!;Blocked by %pas.",
+	"Good leg kicks from %act.;%pas winces a bit.;%pas defends with ease.",
+	"Every time %pas attempts to get inside;%act fires a low kick.;%act misses with a low kick",
+	"Nice low kick from %act;Loud pop!;but %pas stops it"));
 	
 	
 	public static final ArrayList<String> counter = new ArrayList<String>(Arrays.asList(
-		   "%s está tentando contra-atacar agora!",
-			"%s falha desajeitadamente aqui e é hora de %s revidar!",
-			"%s tenta obter alguma vantagem após seu oponente errar o movimento...",
-			"%s fica desleixado e %s tenta tirar vantagem...",
-			"Técnica mal executada. %s procura contra-atacar!",
-			"%s erra um passo e %s vê uma oportunidade de contra-atacar!"));
+			"%act is trying to counter now!",
+			"%pas clumsily fails here and it's time for %act to fight back!",
+			"%act tries to get some advantage after his opponent miss move...",
+			"%pas gets sloppy and %act tries to take advantage...",
+			"Poorly executed technique. %act looks to counter!",
+			"%act misses a step and %act sees an opportunity to counter him!"));
 	
 	
 	public static final ArrayList<String> groundKO = new ArrayList<String>(Arrays.asList(
 		   "This is over! That impact from %act has left %pas laying flat on the mat!",
-			"%act turns out the lights for %pas! What an astonishing KO by %a2!",
+			"%act turns out the lights for %pas! What an astonishing KO by %act!",
 			"That brutal impact left %pas laid out on the mat! %act's corner come in to congratulate him!"));
 	
 	public static final ArrayList<String> standingKO = new ArrayList<String>(Arrays.asList(
@@ -58,7 +73,7 @@ public abstract class Comments {
 			"%act turns out the lights for %pas! Tiiiiiiiim-ber! What a knock out!",
 			"%pas fell like he got shot! This is over!",
 			"The frightening power of %act has left %pas sleeping peacefully on the canvas!",
-			"%pas crumples to the mat and %a2 moves in to finish him. The referee jumps in and stops the fight!"
+			"%pas crumples to the mat and %act moves in to finish him. The referee jumps in and stops the fight!"
 	));
 	
 	public static final ArrayList<String> misc = new ArrayList<String>(Arrays.asList(
