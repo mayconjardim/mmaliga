@@ -84,8 +84,8 @@ public class Fight implements Serializable {
 	private Integer fighterWinner;
 	private String moveName;
 	private String fullComment;
-	private String   side;
-	private String    location;
+	private String side;
+	private String location;
 	private String injuryComment;
 	private Integer injuryFreq = 0;
 	private Integer numHooks = 0;
@@ -140,9 +140,8 @@ public class Fight implements Serializable {
 	}
 
 	/* Execução da luta */
-	
-	public void fightController() {
 
+	public void fightController() {
 
 		for (int i = 1; i <= rounds; i++) {
 
@@ -197,7 +196,8 @@ public class Fight implements Serializable {
 					actPunch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_KICKS:
-					//actKick(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
+					// actKick(fighterActiveOrPassive(fighterActive),
+					// fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_CLINCH:
 					setPbp("ACT_CLINCH");// ActClinch(fighterActiveOrPassive(fighterActive),
@@ -359,31 +359,27 @@ public class Fight implements Serializable {
 				}
 
 				/*
-				if (boutFinished == false) {
-					RefStandFighters(Fighters[FighterActive], Fighters[FighterPasive]);
-					ActKeepClinch(Fighters[FighterActive], Fighters[FighterPasive]);
-					MakeStaggeredComment(Fighters[FighterActive], Fighters[FighterPasive]);
-					MakeStandUpComment(Fighters[FighterActive], Fighters[FighterPasive], !f1Ground, !f2Ground);
-				}
-
-				ProcessStaminaLoss(Fighters[FighterActive], true);
-				ProcessStaminaLoss(Fighters[FighterPasive], false);
-
-				// Recueprar de atordoamento
-				RecoverForDazed(Fighters[FighterActive]);
-				RecoverForDazed(Fighters[FighterPasive]);
-
-				CheckFightPerformance(Fighters[FighterActive], Fighters[FighterPasive]);
-				CheckFightPerformance(Fighters[FighterPasive], Fighters[FighterActive]);
-				CheckPainAndTiredness(Fighters[FighterActive]);
-				CheckPainAndTiredness(Fighters[FighterPasive]);
-				CheckMoral(Fighters[FighterActive]);
-				CheckMoral(Fighters[FighterPasive]);
-				if (BoutFinished == false) {
-					ProcessTowelThrow(Fighters[FighterPasive], Fighters[FighterActive]);
-					RefRestartCentreRing(Fighters[FighterPasive], Fighters[FighterActive]);
-				}
-				*/
+				 * if (boutFinished == false) { RefStandFighters(Fighters[FighterActive],
+				 * Fighters[FighterPasive]); ActKeepClinch(Fighters[FighterActive],
+				 * Fighters[FighterPasive]); MakeStaggeredComment(Fighters[FighterActive],
+				 * Fighters[FighterPasive]); MakeStandUpComment(Fighters[FighterActive],
+				 * Fighters[FighterPasive], !f1Ground, !f2Ground); }
+				 * 
+				 * ProcessStaminaLoss(Fighters[FighterActive], true);
+				 * ProcessStaminaLoss(Fighters[FighterPasive], false);
+				 * 
+				 * // Recueprar de atordoamento RecoverForDazed(Fighters[FighterActive]);
+				 * RecoverForDazed(Fighters[FighterPasive]);
+				 * 
+				 * CheckFightPerformance(Fighters[FighterActive], Fighters[FighterPasive]);
+				 * CheckFightPerformance(Fighters[FighterPasive], Fighters[FighterActive]);
+				 * CheckPainAndTiredness(Fighters[FighterActive]);
+				 * CheckPainAndTiredness(Fighters[FighterPasive]);
+				 * CheckMoral(Fighters[FighterActive]); CheckMoral(Fighters[FighterPasive]); if
+				 * (BoutFinished == false) { ProcessTowelThrow(Fighters[FighterPasive],
+				 * Fighters[FighterActive]); RefRestartCentreRing(Fighters[FighterPasive],
+				 * Fighters[FighterActive]); }
+				 */
 
 				// Adicionar esquema de pontuação!
 
@@ -391,12 +387,9 @@ public class Fight implements Serializable {
 
 		}
 	}
-	
+
 	/* Fim execução da luta */
 
-	
-	
-	
 	/* Execução ação de luta */
 
 	public int fightAction(Fighter act, Fighter pas) {
@@ -516,7 +509,6 @@ public class Fight implements Serializable {
 				}
 
 				int actions = Sim.setLimits(act.getActionsInGround() - 1, Sim.MINSROUNDSINTHEGROUND, 0);
-
 
 				/* Fim GroundAction */
 
@@ -705,7 +697,6 @@ public class Fight implements Serializable {
 					}
 				}
 
-
 				/* Fim getStandUpAction */
 
 			}
@@ -718,10 +709,8 @@ public class Fight implements Serializable {
 
 	/* Fim Execução da ação de luta */
 
-	
-	
 	/* Realizar ações de luta */
-	
+
 	public void actPunch(Fighter act, Fighter pas) {
 		double at, def, damageDone;
 		int attackLevel, injuryType;
@@ -792,11 +781,11 @@ public class Fight implements Serializable {
 				if (isCounter) {
 					doCounterAttack(pas, act);
 				} else {
-					ProcessAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+					processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
 				}
 			} else {
 				isCounter = false;
-				ProcessAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+				processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
 			}
 		} else {
 			// Do comments
@@ -812,19 +801,18 @@ public class Fight implements Serializable {
 			damageDone = (at - def) * act.getDamageBonus() * attackLevel;
 			damageFighter(act, pas, damageDone);
 
-			ProcessAfterMovePosition(act, pas, extractFinalSuccessPosition(fullComment));
+			processAfterMovePosition(act, pas, extractFinalSuccessPosition(fullComment));
 
 			// Check KO
 			if (checkKO(act, pas, damageDone, kOSubProb)) {
 				processKO(act, pas);
 			}
 
-			// fazer
 			// Check Injury
-			// injuryType = checkInjury(act, pas, damageDone, injuryProb);
-			// if (injuryType != Sim.INJURYORCUTFALSE) {
-			// ProcessInjury(act, pas, injuryType);
-			// }
+			injuryType = checkInjury(act, pas, damageDone, injuryProb);
+			if (injuryType != Sim.INJURYORCUTFALSE) {
+				processInjury(act, pas, injuryType);
+			}
 
 			// Check Cut
 			injuryType = checkCut(act, pas, damageDone, cutProb);
@@ -838,7 +826,7 @@ public class Fight implements Serializable {
 		}
 
 	}
-	
+
 	public int dirtyBoxingAction(Fighter act) {
 		final double PUNCH_PROB = 1.25;
 		double kneeProb = act.getStratKicking() + randomGenerator();
@@ -850,7 +838,7 @@ public class Fight implements Serializable {
 			return Moves.ACT_DIRTYBOXING;
 		}
 	}
-	
+
 	public int thaiAction(Fighter act) {
 		final double KNEE_PROB = 1.25;
 		double kneeProb = (act.getStratKicking() + randomGenerator()) * KNEE_PROB;
@@ -878,7 +866,7 @@ public class Fight implements Serializable {
 			actPunch(act, pas);
 			break;
 		case 2:
-			//actKick(act, pas);
+			// actKick(act, pas);
 			break;
 		case 3:
 			if (inTheClinch) {
@@ -951,11 +939,9 @@ public class Fight implements Serializable {
 			break;
 		}
 	}
-	
+
 	/* Fim realizar ações de luta */
-	
-	
-	
+
 	/* Iniciativas de luta */
 
 	public int standUpInitiative(Fighter act, Fighter pas, int bonus1, int bonus2) {
@@ -1061,10 +1047,8 @@ public class Fight implements Serializable {
 			fighterWinner = fighterNumber(act);
 		}
 	}
-	
-	/* Fim iniciativas de luta */
 
-	
+	/* Fim iniciativas de luta */
 
 	/* Checar ações de luta */
 
@@ -1092,7 +1076,7 @@ public class Fight implements Serializable {
 			return false;
 		}
 	}
-	
+
 	public boolean checkCounterAttack(Fighter act, Fighter pas, double prob) {
 		int counter1 = extractCounterMove1(Comments.counter.get(1));
 		int counter2 = extractCounterMove2(Comments.counter.get(2));
@@ -1101,15 +1085,14 @@ public class Fight implements Serializable {
 			return false;
 		}
 
-		double at = fixedRandomInt(act.getControl()) - prob - fixedRandomInt(act.getAggressiveness())
-				+ smallRandom();
+		double at = fixedRandomInt(act.getControl()) - prob - fixedRandomInt(act.getAggressiveness()) + smallRandom();
 
 		double def = (fixedRandomInt(pas.getAggressiveness()) + fixedRandomInt(pas.getControl() / 2))
 				/ Sim.COUNTERATTACKCUT;
 
 		return fixedRandomInt(def) > at;
 	}
-	
+
 	public int checkCut(Fighter act, Fighter pas, double damageDone, int cutProb) {
 		final int MAX_CUT = 20;
 		Random rand = new Random();
@@ -1126,7 +1109,7 @@ public class Fight implements Serializable {
 			return Sim.INJURYORCUTFALSE;
 		}
 	}
-	
+
 	public boolean checkKO(Fighter act, Fighter pas, double DamageDone, int Prob) {
 		final double DAZED_PROB = 1.5;
 
@@ -1168,7 +1151,181 @@ public class Fight implements Serializable {
 
 		return result;
 	}
-	
+
+	public int checkInjury(Fighter act, Fighter pas, double damageDone, int injuryProb) {
+		final int MAX_INJURY = 20;
+		int prob;
+		int value;
+		int injuryLimitB;
+		int injuryLimitS;
+
+		prob = (int) (Math.round(damageDone / injuryFrequency()) + injuryProb + randomGenerator());
+
+		value = new Random().nextInt(MAX_INJURY) * (act.getInjuryResistance() + 2);
+		injuryLimitB = balancedRandom(value + Sim.BIGINJURIES);
+		injuryLimitS = balancedRandom(value + Sim.SMALLINJURIES);
+
+		if (prob >= injuryLimitB) {
+			return Sim.BIGINJURYORCUTTRUE;
+		} else if (prob >= injuryLimitS) {
+			return Sim.SMALLINJURYORCUTTRUE;
+		} else {
+			return Sim.INJURYORCUTFALSE;
+		}
+	}
+
+	public void processInjury(Fighter act, Fighter pas, int injuryType) {
+		String injuryComment;
+		boolean finishedByInj = false;
+		int hitLocation = extractHitLocation(fullComment);
+
+		if (injuryType == Sim.BIGINJURYORCUTTRUE) {
+			// Prevents a finished fight to be changed from KO to Injury win
+			if (!boutFinished) {
+				boutFinished = true;
+				finishedType = Comments.misc.get(Sim.INJ);
+				finishMode = Sim.RES_INJURY;
+				fighterWinner = fighterNumber(act);
+				finishedByInj = true;
+			}
+
+			switch (hitLocation) {
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+				injuryComment = returnComment(Comments.faceInjuries1);
+				doComment(act, pas, extractInjuryCutComment(injuryComment));
+				//pas.addInjuryToList(ReplaceTokkens(act, pas, extractInjuryCutName(injuryComment)));
+			  	pas.setFaceInjury(pas.getFaceInjury() + 4);
+				break;
+			case 9:
+			case 10:
+			case 11:
+			case 12:
+				injuryComment = returnComment(Comments.bodyInjuries1);
+				doComment(act, pas, extractInjuryCutComment(injuryComment));
+				//pas.addInjuryToList(ReplaceTokkens(act, pas, extractInjuryCutName(injuryComment)));
+				if (hitLocation == 9 || hitLocation == 10) {
+					pas.setTorsoInjury(pas.getTorsoInjury() + 4);
+				} else {
+					 pas.setBackInjury(pas.getBackInjury() + 4);
+				}
+				break;
+			case 13:
+			case 14:
+				injuryComment = returnComment(Comments.armInjuries1);
+				doComment(act, pas, extractInjuryCutComment(injuryComment));
+				//pas.addInjuryToList(ReplaceTokkens(act, pas, extractInjuryCutName(injuryComment)));
+				if (hitLocation == 13) {
+					pas.setLeftArmInjury(pas.getLeftArmInjury() + 4);
+				} else {
+					pas.setRightArmInjury(pas.getRightArmInjury() + 4);
+				}
+				break;
+			case 15:
+			case 16:
+			case 17:
+			case 18:
+			case 19:
+			case 20:
+				injuryComment = returnComment(Comments.legInjuries1);
+				doComment(act, pas, extractInjuryCutComment(injuryComment));
+				//pas.addInjuryToList(ReplaceTokkens(act, pas, extractInjuryCutName(injuryComment)));
+				if (hitLocation == 15 || hitLocation == 17 || hitLocation == 19) {
+					pas.setLeftLegInjury(pas.getLeftLegInjury() + 4); 
+				} else {
+					pas.setRightLegInjury(pas.getRightLegInjury() + 4) ;
+				}
+				break;
+			}
+
+			if (finishedByInj) {
+				//finishedDescription = ReplaceTokkens(act, pas, extractInjuryCutName(injuryComment));
+			}
+
+			else {
+				switch (hitLocation) {
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+				case 8: {
+					 injuryComment = returnComment(Comments.faceInjuries0);
+					doComment(act, pas, extractInjuryCutComment(injuryComment));
+					pas.setControlMod(pas.getControlMod() - 0.5);
+					pas.setMoral(pas.getMoral() - 0.5);
+					//pas.addInjuryToList(ReplaceTokens(act, pas, extractInjuryCutName(injuryComment)));
+					pas.setFaceInjury(pas.getFaceInjury() + 1);
+				}
+					break;
+				case 9:
+				case 10:
+				case 11:
+				case 12: {
+					 injuryComment = returnComment(Comments.bodyInjuries0);
+					doComment(act, pas, extractInjuryCutComment(injuryComment));
+					pas.setAgilityMod(pas.getAgilityMod() - 0.5);
+					pas.setStrengthMod(pas.getStrengthMod() - 0.5);
+					pas.setDodgingMod(pas.getDodgingMod() - 0.5);
+					//pas.addInjuryToList(ReplaceTokens(act, pas, extractInjuryCutName(injuryComment)));
+					if (hitLocation == 9 || hitLocation == 10) {
+						pas.setTorsoInjury(pas.getTorsoInjury() + 1);
+					} else {
+						pas.setBackInjury(pas.getBackInjury() + 1);
+					}
+				}
+					break;
+				case 13:
+				case 14: {
+					injuryComment = returnComment(Comments.armInjuries0);
+					doComment(act, pas, extractInjuryCutComment(injuryComment));
+					
+					pas.setPunchingMod(pas.getPunchingMod() - 0.5);
+					pas.setStrengthMod(pas.getStrengthMod() - 0.5);
+					//pas.addInjuryToList(ReplaceTokens(act, pas, extractInjuryCutName(injuryComment)));
+					if (hitLocation == 13) {
+						pas.setLeftArmInjury(pas.getLeftArmInjury() + 1);
+					} else {
+						pas.setRightArmInjury(pas.getRightArmInjury() + 1);
+					}
+				}
+					break;
+				case 15:
+				case 16:
+				case 17:
+				case 18:
+				case 19:
+				case 20: {
+				 injuryComment = returnComment(Comments.legInjuries0);
+					doComment(act, pas, extractInjuryCutComment(injuryComment));
+					pas.setKickingMod(pas.getKicking() - 0.5);
+					pas.setAgilityMod(pas.getAgility() - 0.5);
+					//pas.addInjuryToList(ReplaceTokens(act, pas, extractInjuryCutName(injuryComment)));
+					if (hitLocation == 15 || hitLocation == 17 || hitLocation == 19) {
+						pas.setLeftLegInjury(pas.getLeftLegInjury() + 1);
+					} else {
+						pas.setRightLegInjury(pas.getRightLegInjury() + 1);
+
+					}
+				}
+					break;
+				}
+			}
+
+		}
+
+	}
+
 	public void damageFighter(Fighter act, Fighter pas, double damageDone) {
 
 		if (damageDone < 0) {
@@ -1194,7 +1351,7 @@ public class Fight implements Serializable {
 		// Act.increasePoints(Bout.CurrentRound, DamageDone /
 		// ApplicationUtils.DAMAGECUTPOINTS);
 	}
-	
+
 	public double upsetSystem(Fighter act, Fighter pas, double value) {
 		final int UPSET_POWER = 100;
 		if (act.getRanking() < pas.getRanking() && (Math.random() * 1000 <= Sim.UPSET_FREQUENCY + randomnes)) {
@@ -1203,15 +1360,15 @@ public class Fight implements Serializable {
 			return value;
 		}
 	}
-	
+
 	public int koFrequency() {
 		return Sim.KOPROBCUT + kOFreq;
 	}
-	
+
 	public int injuryFrequency() {
 		return Sim.INJURYCUT + injuryFreq;
 	}
-	
+
 	public void processCut(Fighter act, Fighter pas, int cutType) {
 
 		boolean finishedByCut = false;
@@ -1220,7 +1377,7 @@ public class Fight implements Serializable {
 			return;
 		}
 
-		//hitLocation = extractHitLocation(fullComment);
+		// hitLocation = extractHitLocation(fullComment);
 
 		if (cutType == Sim.BIGINJURYORCUTTRUE) {
 
@@ -1281,14 +1438,12 @@ public class Fight implements Serializable {
 			}
 		}
 	}
-	
+
 	/* Fim checar ações de luta */
 
-
-	
 	/* Processar movimentos */
-	
-	public void ProcessAfterMovePosition(Fighter Act, Fighter Pas, int Position) {
+
+	public void processAfterMovePosition(Fighter Act, Fighter Pas, int Position) {
 
 		if (Position != 0) {
 			guardType = -1;
@@ -1420,12 +1575,9 @@ public class Fight implements Serializable {
 			break;
 		}
 	}
-	
+
 	/* Fim processar movimentos */
-	
-	
-	
-	
+
 	/* Retorna Lutadores */
 
 	public Fighter fighterActiveOrPassive(int number) {
@@ -1435,7 +1587,7 @@ public class Fight implements Serializable {
 			return fighter2;
 		}
 	}
-	
+
 	public int fighterNumber(Fighter act) {
 		int result = -1;
 		if (act == fighter1) {
@@ -1445,12 +1597,9 @@ public class Fight implements Serializable {
 		}
 		return result;
 	}
-	
+
 	/* Fim retorna lutadores */
 
-
-	
-	
 	/* Gerar probabilidade de ação */
 
 	public double setLimits(double actual, double max, double min) {
@@ -1461,7 +1610,7 @@ public class Fight implements Serializable {
 		}
 		return actual;
 	}
-	
+
 	public int getSubmissionProbByPosition(Fighter act) {
 		double FULL_MOUNT = 1.15;
 		double CLOSED_GUARD = 0.7;
@@ -1471,11 +1620,11 @@ public class Fight implements Serializable {
 
 		double prob = act.getStratSub();
 		switch (guardType) {
-			case 1 -> prob *= FULL_MOUNT;
-			case 2 -> prob *= SIDE_MOUNT;
-			case 3 -> prob *= HALF_GUARD;
-			case 4 -> prob *= OPEN_GUARD;
-			case 5 -> prob *= CLOSED_GUARD;
+		case 1 -> prob *= FULL_MOUNT;
+		case 2 -> prob *= SIDE_MOUNT;
+		case 3 -> prob *= HALF_GUARD;
+		case 4 -> prob *= OPEN_GUARD;
+		case 5 -> prob *= CLOSED_GUARD;
 		}
 		return (int) Math.round(prob);
 	}
@@ -1532,11 +1681,9 @@ public class Fight implements Serializable {
 		}
 		return result;
 	}
-	
+
 	/* Fim gerar probabilidade de ação */
-	
-	
-	
+
 	/* Gerar fatores para luta */
 
 	public int hurtFactor(Fighter act) {
@@ -1557,19 +1704,17 @@ public class Fight implements Serializable {
 			return 0;
 		}
 	}
-	
+
 	public int gasTankFactor(Fighter act, double value) {
 		// Reduce the fighter's skills if he's tired
 		double reducingFactor = act.getCurrentStamina() * Sim.FATIGUECUT / (act.getConditioning() * 5);
 		return (int) Math.round(value * reducingFactor);
 	}
-	
+
 	/* Fim gerar fatores para luta */
-	
-	
-	
+
 	/* Gera bonus por ação. */
-	
+
 	public int actionBonus(int action) {
 		final int PUNCHES_BONUS = 5;
 		final int KICK_BONUS = -1;
@@ -1585,14 +1730,11 @@ public class Fight implements Serializable {
 		}
 		return result;
 	}
-	
+
 	/* Fim gerar bonus por ação. */
-	
 
-
-	
 	/* Level de ataque */
-	
+
 	public int attackLevel(Fighter act, Fighter pas, double atSkill, double pasSkill) {
 		final double DAZED_BONUS = 10.0;
 		double at, def;
@@ -1640,20 +1782,13 @@ public class Fight implements Serializable {
 
 		return result;
 	}
-	
+
 	/* Level de ataque */
-	
-	
-	
-	
+
 	/* Gera numeros randomicos */
-	
 
 	/* Fim geração de Bonus */
 
-
-	
-	
 	/* Gera numeros randomicos */
 
 	public int randomGenerator() {
@@ -1672,7 +1807,7 @@ public class Fight implements Serializable {
 
 		return (int) (aux / 2 + (Math.random() * (aux / 2)) + 1 + doubleValue);
 	}
-	
+
 	public int balancedRandom(double value) {
 		if (value < 0) {
 			return 0;
@@ -1695,150 +1830,151 @@ public class Fight implements Serializable {
 	}
 
 	/* Fim gera numeros randomicos */
-	
-	
-	
+
 	/* Geração de comentarios */
 
 	public String extractComment(String comment) {
-	    String[] splitFullString = comment.split(";");
-	    String unknownStr = "unknown";
-	    String result = unknownStr;
+		String[] splitFullString = comment.split(";");
+		String unknownStr = "unknown";
+		String result = unknownStr;
 
-	    if (splitFullString.length > 1) {
-	        result = splitFullString[1];
-	    }
+		if (splitFullString.length > 1) {
+			result = splitFullString[1];
+		}
 
-	    return result;
+		return result;
 	}
-	
+
 	public String extractMoveName(String comment) {
-	    String[] splitFullString = comment.split(";");
-	    String unknownStr = "unknown";
-	    String result = unknownStr;
+		String[] splitFullString = comment.split(";");
+		String unknownStr = "unknown";
+		String result = unknownStr;
 
-	    if (splitFullString.length > 7) {
-	        result = splitFullString[7];
-	    }
+		if (splitFullString.length > 7) {
+			result = splitFullString[7];
+		}
 
-	    return result;
+		return result;
 	}
-	
+
 	public int extractCounterMove1(String comment) {
-	    int result = 0;
-	    List<String> splitFullString = Arrays.asList(comment.split(";"));
-	    if (splitFullString.size() > 5) {
-	        result = Integer.parseInt(splitFullString.get(5));
-	    }
-	    return result;
+		int result = 0;
+		List<String> splitFullString = Arrays.asList(comment.split(";"));
+		if (splitFullString.size() > 5) {
+			result = Integer.parseInt(splitFullString.get(5));
+		}
+		return result;
 	}
 
 	public int extractCounterMove2(String comment) {
-	    int result = 0;
-	    List<String> splitFullString = Arrays.asList(comment.split(";"));
-	    if (splitFullString.size() > 6) {
-	        result = Integer.parseInt(splitFullString.get(6));
-	    }
-	    return result;
+		int result = 0;
+		List<String> splitFullString = Arrays.asList(comment.split(";"));
+		if (splitFullString.size() > 6) {
+			result = Integer.parseInt(splitFullString.get(6));
+		}
+		return result;
 	}
-	
+
 	public String extractFailureComment(String comment) {
-	    // Split the comment using the ';' separator and return the third part
-	    List<String> splitFullString = splitString(comment);
-	    if (splitFullString.size() > 2) {
-	        return splitFullString.get(2);
-	    } else {
-	        return Sim.UNKNOWN_STR;
-	    }
+		// Split the comment using the ';' separator and return the third part
+		List<String> splitFullString = splitString(comment);
+		if (splitFullString.size() > 2) {
+			return splitFullString.get(2);
+		} else {
+			return Sim.UNKNOWN_STR;
+		}
 	}
 
 	public int extractFinalFailurePosition(String comment) {
-	    // Split the comment using the ';' separator and try to extract the 15th part as an integer
-	    List<String> splitFullString = splitString(comment);
-	    if (splitFullString.size() > 14) {
-	        try {
-	            return Integer.parseInt(splitFullString.get(14));
-	        } catch (NumberFormatException e) {
-	            // Handle the exception, e.g. log an error message
-	            e.printStackTrace();
-	        }
-	    }
-	    return 0;
+		// Split the comment using the ';' separator and try to extract the 15th part as
+		// an integer
+		List<String> splitFullString = splitString(comment);
+		if (splitFullString.size() > 14) {
+			try {
+				return Integer.parseInt(splitFullString.get(14));
+			} catch (NumberFormatException e) {
+				// Handle the exception, e.g. log an error message
+				e.printStackTrace();
+			}
+		}
+		return 0;
 	}
 
 	public int extractFinalSuccessPosition(String comment) {
-	    // Split the comment using the ';' separator and try to extract the 14th part as an integer
-	    List<String> splitFullString = splitString(comment);
-	    if (splitFullString.size() > 13) {
-	        try {
-	            return Integer.parseInt(splitFullString.get(13));
-	        } catch (NumberFormatException e) {
-	            // Handle the exception, e.g. log an error message
-	            e.printStackTrace();
-	        }
-	    }
-	    return 0;
+		// Split the comment using the ';' separator and try to extract the 14th part as
+		// an integer
+		List<String> splitFullString = splitString(comment);
+		if (splitFullString.size() > 13) {
+			try {
+				return Integer.parseInt(splitFullString.get(13));
+			} catch (NumberFormatException e) {
+				// Handle the exception, e.g. log an error message
+				e.printStackTrace();
+			}
+		}
+		return 0;
 	}
 
-	public  String extractInjuryCutComment(String comment) {
-	    // Split the comment using the ';' separator and return the first part
-	    List<String> splitFullString = splitString(comment);
-	    return splitFullString.get(0);
+	public String extractInjuryCutComment(String comment) {
+		// Split the comment using the ';' separator and return the first part
+		List<String> splitFullString = splitString(comment);
+		return splitFullString.get(0);
 	}
 
-	public  String extractInjuryCutName(String comment) {
-	    // Split the comment using the ';' separator and return the second part
-	    List<String> splitFullString = splitString(comment);
-	    return splitFullString.get(1);
+	public String extractInjuryCutName(String comment) {
+		// Split the comment using the ';' separator and return the second part
+		List<String> splitFullString = splitString(comment);
+		return splitFullString.get(1);
 	}
 
-	public  int extractInjuryProb(String comment) {
-	    // Split the comment using the ';' separator and try to extract the 12th part as an integer
-	    List<String> splitFullString = splitString(comment);
-	    if (splitFullString.size() > 11) {
-	        try {
-	            return Integer.parseInt(splitFullString.get(11));
-	        } catch (NumberFormatException e) {
-	            // Handle the exception, e.g. log an error message
-	            e.printStackTrace();
-	        }
-	    }
-	    return 0;
+	public int extractInjuryProb(String comment) {
+		// Split the comment using the ';' separator and try to extract the 12th part as
+		// an integer
+		List<String> splitFullString = splitString(comment);
+		if (splitFullString.size() > 11) {
+			try {
+				return Integer.parseInt(splitFullString.get(11));
+			} catch (NumberFormatException e) {
+				// Handle the exception, e.g. log an error message
+				e.printStackTrace();
+			}
+		}
+		return 0;
 	}
 
 	public static String returnComment(List<String> commentList) {
-	    String comment = "";
-	    int listSize = commentList.size();
+		String comment = "";
+		int listSize = commentList.size();
 
-	    // If commentList has more than 0 elements
-	    if (listSize > 0) {
-	        // Get a random comment from the list
-	        while (comment.isEmpty()) {
-	            comment = commentList.get((int) (Math.random() * listSize));
-	        }
-	    }
+		// If commentList has more than 0 elements
+		if (listSize > 0) {
+			// Get a random comment from the list
+			while (comment.isEmpty()) {
+				comment = commentList.get((int) (Math.random() * listSize));
+			}
+		}
 
-	    return comment;
+		return comment;
 	}
 
 	public List<String> splitString(String comment) {
-	    List<String> splitFullComment = new ArrayList<>();
+		List<String> splitFullComment = new ArrayList<>();
 
-	    try {
-	        // Split the comment using the ';' separator
-	        String[] parts = comment.split(";");
-	        // Add each part to the list
-	        for (String part : parts) {
-	            splitFullComment.add(part);
-	        }
-	    } catch (Exception e) {
-	        // Handle the exception, e.g. log an error message
-	        e.printStackTrace();
-	    }
+		try {
+			// Split the comment using the ';' separator
+			String[] parts = comment.split(";");
+			// Add each part to the list
+			for (String part : parts) {
+				splitFullComment.add(part);
+			}
+		} catch (Exception e) {
+			// Handle the exception, e.g. log an error message
+			e.printStackTrace();
+		}
 
-	    return splitFullComment;
+		return splitFullComment;
 	}
-	
+
 	public void generateComment(List<String> CommentList) {
 		int listSize = CommentList.size();
 		fullComment = "";
@@ -1852,75 +1988,75 @@ public class Fight implements Serializable {
 		}
 
 		// Extract necessary values
-		 side = leftRight(fullComment);
+		side = leftRight(fullComment);
 		location = locationName(extractHitLocation(fullComment));
 	}
-	
+
 	public String locationName(int location) {
-	   	 String result = "";
-	    // Location 0 is Head, so we get a random part of the head
-	    if (location == 0) {
-	        location = (int) (Math.random() * 8) + 1;
-	    }
-	    switch (location) {
-	        case 1:
-	            result = Comments.misc.get(Sim.FOREHEAD);
-	            break;
-	        case 2:
-	            result = Comments.misc.get(Sim.LEFT_EYE);
-	            break;
-	        case 3:
-	            result = Comments.misc.get(Sim.RIGHT_EYE);
-	            break;
-	        case 4:
-	            result = Comments.misc.get(Sim.LEFT_CHEEK);
-	            break;
-	        case 5:
-	            result = Comments.misc.get(Sim.RIGHT_CHEEK);
-	            break;
-	        case 6:
-	            result = Comments.misc.get(Sim.NOSE);
-	            break;
-	        case 7:
-	            result = Comments.misc.get(Sim.MOUTH);
-	            break;
-	        case 8:
-	            result = Comments.misc.get(Sim.CHIN);
-	            break;
-	    }
-	    return result;
+		String result = "";
+		// Location 0 is Head, so we get a random part of the head
+		if (location == 0) {
+			location = (int) (Math.random() * 8) + 1;
+		}
+		switch (location) {
+		case 1:
+			result = Comments.misc.get(Sim.FOREHEAD);
+			break;
+		case 2:
+			result = Comments.misc.get(Sim.LEFT_EYE);
+			break;
+		case 3:
+			result = Comments.misc.get(Sim.RIGHT_EYE);
+			break;
+		case 4:
+			result = Comments.misc.get(Sim.LEFT_CHEEK);
+			break;
+		case 5:
+			result = Comments.misc.get(Sim.RIGHT_CHEEK);
+			break;
+		case 6:
+			result = Comments.misc.get(Sim.NOSE);
+			break;
+		case 7:
+			result = Comments.misc.get(Sim.MOUTH);
+			break;
+		case 8:
+			result = Comments.misc.get(Sim.CHIN);
+			break;
+		}
+		return result;
 	}
-	
+
 	public String leftRight(String comment) {
-	    String result = "";
-	    if (!comment.isEmpty()) {
-	        int loc = extractHitLocation(comment);
-	        if (Arrays.asList(2, 4, 13, 15, 17, 19).contains(loc)) {
-	            result = Sim.LEFT;
-	        } else if (!Arrays.asList(2, 4, 13, 15, 17, 19).contains(loc)) {
-	            result = Sim.RIGHT;
-	        }
-	    }
-	    return result;
+		String result = "";
+		if (!comment.isEmpty()) {
+			int loc = extractHitLocation(comment);
+			if (Arrays.asList(2, 4, 13, 15, 17, 19).contains(loc)) {
+				result = Sim.LEFT;
+			} else if (!Arrays.asList(2, 4, 13, 15, 17, 19).contains(loc)) {
+				result = Sim.RIGHT;
+			}
+		}
+		return result;
 	}
-	
+
 	public int extractHitLocation(String comment) {
-	    int result = 0;
-	    List<String> splitFullString = splitString(comment);
-	    if (splitFullString.size() > 3) {
-	        result = Integer.parseInt(splitFullString.get(3));
-	    }
-	    return result;
+		int result = 0;
+		List<String> splitFullString = splitString(comment);
+		if (splitFullString.size() > 3) {
+			result = Integer.parseInt(splitFullString.get(3));
+		}
+		return result;
 	}
-	
+
 	public void doComment(Fighter act, Fighter pas, String comment) {
 
-		String updatedComment = comment.replaceAll("%act", act.getName()).replaceAll("%pas", pas.getName());
+		String updated1 = comment.replaceAll("%act", act.getName()).replaceAll("%pas", pas.getName());
+		String updated2 = updated1.replaceAll("%location", location);
 
-		setPbp(updatedComment);
+		setPbp(updated2);
 	}
-	
+
 	/* Fim geração de comentarios */
-	
 
 }

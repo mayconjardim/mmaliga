@@ -32,7 +32,7 @@ public abstract class Comments {
 			"A solid combination from %act;connects with %pas.;mostly hits air.;0;2;1;2;Punches;2;2;1;0;0;1;1",
 			"%act is measuring %pas with his jab.;Good accuracy on his part.;%pas isn't fazed.;0;1;1;2;Jabs;2;2;-1;-2;-1;1;1",
 			"Solid shot from %act to the body.;%pas didn't like that.;%pas blocks in time.;9;2;1;4;Body punch;1;1;-5;1;0;1;1",
-			"Some counter punches against %pas; land while he's on his bicycle.;almost hit him as he moves away.;0;1;4;1;Punches;2;2;0;-1;0;1;1",
+			"Some counter punches against %pas; %location;almost hit him as he moves away.;0;1;4;1;Punches;2;2;0;-1;0;1;1",
 			"Good movement from %act;moving in to strike and moving away afterwards.;who is bobbing and weaving.;0;0;1;3;Punches;2;2;1;0;0;1;1",
 			"%act fires an unorthodox punch to %pas's torso;that hits its mark.;that goes wide.;11;2;1;2;Body punch;1;1;-5;-1;-3;1;1",
 			"A punch from %act;grazes %pas's left cheek.;whizzes past %pas.;4;2;1;4;Punch;1;1;0;-1;0;1;1",
@@ -161,4 +161,68 @@ public abstract class Comments {
 			Arrays.asList("%pas has a small cut in his %location;Small cut %location",
 					"There is a small laceration on %pas's %location;Small cut %location"));
 
+	public static final ArrayList<String> faceInjuries1 = new ArrayList<String>(Arrays.asList(
+			"%pas can't see anything with that swollen left eye.;Swollen Eye",
+
+			"%pas can't see anything with that swollen right eye.;Swollen Eye",
+
+			"%pas is out! He has a broken orbital bone!;Broken orbital bone",
+
+			"%pas is out! He has a broken cheekbone!;Broken cheeckbone",
+
+			"%pas can't continue fighting. %ref doesn't allow him to continue fighting with his swollen right eye!;Swollen eye",
+
+			"%pas can't continue fighting. %ref doesn't allow him to continue fighting with his swollen left eye!;Swollen eye"
+			));
+	
+	public static final ArrayList<String> bodyInjuries1 = new ArrayList<String>(Arrays.asList(
+			"%pas has a broken rib. He can't continue fighting.;Broken Rib",
+			"%pas may have a broken rib. It's painful to see him losing this way.;Broken Ribs",
+			"%pas's holding his side, he appears to be in terrible pain, he's broken a rib ;Broken Ribs"
+			));
+	
+	public static final ArrayList<String> armInjuries1 = new ArrayList<String>(Arrays.asList(
+			"%pas [SIDE] arm has been Hyper-extended so much it appears its dislocated, the fight is over;Arm injury",
+
+			"Thats a joint Hyper-extension you don't want, %pas has broken his [SIDE] arm,this fight is over;Broken arm",
+
+			"He hit him so hard %pas has broken his [SIDE] hand;Broken hand "
+			+ "It appears %pas broke his [SIDE] wrist with that block;Broken wrist"
+			));
+
+	public static final ArrayList<String> legInjuries1 = new ArrayList<String>(Arrays.asList(
+			"%pas's [SIDE] leg has been hammered so much, he can't stand on it, the fight is over;Leg injury",
+
+			"Nasty joint hyper-extension on %pas's [SIDE] leg, he can't fight;Leg injury",
+
+			"%pas's [SIDE] knee cap just popped, he can't fight on;Leg injury",
+
+			"Bad leg defense, %pas broke his [SIDE] ankle with that defense, this fight is over;Leg injury"
+			));
+	
+	public static final ArrayList<String> faceInjuries0 = new ArrayList<String>(Arrays.asList(
+			"%pas's %location is beginning to swell;%location swelling",
+			"%pas's %location is bruised after the punishement he's received!;%location bruising"
+			));
+
+	public static final ArrayList<String> bodyInjuries0 = new ArrayList<String>(Arrays.asList(
+			"Crushing shot to %pas's body! He's holding his side;Contused side",
+			"Hard blow to %pas's mid-section, he seems hurt;Contused side",
+			"%pas ribs are getting hammered, they look bad!;Hammered ribs"
+			));
+
+	public static final ArrayList<String> armInjuries0 = new ArrayList<String>(Arrays.asList(
+			"%pas Hyper-extended his [SIDE] arm;Hyper-extended arm",
+			"%pas's [SIDE] arm is getting wrenched, it appears to be injured;contused left arm"
+			));
+
+	public static final ArrayList<String> legInjuries0 = new ArrayList<String>(Arrays.asList(
+			"%pas hyper-extended his [SIDE] leg;hyper-extended [SIDE] leg"
+			));
+
+	
+	
+	
+
+	
 }
