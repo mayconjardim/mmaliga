@@ -90,6 +90,7 @@ public class Fight implements Serializable {
 	private Integer injuryFreq = 0;
 	private Integer numHooks = 0;
 
+	
 	//Constantes
 	
 	  //Clinch
@@ -1049,6 +1050,119 @@ public class Fight implements Serializable {
 	          //  extractHitsLaunched(fullComment));
 	    }
 	}
+
+	public void actTakedown(Fighter act, Fighter pas) {
+	    double at, def, damageDone;
+	    int attackLevel, injuryType;
+
+	    attackLevel = attackLevel(act, pas, act.getTakedowns(), pas.getTakedownsDef());
+
+	    switch (attackLevel) {
+	        case 1:
+	        case 2:
+	        case 3:
+	            generateComment(Comments.takeDown1);
+	            break;
+	    }
+
+	    doComment(act, pas, extractInitComment(fullComment));
+
+	    hitLocation = extractHitLocation(fullComment);
+
+	    at = fixedRandomInt(act.getTakedowns()) + act.getAttackBonus();
+
+	    Random rndAtk = new Random();
+        int rndtk = rndAtk.nextInt(4);
+	    switch (rndtk) {
+	        case 0:
+	            at += fixedRandomInt(act.getStrength() / 2);
+	            break;
+	        case 1:
+	            at += fixedRandomInt(act.getAgility() / 2);
+	            break;
+	        case 2:
+	            at += fixedRandomInt(act.getDodging() / 2);
+	            break;
+	        case 3:
+	            at += fixedRandomInt(act.getClinchGrappling() / 2);
+	            break;
+	    }
+	    at += smallRandom();
+	    at = gasTankFactor(act, at);
+	    at -= hurtFactor(act);
+
+	    
+	    def = fixedRandomInt(pas.getTakedownsDef());
+	    def += pas.getDefenseBonus();
+	    
+	    Random rnddfs = new Random();
+        int rndfs = rnddfs.nextInt(4);
+	    switch (rndfs) {
+	        case 0:
+	            def += fixedRandomInt(pas.getStrength() / 2);
+	            break;
+	        case 1:
+	            def += fixedRandomInt(pas.getAgility() / 2);
+	            break;
+	        case 2:
+	            def += fixedRandomInt(pas.getDodging() / 2);
+	            break;
+	        case 3:
+	            def += fixedRandomInt(pas.getClinchGrappling() / 2);
+	            break;
+	    }
+	    def += smallRandom();
+	    def = gasTankFactor(pas, def);
+	    def -= hurtFactor(pas);
+
+	    if (def >= at) {
+	        doComment(act, pas, extractFailureComment(fullComment));
+
+	        if (!isCounter) {
+	            isCounter = checkCounterAttack(act, pas, counterProb);
+	            if (isCounter) {
+	                doCounterAttack(pas, act);
+	            } else {
+	                processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+	            }
+	        } else {
+	            isCounter = false;
+	            processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+	        }
+	    } else {
+	        switch (attackLevel) {
+	            case 1:
+	            case 2:
+	            case 3:
+	                doComment(act, pas, extractComment(fullComment));
+	                break;
+	        }
+	        act.setRoundsInTheGround(Sim.MINSROUNDSINTHEGROUND);
+
+	        damageDone = ((at - def) * act.getDamageBonus() * attackLevel) / 4;
+	        damageFighter(act, pas, damageDone);
+
+	        //act.increasePoints(bout.getCurrentRound(), ApplicationUtils.SUCCESSFULTAKEDOWNPOINTS);
+
+	        processAfterMovePosition(act, pas, extractFinalSuccessPosition(fullComment));
+
+	        injuryType = checkInjury(act, pas, damageDone, injuryProb);
+	        if (injuryType != Sim.INJURYORCUTFALSE) {
+	            processInjury(act, pas, injuryType);
+	        }
+
+	injuryType = checkCut(act, pas, damageDone, cutProb);
+	if (injuryType != Sim.INJURYORCUTFALSE) {
+	processCut(act, pas, injuryType);
+	}
+
+	//Check KO
+	if (checkKO(act, pas, damageDone, kOSubProb)) {
+	processKO(act, pas);
+	}
+
+
+	    }}
 	
 	public int dirtyBoxingAction(Fighter act) {
 		final double PUNCH_PROB = 1.25;

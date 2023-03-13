@@ -234,6 +234,29 @@ public abstract class Comments {
 			"%pas gets sloppy and %act tries to take advantage...", "Poorly executed technique. %act looks to counter!",
 			"%act misses a step and %pas sees an opportunity to counter him!"));
 	
+	public static final ArrayList<String> takeDown1 = new ArrayList<String>(Arrays.asList(
+			"%act is holding %pas's left leg... He's trying to take him down.;%pas loses balance and goes to "
+			+ "the ground.;%pas shows great balance while pushing away %act;13;3;1;3;One leg takedown;1;1;0;0;0;13;1",
+
+			"%act is holding %pas's right leg... He's trying to take him down.;%pas loses balance and goes to "
+			+ "the ground.;%pas shows great balance while pushing away %act;14;3;1;3;One leg takedown;1;1;0;0;0;13;1",
+
+			"%act grabs his opponent by the waist and tries to take the fight to the ground;Great takedown "
+			+ "by %act;%pas struggles... %act is unable to take him down;12;1;3;1;Takedown;1;1;0;0;0;5;1",
+
+			"%act tries to take the fight to the ground with a one leg takedown...;%pas is unable to remain "
+			+ "on his feet and falls to the ground;%pas jumps backwards and frees his leg.;12;2;2;3;One leg takedown;1;1;0;0;0;5;1",
+
+			"%act tries to bring the fight to the ground;%pas goes down.;%pas won't budge, forcing %act to "
+			+ "pull guard.;12;0;0;0;Takedown;1;1;0;-1;0;5;10",
+
+			"%act shoots for a double leg takedown!;He hits it! %pas is taken off his feet, but he manages "
+			+ "to pull %act into his guard.;%pas sprawls and manages to stay on his feet.;12;2;7;3;Double Leg Takedown;1;1;0;0;1;6;1;",
+
+			"%act attempts a sweep single...;%act catches %pas's far ankle and trips him to the mat! Slick"
+			+ " takedown by %act.;%pas was ready and shrugs off the takedown attempt.;12;2;2;3;Sweep Single;1;1;0;0;0;6;0;"
+			));
+	
 	public static final ArrayList<String> groundKO = new ArrayList<String>(
 			Arrays.asList("This is over! That impact from %act has left %pas laying flat on the mat!",
 					"%act turns out the lights for %pas! What an astonishing KO by %act!",
