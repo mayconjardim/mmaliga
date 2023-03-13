@@ -137,7 +137,10 @@ public class Fight implements Serializable {
 		FightApresentation();
 	}
 
+	/* Execução da luta */
+	
 	public void fightController() {
+
 
 		for (int i = 1; i <= rounds; i++) {
 
@@ -161,11 +164,11 @@ public class Fight implements Serializable {
 
 				if (fighter1.isDazed() == fighter2.isDazed()) {
 					if ((!fighter1.isOnTheGround()) && (!fighter2.isOnTheGround())) {
-						fighterActive = getStandUpInitiative(fighter1, fighter2, getActionBonus(fighterAction1),
-								getActionBonus(fighterAction2));
+						fighterActive = standUpInitiative(fighter1, fighter2, actionBonus(fighterAction1),
+								actionBonus(fighterAction2));
 					} else {
-						fighterActive = getGroundInitiative(fighter1, fighter2, getActionBonus(fighterAction1),
-								getActionBonus(fighterAction2));
+						fighterActive = groundInitiative(fighter1, fighter2, actionBonus(fighterAction1),
+								actionBonus(fighterAction2));
 					}
 				} else {
 					fighterActive = fighter1.isDazed() ? 1 : 0;
@@ -189,12 +192,10 @@ public class Fight implements Serializable {
 
 				switch (fightAction(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive))) {
 				case Moves.ACT_PUNCHES:
-					 actPunch(fighterActiveOrPassive(fighterActive),
-					 fighterActiveOrPassive(fighterPasive));
+					actPunch(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_KICKS:
-					actKick(fighterActiveOrPassive(fighterActive),
-					fighterActiveOrPassive(fighterPasive));
+					//actKick(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_CLINCH:
 					setPbp("ACT_CLINCH");// ActClinch(fighterActiveOrPassive(fighterActive),
@@ -355,12 +356,1462 @@ public class Fight implements Serializable {
 					break;
 				}
 
+				/*
+				if (boutFinished == false) {
+					RefStandFighters(Fighters[FighterActive], Fighters[FighterPasive]);
+					ActKeepClinch(Fighters[FighterActive], Fighters[FighterPasive]);
+					MakeStaggeredComment(Fighters[FighterActive], Fighters[FighterPasive]);
+					MakeStandUpComment(Fighters[FighterActive], Fighters[FighterPasive], !f1Ground, !f2Ground);
+				}
+
+				ProcessStaminaLoss(Fighters[FighterActive], true);
+				ProcessStaminaLoss(Fighters[FighterPasive], false);
+
+				// Recueprar de atordoamento
+				RecoverForDazed(Fighters[FighterActive]);
+				RecoverForDazed(Fighters[FighterPasive]);
+
+				CheckFightPerformance(Fighters[FighterActive], Fighters[FighterPasive]);
+				CheckFightPerformance(Fighters[FighterPasive], Fighters[FighterActive]);
+				CheckPainAndTiredness(Fighters[FighterActive]);
+				CheckPainAndTiredness(Fighters[FighterPasive]);
+				CheckMoral(Fighters[FighterActive]);
+				CheckMoral(Fighters[FighterPasive]);
+				if (BoutFinished == false) {
+					ProcessTowelThrow(Fighters[FighterPasive], Fighters[FighterActive]);
+					RefRestartCentreRing(Fighters[FighterPasive], Fighters[FighterActive]);
+				}
+				*/
+
+				// Adicionar esquema de pontuação!
+
 			}
 
 		}
 	}
+	
+	/* Fim execução da luta */
 
 	
+	
+	
+	/* Execução ação de luta */
+
+	public int fightAction(Fighter act, Fighter pas) {
+
+		Random random = new Random();
+		int randomNumber = random.nextInt(19);
+		int result = 0;
+
+		if ((randomNumber < act.getAggressiveness() + act.getRush()) || act.isOnTheGround() || pas.isOnTheGround()
+				|| isInTheClinch()) {
+			if (act.isOnTheGround() && pas.isOnTheGround()) {
+
+				/* GroundAction */
+
+				int prob, gnPProb, subProb, posProb, lnPProb, standProb;
+
+				prob = (int) (Math.random() * 100) + 1;
+
+				gnPProb = act.getStratGNP();
+
+				if (isSubmissionAvailable(act)) {
+					subProb = gnPProb + getSubmissionProbByPosition(act);
+				} else {
+					subProb = 0;
+				}
+
+				if (act.getLastName().equals(fighterActiveOrPassive(fighterOnTop).getLastName())
+						&& (guardType == 0 || guardType == 1)) {
+					posProb = 0;
+				} else {
+					posProb = subProb + act.getStratPositioning();
+				}
+
+				lnPProb = posProb + act.getStratLNP();
+
+				if (((guardType == 3 || guardType == 4)
+						|| (act.getLastName().equals(fighterActiveOrPassive(fighterOnTop).getLastName())
+								&& (guardType == 2 || guardType == 4)))
+						&& (act.getRoundsInTheGround() <= 0)) {
+					standProb = lnPProb + act.getStratStandUp();
+				} else {
+					standProb = 0;
+					posProb += act.getStratStandUp();
+					lnPProb = posProb + act.getStratLNP();
+				}
+
+				if (prob <= gnPProb) {
+					result = Moves.ACT_GNP;
+				} else if (prob <= subProb) {
+					result = Moves.ACT_SUBMISSION;
+				} else if (prob <= posProb) {
+					result = Moves.ACT_POSITIONING;
+				} else if (prob <= lnPProb) {
+					result = Moves.ACT_LNP;
+				} else if ((prob <= standProb) && (standProb > 0)) {
+					result = Moves.ACT_STANDUP;
+				} else {
+					result = Moves.ACT_POSITIONING;
+
+				}
+
+				if (act.getFancySubmissions() > 0 && result == Moves.ACT_SUBMISSION) {
+					if (randomGenerator() < act.getAgility() && randomGenerator() < act.getSubmission()
+							&& randomGenerator() < act.getFancySubmissions() * Sim.FANCYMOVEPROB) {
+						result = Moves.ACT_FANCYSUB;
+					}
+				}
+
+				if (result == Moves.ACT_GNP
+						&& act.getLastName().equals(fighterActiveOrPassive(fighterOnTop).getLastName())
+						&& (guardType == 2 || guardType == 3 || guardType == 7 || guardType == 8)
+						&& act.isUseKneesGround()) {
+					if ((fixedRandomInt(act.getAggressiveness()) + Sim.KNEESFREQUENCY > 20)) {
+						result = Moves.ACT_KNEESONGROUND;
+					}
+				}
+
+				if (act.checkDirtyMove()) {
+					result = Moves.ACT_POKE;
+				}
+
+				if (act.checkDirtyMove()) {
+					result = Moves.ACT_HEADBUTT;
+				}
+
+				if (act.getActionsInGround() > 0 && act.getActionsInGround() < Sim.MINACTIONSFORSWITCHING
+						&& result == Moves.ACT_STANDUP) {
+					result = Moves.ACT_LNP;
+					if (act.getActionsInGround() >= Sim.MINACTIONSFORSWITCHING) {
+						act.setActionsInGround(-1);
+					}
+				}
+
+				act.setActionsInGround(act.getActionsInGround() + 1);
+
+				if (!act.getLastName().equals(fighterActiveOrPassive(fighterOnTop).getLastName())
+						&& result == Moves.ACT_GNP) {
+					result = Moves.ACT_STRIKESFROMGUARD;
+				}
+
+				if (result == Moves.ACT_GNP && act.isUseElbows() && isElbows()) {
+					if (randomGenerator() < act.getAggressiveness()) {
+						result = Moves.ACT_GNPELBOWS;
+					}
+				}
+
+				if (act.getTempDamageGround() > act.getToughness() * Sim.MAXDAMAGEFORCHANGINGGAMEPLAN) {
+					if (randomGenerator() < act.getControl()) {
+						result = Moves.ACT_STANDUP;
+					}
+				}
+
+				if (pas.isDazed()) {
+					if (fixedRandomInt(act.getAggressiveness()) > Sim.CAPITALIZEPROB) {
+						result = Moves.ACT_CAPITALIZEGROUND;
+					}
+				}
+
+				int actions = Sim.setLimits(act.getActionsInGround() - 1, Sim.MINSROUNDSINTHEGROUND, 0);
+
+
+				/* Fim GroundAction */
+
+			} else if (!act.isOnTheGround() && pas.isOnTheGround()) {
+
+				/* StandToGroundAction */
+
+				int goToGroundProb = fixedRandomInt(act.getStratTakedowns());
+				int kickProb = fixedRandomInt((act.getStratKicking() + act.getStratStandUp() / 2));
+
+				if (goToGroundProb > kickProb) {
+					result = Moves.ACT_MOVETOGROUND;
+				} else {
+					result = Moves.ACT_STANDKICK;
+				}
+
+				if (randomGenerator() > act.getAggressiveness()) {
+					result = Moves.ACT_ALLOWSTAND;
+				}
+
+				int soccerKickProb = 0;
+				if (result == Moves.ACT_STANDKICK && isSoccerKicks() && act.isUseSoccerKicks()
+						&& fixedRandomInt(act.getAggressiveness()) + Sim.SOCCERKICKSFREQUENCY > 20) {
+					soccerKickProb = fixedRandomInt(act.getKicking());
+				}
+
+				int stompProb = 0;
+				if (result == Moves.ACT_STANDKICK && isStomps() && act.isUseStomps()
+						&& fixedRandomInt(act.getAggressiveness()) + Sim.STOPMSFREQUENCY > 20) {
+					stompProb = fixedRandomInt(act.getKicking());
+				}
+
+				if (result == Moves.ACT_STANDKICK) {
+					if (soccerKickProb > stompProb) {
+						result = Moves.ACT_SOCCERKICKS;
+					} else if (stompProb > soccerKickProb) {
+						result = Moves.ACT_STOMPS;
+					}
+				}
+
+				if (pas.isDazed()) {
+					if (fixedRandomInt(act.getAggressiveness()) > Sim.CAPITALIZEPROB) {
+						result = Moves.ACT_CAPITALIZEGROUND;
+					}
+				}
+
+				/* Fim StandToGroundAction */
+
+			} else if (act.isOnTheGround() && !pas.isOnTheGround()) {
+
+				/* getGroundToStandAction */
+
+				int standupProb = fixedRandomInt(act.getStratStandUp());
+				int kickProb = fixedRandomInt((act.getStratKicking()) / 2);
+
+				if (standupProb > kickProb) {
+					result = Moves.ACT_STANDUP;
+				} else {
+					result = Moves.ACT_GROUNDKICK;
+				}
+
+				/* Fim getGroundToStandAction */
+
+			} else if (isInTheClinch()) {
+
+				/* getClinchAction */
+				int prob = ThreadLocalRandom.current().nextInt(1, 101);
+
+				int dirtyBoxing = act.getStratDirtyBoxing();
+				int thai = dirtyBoxing + act.getStratThaiClinch();
+				int avoidProb = thai + act.getStratAvoidClinch();
+
+				if (prob <= dirtyBoxing) {
+					result = dirtyBoxingAction(act);
+				} else if (prob <= thai) {
+					result = thaiAction(act);
+				} else if (prob <= avoidProb) {
+					result = Moves.ACT_BREAKCLINCH;
+				} else {
+					result = Moves.ACT_TAKEDOWNCLINCH;
+				}
+
+				if (act.getActionsInClinch() > 0 && act.getActionsInClinch() < Sim.MINACTIONSFORSWITCHING
+						&& result == Moves.ACT_BREAKCLINCH) {
+					result = Moves.ACT_DIRTYBOXING;
+					if (act.getActionsInClinch() >= Sim.MINACTIONSFORSWITCHING) {
+						act.setActionsInClinch(-1);
+					}
+				}
+
+				act.setActionsInClinch(act.getActionsInClinch() + 1);
+
+				if (act.checkDirtyMove()) {
+					result = Moves.ACT_GROINKICK;
+				}
+
+				if (result == Moves.ACT_TAKEDOWNCLINCH && act.isPullsGuard()) {
+					if (randomGenerator() < ((act.getAgility() + act.getTakedowns()) / Sim.PULLGUARDCUT)) {
+						result = Moves.ACT_PULLGUARD;
+					}
+				}
+
+				/*
+				 * if (Bout.getStatistics()[getFighterNumber(act)].getTempDamageClinch() >
+				 * act.getToughness() * Sim.MAXDAMAGEFORCHANGINGGAMEPLAN) { if
+				 * (randomGenerator() < act.getControl()) { result = Moves.ACT_BREAKCLINCH; } }
+				 */
+
+				if (ThreadLocalRandom.current().nextInt(1, 101) < Sim.RESTFREQUENCY) {
+					if (randomGenerator() > act.getControl() && randomGenerator() * 5 > act.getCurrentStamina()) {
+						result = Moves.ACT_RESTCLINCH;
+					}
+				}
+
+				if ((result == Moves.ACT_THAICLINCH_PUNCHES && !act.isThaiClinch())
+						|| (result == Moves.ACT_THAICLINCH_KNEES && !act.isThaiClinch())
+						|| (result == Moves.ACT_DIRTYBOXING && !act.isDirtyBoxing())) {
+					result = Moves.ACT_GRAPPLING_PUNCH;
+				}
+
+				/* Fim getClinchAction */
+
+			} else {
+
+				/* getStandUpAction */
+
+				Random randomico = new Random();
+				int Prob = randomico.nextInt(100) + 1;
+
+				int PunchProb = act.getStratPunching();
+				int KickProb = PunchProb + act.getStratKicking();
+				int ClinchProb = KickProb + act.getStratClinching();
+
+				if (Prob <= PunchProb) {
+					result = Moves.ACT_PUNCHES;
+
+				} else if (Prob <= KickProb) {
+					result = Moves.ACT_KICKS;
+				} else if (Prob <= ClinchProb) {
+					result = Moves.ACT_CLINCH;
+				} else {
+					result = Moves.ACT_TAKEDOWNS;
+					setPbp("valor " + act.getStratTakedowns() + " - prob " + Prob);
+				}
+
+				if (act.checkDirtyMove()) {
+					result = Moves.ACT_POKE;
+				}
+
+				if (act.getFancyPunches() > 0 && result == Moves.ACT_PUNCHES) {
+					double rand = Math.random();
+					if (rand < act.getAgility() && rand < act.getPunching()
+							&& rand < act.getFancyPunches() * Sim.FANCYMOVEPROB) {
+						result = Moves.ACT_FANCYPUNCH;
+					}
+				} else if (act.getFancyKicks() > 0 && result == Moves.ACT_KICKS) {
+					double rand = Math.random();
+					if (rand < act.getAgility() && rand < act.getKicking()
+							&& rand < act.getFancyKicks() * Sim.FANCYMOVEPROB) {
+						result = Moves.ACT_FANCYKICK;
+					}
+				} else if (act.getFancySubmissions() > 0) {
+					double rand = Math.random();
+					if (rand < act.getAgility() && rand < act.getSubmission()
+							&& rand < act.getFancySubmissions() * Sim.FANCYMOVEPROB) {
+						result = Moves.ACT_FANCYSUB;
+					}
+				} else if (result == Moves.ACT_TAKEDOWNS) {
+					if (act.getStrength() > Sim.SLAMSTRENGTH && Math.random() < Sim.SLAMPROB) {
+						result = Moves.ACT_SLAM;
+					} else if (act.getStrength() > Sim.SUPPLEXSTRENGHT && Math.random() < Sim.SUPPLEXPROB) {
+						result = Moves.ACT_SUPPLEX;
+					}
+				}
+
+				if (Math.random() * 100 < Sim.RESTFREQUENCY) {
+					if (Math.random() > act.getControl() && Math.random() * 5 > act.getCurrentStamina()
+							&& getTimeCurrent() > 100) {
+						result = Moves.ACT_REST;
+					}
+				}
+
+				if (pas.isDazed()) {
+					if (fixedRandomInt(act.getAggressiveness()) > Sim.CAPITALIZEPROB) {
+						result = Moves.ACT_CAPITALIZESTAND;
+					}
+				}
+
+
+				/* Fim getStandUpAction */
+
+			}
+		} else {
+
+			return Moves.ACT_NOACTION;
+		}
+		return result;
+	}
+
+	/* Fim Execução da ação de luta */
+
+	
+	
+	/* Realizar ações de luta */
+	
+	public void actPunch(Fighter act, Fighter pas) {
+		double at, def, damageDone;
+		int attackLevel, injuryType;
+
+		attackLevel = attackLevel(act, pas, act.getPunching(), pas.getDodging());
+
+		switch (attackLevel) {
+		case 1:
+			generateComment(Comments.punch1);
+			break;
+		case 2:
+			generateComment(Comments.punch2);
+			break;
+		case 3:
+			generateComment(Comments.punch3);
+			break;
+		}
+
+		// Attacking value
+		int rndatk = new Random().nextInt(4);
+		at = fixedRandomInt(act.getPunching()) + act.getAttackBonus();
+		switch (rndatk) {
+		case 0:
+			at += fixedRandomInt(act.getStrength() / 2);
+			break;
+		case 1:
+			at += fixedRandomInt(act.getAgility() / 2);
+			break;
+		case 2:
+			at += fixedRandomInt(act.getDodging() / 2);
+			break;
+		case 3:
+			at += fixedRandomInt(act.getClinchStriking() / 2);
+			break;
+		}
+
+		at += smallRandom();
+		at = gasTankFactor(act, at);
+		at -= hurtFactor(act);
+
+		// Defensive value
+		int rnddfs = new Random().nextInt(4);
+		def = fixedRandomInt(pas.getDodging()) + pas.getDefenseBonus();
+		switch (rnddfs) {
+		case 0:
+			def += fixedRandomInt(pas.getStrength() / 2);
+			break;
+		case 1:
+			def += fixedRandomInt(pas.getAgility() / 2);
+			break;
+		case 2:
+			def += fixedRandomInt(pas.getPunching() / 2);
+			break;
+		case 3:
+			def += fixedRandomInt(pas.getClinchStriking() / 2);
+			break;
+		}
+		def += smallRandom();
+		def = gasTankFactor(pas, def);
+		def -= hurtFactor(pas);
+
+		if (def >= at) {
+			doComment(act, pas, extractFailureComment(fullComment));
+
+			// Counter attack
+			if (!isCounter) {
+				isCounter = checkCounterAttack(act, pas, counterProb);
+				if (isCounter) {
+					doCounterAttack(pas, act);
+				} else {
+					ProcessAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+				}
+			} else {
+				isCounter = false;
+				ProcessAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+			}
+		} else {
+			// Do comments
+			switch (attackLevel) {
+			case 1:
+			case 2:
+			case 3:
+				doComment(act, pas, extractComment(fullComment));
+				break;
+			}
+
+			// Damage
+			damageDone = (at - def) * act.getDamageBonus() * attackLevel;
+			damageFighter(act, pas, damageDone);
+
+			ProcessAfterMovePosition(act, pas, extractFinalSuccessPosition(fullComment));
+
+			// Check KO
+			if (checkKO(act, pas, damageDone, kOSubProb)) {
+				processKO(act, pas);
+			}
+
+			// fazer
+			// Check Injury
+			// injuryType = checkInjury(act, pas, damageDone, injuryProb);
+			// if (injuryType != Sim.INJURYORCUTFALSE) {
+			// ProcessInjury(act, pas, injuryType);
+			// }
+
+			// Check Cut
+			injuryType = checkCut(act, pas, damageDone, cutProb);
+			if (injuryType != Sim.INJURYORCUTFALSE) {
+				processCut(act, pas, injuryType);
+			}
+
+			// Statistics
+			// Bout.UpdateStatistic(getFighterNumber(act), stPunches, 0,
+			// ExtractHitsLanded(FullComment));
+		}
+
+	}
+	
+	public int dirtyBoxingAction(Fighter act) {
+		final double PUNCH_PROB = 1.25;
+		double kneeProb = act.getStratKicking() + randomGenerator();
+		double punchProb = (act.getStratPunching() + randomGenerator()) * PUNCH_PROB;
+
+		if (kneeProb > punchProb) {
+			return Moves.ACT_GRAPPLING_KNEE;
+		} else {
+			return Moves.ACT_DIRTYBOXING;
+		}
+	}
+	
+	public int thaiAction(Fighter act) {
+		final double KNEE_PROB = 1.25;
+		double kneeProb = (act.getStratKicking() + randomGenerator()) * KNEE_PROB;
+		double punchProb = act.getStratPunching() + randomGenerator();
+
+		if (kneeProb > punchProb) {
+			return Moves.ACT_THAICLINCH_KNEES;
+		} else {
+			return Moves.ACT_THAICLINCH_PUNCHES;
+		}
+	}
+
+	public void doCounterAttack(Fighter act, Fighter pas) {
+
+		int counter1 = extractCounterMove1(fullComment);
+		int counter2 = extractCounterMove2(fullComment);
+		int counterProb1 = getCounterMoveProb(act, counter1);
+		int counterProb2 = getCounterMoveProb(act, counter2);
+		int finalMove = counterProb1 > counterProb2 ? counter1 : counter2;
+
+		doComment(act, pas, returnComment(Comments.counter));
+
+		switch (finalMove) {
+		case 1:
+			actPunch(act, pas);
+			break;
+		case 2:
+			//actKick(act, pas);
+			break;
+		case 3:
+			if (inTheClinch) {
+				int clinchMove = 1;// GetClinchAction(act, pas);
+				switch (clinchMove) {
+				case Moves.ACT_DIRTYBOXING:
+					// ActPunchClinch(act, pas, DIRTY_BOXING);
+					break;
+				case Moves.ACT_THAICLINCH_KNEES:
+					// ActKickClinch(act, pas, THAI_ATTACK);
+					break;
+				case Moves.ACT_THAICLINCH_PUNCHES:
+					// ActPunchClinch(act, pas, THAI_ATTACK);
+					break;
+				case Moves.ACT_TAKEDOWNCLINCH:
+					// ActClinchTakedown(act, pas);
+					break;
+				case Moves.ACT_BREAKCLINCH:
+					// ActBreakClinch(act, pas);
+					break;
+				default:
+					// ActPunchClinch(act, pas, -1);
+					break;
+				}
+			} else {
+				// ActClinch(act, pas);
+			}
+			break;
+		case 4:
+			// ActTakedown(act, pas);
+			break;
+		case 5:
+			// ActSubmission(act, pas);
+			break;
+		case 6:
+			// ActSubmission(act, pas);
+			break;
+		case 7:
+			// ActSubmission(act, pas);
+			break;
+		case 8:
+			if (fighterOnTop == fighterNumber(act)) {
+				// ActGnP(act, pas);
+			} else {
+				// ActStrikesFromGuard(act, pas);
+			}
+			break;
+		case 9:
+			// ActSubmission(act, pas);
+			break;
+		case 10:
+			// ActPositioning(act, pas);
+			break;
+		case 11:
+			// ActStandKickToGround(act, pas);
+			break;
+		case 12:
+			// ActGroundKicksToStand(act, pas);
+			break;
+		case 13:
+			// ActStrikesFromGuard(act, pas);
+			break;
+		case 14:
+			// ActMoveToGround(act, pas);
+			break;
+		case 15:
+			// ActStandUp(act, pas);
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Fim realizar ações de luta */
+	
+	
+	
+	/* Iniciativas de luta */
+
+	public int standUpInitiative(Fighter act, Fighter pas, int bonus1, int bonus2) {
+
+		// Get Fighter1 Initiative
+		double fighter1Ini = balancedRandom(act.getAggressiveness() + act.getControl() / 4);
+		fighter1Ini += balancedRandom(act.getAgility() / 2);
+		fighter1Ini += balancedRandom(act.getCurrentStamina() / 10);
+		fighter1Ini += randomGenerator() * 1.5;
+		fighter1Ini += act.getInitiativeBonus();
+		fighter1Ini += act.getMean() / 8;
+		fighter1Ini -= hurtFactor(act);
+
+		// Get Fighter2 Initiative
+		double fighter2Ini = balancedRandom(pas.getAggressiveness() + pas.getControl() / 4);
+		fighter2Ini += balancedRandom(pas.getAgility() / 2);
+		fighter2Ini += balancedRandom(pas.getCurrentStamina() / 10);
+		fighter2Ini += randomGenerator() * 1.5;
+		fighter2Ini += pas.getInitiativeBonus();
+		fighter2Ini += pas.getMean() / 8;
+		fighter2Ini -= hurtFactor(pas);
+
+		if (fighter1Ini > fighter2Ini) {
+			if (act.getRush() < Sim.MAXRUSH) {
+				act.setRush(act.getRush() + 1);
+			}
+			pas.setRush(0);
+			return 0;
+		} else {
+			if (pas.getRush() < Sim.MAXRUSH) {
+				pas.setRush(pas.getRush() + 1);
+			}
+			act.setRush(0);
+			return 1;
+		}
+	}
+
+	public int groundInitiative(Fighter act, Fighter pas, int bonus1, int bonus2) {
+		double fighter1Ini = balancedRandom(act.getAggressiveness() + act.getControl() / 4);
+		fighter1Ini += balancedRandom(act.getCurrentStamina() / 10);
+		fighter1Ini += balancedRandom(act.getGroundGame() / 2);
+		fighter1Ini += randomGenerator() * 1.5;
+		fighter1Ini += act.getInitiativeBonus();
+		fighter1Ini -= hurtFactor(act);
+
+		double fighter2Ini = balancedRandom(pas.getAggressiveness() + pas.getControl() / 4);
+		fighter2Ini += balancedRandom(pas.getCurrentStamina() / 10);
+		fighter2Ini += balancedRandom(pas.getGroundGame() / 2);
+		fighter2Ini += randomGenerator() * 1.5;
+		fighter2Ini += pas.getInitiativeBonus();
+		fighter2Ini -= hurtFactor(pas);
+
+		if (fighter1Ini > fighter2Ini) {
+			if (act.getRush() < Sim.MAXRUSH) {
+				act.setRush(act.getRush() + 1);
+			}
+			pas.setRush(0);
+			return 0;
+		} else {
+			if (pas.getRush() < Sim.MAXRUSH) {
+				pas.setRush(pas.getRush() + 1);
+			}
+			act.setRush(0);
+			return 1;
+		}
+
+	}
+
+	public void processKO(Fighter act, Fighter pas) {
+
+		if (boutFinished) {
+			return;
+		}
+
+		// KO
+		if (finishMode == Sim.RES_KO) {
+			if (hitLocation <= 8) {
+				finishedType = Comments.misc.get(Sim.KO);
+				finishMode = Sim.RES_KO;
+				// This is needed for unusual comments structures, like punches exchange
+				if (finishedDescription.equals("")) {
+					finishedDescription = extractMoveName(fullComment);
+				}
+				if (pas.isOnTheGround()) {
+					doComment(act, pas, returnComment(Comments.groundKO));
+				} else {
+					doComment(act, pas, returnComment(Comments.standingKO));
+				}
+				boutFinished = true;
+				fighterWinner = fighterNumber(act);
+			} else {
+				pas.setDazed(true);
+			}
+		}
+		// TKO
+		else {
+			boutFinished = true;
+			finishedType = Comments.misc.get(Sim.TKO);
+			finishMode = Sim.RES_TKO;
+			finishedDescription = extractMoveName(fullComment);
+			doComment(act, pas, returnComment(Comments.tkoRef));
+			boutFinished = true;
+			fighterWinner = fighterNumber(act);
+		}
+	}
+	
+	/* Fim iniciativas de luta */
+
+	
+
+	/* Checar ações de luta */
+
+	public boolean checkPunchesExchange(Fighter act, Fighter pas) {
+		final int PUNCHES_EXC_PROB = 8;
+		boolean result = false;
+		if (!act.isOnTheGround() && !pas.isOnTheGround() && !inTheClinch) {
+			if (randomGenerator() < PUNCHES_EXC_PROB) {
+				if (randomGenerator() < Math.round(act.getAggressiveness() - act.getControl() / 2)
+						|| randomGenerator() < Math.round(pas.getAggressiveness() - pas.getControl() / 2)) {
+					result = true;
+				}
+			}
+		}
+		return result;
+	}
+
+	public boolean isSubmissionAvailable(Fighter act) {
+		if (act.isTechSubs()) {
+			return true;
+		} else if (act.isEasySubs() && (fighterNumber(act) == fighterOnTop)
+				&& (guardType == Sim.FULL_MOUNT || guardType == Sim.REAR_MOUNT)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean checkCounterAttack(Fighter act, Fighter pas, double prob) {
+		int counter1 = extractCounterMove1(Comments.counter.get(1));
+		int counter2 = extractCounterMove2(Comments.counter.get(2));
+
+		if (counter1 == 0 && counter2 == 0) {
+			return false;
+		}
+
+		double at = fixedRandomInt(act.getControl()) - prob - fixedRandomInt(act.getAggressiveness())
+				+ smallRandom();
+
+		double def = (fixedRandomInt(pas.getAggressiveness()) + fixedRandomInt(pas.getControl() / 2))
+				/ Sim.COUNTERATTACKCUT;
+
+		return fixedRandomInt(def) > at;
+	}
+	
+	public int checkCut(Fighter act, Fighter pas, double damageDone, int cutProb) {
+		final int MAX_CUT = 20;
+		Random rand = new Random();
+		int prob = (int) (Math.round(damageDone / injuryFrequency()) + cutProb + randomGenerator());
+		int value = rand.nextInt(MAX_CUT) * (act.getCutResistance() + 2);
+		int injuryLimitB = balancedRandom(value + Sim.BIGINJURIES);
+		int injuryLimitS = balancedRandom(value + Sim.SMALLINJURIES);
+
+		if (prob >= injuryLimitB) {
+			return Sim.BIGINJURYORCUTTRUE;
+		} else if (prob >= injuryLimitS) {
+			return Sim.SMALLINJURYORCUTTRUE;
+		} else {
+			return Sim.INJURYORCUTFALSE;
+		}
+	}
+	
+	public boolean checkKO(Fighter act, Fighter pas, double DamageDone, int Prob) {
+		final double DAZED_PROB = 1.5;
+
+		boolean result = false;
+
+		DamageDone = upsetSystem(act, pas, DamageDone);
+
+		double At = DamageDone / koFrequency() + Prob;
+		double Def = (pas.getKORes() + fixedRandomInt(pas.getCurrentHP() / 5.0)) / Sim.KOFREQUENCY;
+
+		if (At > Def) {
+			if (fixedRandomInt(At) > fixedRandomInt(Def)) {
+				result = true;
+				finishMode = Sim.RES_KO;
+				// checkKOTN(DamageDone);
+			}
+		} else if (At * DAZED_PROB > Def) {
+			pas.setKoResistanceMod(pas.getKoResistanceMod() - 1);
+			result = false;
+			pas.setDazed(true);
+		}
+
+		if (!result) {
+			result = checkTKO(act, pas, DamageDone, Prob);
+			finishMode = Sim.RES_TKO;
+		}
+
+		return result;
+	}
+
+	public boolean checkTKO(Fighter act, Fighter pas, double damageDone, int prob) {
+		boolean result = false;
+
+		if (pas.isDazed() && act.getRush() > Sim.TKORUSHMINIMUN && pas.getCurrentHP() < Sim.TKOMINHITPOINTS) {
+			if (balancedRandom(Sim.TKOFREQUENCY) < 7) { // 7 = Referee.TKOAwareness
+				result = true;
+			}
+		}
+
+		return result;
+	}
+	
+	public void damageFighter(Fighter act, Fighter pas, double damageDone) {
+
+		if (damageDone < 0) {
+			damageDone = 1;
+		}
+
+		// checkMoreDamageOneHit(act, pas, DamageDone);
+
+		// Increase stats
+		// Bout.UpdateDamageDone(getFighterNumber(Act), DamageDone, InTheClinch,
+		// Act.OnTheGround);
+		// Bout.UpdateDamageReceived(getFighterNumber(Pas), DamageDone, InTheClinch,
+		// Pas.OnTheGround);
+
+		damageDone = damageDone;
+		pas.setCurrentHP(pas.getCurrentHP() - damageDone / Sim.DAMAGECUT);
+
+		if (pas.getCurrentHP() < 0) {
+			pas.setCurrentHP(1.0);
+		}
+
+		// Increase points
+		// Act.increasePoints(Bout.CurrentRound, DamageDone /
+		// ApplicationUtils.DAMAGECUTPOINTS);
+	}
+	
+	public double upsetSystem(Fighter act, Fighter pas, double value) {
+		final int UPSET_POWER = 100;
+		if (act.getRanking() < pas.getRanking() && (Math.random() * 1000 <= Sim.UPSET_FREQUENCY + randomnes)) {
+			return value * UPSET_POWER;
+		} else {
+			return value;
+		}
+	}
+	
+	public int koFrequency() {
+		return Sim.KOPROBCUT + kOFreq;
+	}
+	
+	public int injuryFrequency() {
+		return Sim.INJURYCUT + injuryFreq;
+	}
+	
+	public void processCut(Fighter act, Fighter pas, int cutType) {
+
+		boolean finishedByCut = false;
+
+		if (hitLocation < 0 || hitLocation > 8) {
+			return;
+		}
+
+		//hitLocation = extractHitLocation(fullComment);
+
+		if (cutType == Sim.BIGINJURYORCUTTRUE) {
+
+			// Prevents a finished fight change from KO to Cut
+			if (!boutFinished) {
+				boutFinished = true;
+				finishedType = Comments.misc.get(Sim.INJ);
+				finishMode = Sim.RES_INJURY;
+				fighterWinner = fighterNumber(act);
+				finishedByCut = true;
+			}
+
+			// Comment for injury
+			switch (hitLocation) {
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+				String injuryComment = returnComment(Comments.faceCut0);
+				doComment(act, pas, extractInjuryCutComment(injuryComment));
+				// pas.addInjuryToList(replaceTokens(act, pas,
+				// extractInjuryCutName(injuryComment)));
+				pas.setCuts(pas.getCuts() + 4);
+				break;
+			default:
+				break;
+			}
+
+			if (finishedByCut) {
+				finishedDescription = injuryComment;
+			}
+		} else {
+			switch (hitLocation) {
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+				String injuryComment = returnComment(Comments.faceCut0);
+				doComment(act, pas, injuryComment);
+				pas.setControlMod(pas.getControlMod() - 0.5);
+				pas.setMoral(pas.getMoral() - 0.5);
+				// pas.addInjuryToList(replaceTokens(act, pas,
+				// extractInjuryCutName(injuryComment)));
+				pas.setCuts(pas.getCuts() + 1);
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
+	/* Fim checar ações de luta */
+
+
+	
+	/* Processar movimentos */
+	
+	public void ProcessAfterMovePosition(Fighter Act, Fighter Pas, int Position) {
+
+		if (Position != 0) {
+			guardType = -1;
+			inTheClinch = false;
+		}
+
+		switch (Position) {
+		case 1:
+			Act.setOnTheGround(false);
+			Pas.setOnTheGround(false);
+			numHooks = -1;
+			break;
+		case 2:
+			Act.setOnTheGround(false);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Act);
+			guardType = -1;
+			numHooks = -1;
+			break;
+		case 3:
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(false);
+			fighterOnTop = fighterNumber(Pas);
+			guardType = -1;
+			numHooks = -1;
+			break;
+		case 4:
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Act);
+			guardType = 1;
+			numHooks = -1;
+			break;
+		case 5:
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Act);
+			guardType = 4;
+			numHooks = -1;
+			break;
+		case 6:
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Act);
+			guardType = 5;
+			numHooks = -1;
+			break;
+		case 7:
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Act);
+			guardType = 0;
+			numHooks += 1;
+			setLimits(numHooks, 2, 0);
+			break;
+		case 8:
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Pas);
+			guardType = 1;
+			numHooks = -1;
+			break;
+		case 9:
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Pas);
+			guardType = 4;
+			numHooks = -1;
+			break;
+		case 10:
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Pas);
+			guardType = 5;
+			numHooks = -1;
+			break;
+		case 11:
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Pas);
+			guardType = 0;
+			numHooks = -1;
+			break;
+		case 12:
+			Act.setOnTheGround(false);
+			Pas.setOnTheGround(false);
+			guardType = -1;
+			inTheClinch = true;
+			numHooks = -1;
+			break;
+		case 13:
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Act);
+			guardType = 2;
+			numHooks = -1;
+			break;
+		case 14:
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Pas);
+			guardType = 2;
+			numHooks = -1;
+			break;
+		case 15:
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Pas);
+		case 16:
+
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			fighterOnTop = fighterNumber(Pas);
+			guardType = 3;
+			numHooks = -1;
+			break;
+		case 17:
+
+			Act.setOnTheGround(false);
+			guardType = -1;
+			numHooks = -1;
+			break;
+		case 18:
+
+			numHooks--;
+			Act.setOnTheGround(true);
+			Pas.setOnTheGround(true);
+			setLimits(numHooks, 2, 0);
+			break;
+		}
+	}
+	
+	/* Fim processar movimentos */
+	
+	
+	
+	
+	/* Retorna Lutadores */
+
+	public Fighter fighterActiveOrPassive(int number) {
+		if (number == 0) {
+			return fighter1;
+		} else {
+			return fighter2;
+		}
+	}
+	
+	public int fighterNumber(Fighter act) {
+		int result = -1;
+		if (act == fighter1) {
+			result = 0;
+		} else if (act == fighter2) {
+			result = 1;
+		}
+		return result;
+	}
+	
+	/* Fim retorna lutadores */
+
+
+	
+	
+	/* Gerar probabilidade de ação */
+
+	public double setLimits(double actual, double max, double min) {
+		if (actual > max) {
+			actual = max;
+		} else if (actual < min) {
+			actual = min;
+		}
+		return actual;
+	}
+	
+	public int getSubmissionProbByPosition(Fighter act) {
+		double FULL_MOUNT = 1.15;
+		double CLOSED_GUARD = 0.7;
+		double SIDE_MOUNT = 0.9;
+		double OPEN_GUARD = 0.75;
+		double HALF_GUARD = 0.75;
+
+		double prob = act.getStratSub();
+		switch (guardType) {
+			case 1 -> prob *= FULL_MOUNT;
+			case 2 -> prob *= SIDE_MOUNT;
+			case 3 -> prob *= HALF_GUARD;
+			case 4 -> prob *= OPEN_GUARD;
+			case 5 -> prob *= CLOSED_GUARD;
+		}
+		return (int) Math.round(prob);
+	}
+
+	public int getCounterMoveProb(Fighter act, int counterMove) {
+		/* Return a prob value for a counter move based on fighter's strats */
+		int result = 0;
+		switch (counterMove) {
+		case 1:
+			result = fixedRandomInt(act.getStratPunching());
+			break;
+		case 2:
+			result = fixedRandomInt(act.getStratKicking());
+			break;
+		case 3:
+			result = fixedRandomInt(act.getStratClinching());
+			break;
+		case 4:
+			result = fixedRandomInt(act.getStratTakedowns());
+			break;
+		case 5:
+			result = fixedRandomInt(act.getStratSub());
+			break;
+		case 6:
+			result = fixedRandomInt(act.getStratSub());
+			break;
+		case 7:
+			result = fixedRandomInt(act.getStratSub());
+			break;
+		case 8:
+			result = fixedRandomInt(act.getStratGNP());
+			break;
+		case 9:
+			result = fixedRandomInt(act.getStratSub());
+			break;
+		case 10:
+			result = fixedRandomInt(act.getStratPositioning());
+			break;
+		case 11:
+			result = fixedRandomInt(act.getStratStandUp());
+			break;
+		case 12:
+			result = fixedRandomInt(act.getStratTakedowns());
+			break;
+		case 13:
+			result = fixedRandomInt(act.getStratGNP());
+			break;
+		case 14:
+			result = fixedRandomInt(act.getStratTakedowns());
+			break;
+		case 15:
+			result = fixedRandomInt(act.getStratStandUp());
+			break;
+		}
+		return result;
+	}
+	
+	/* Fim gerar probabilidade de ação */
+	
+	
+	
+	/* Gerar fatores para luta */
+
+	public int hurtFactor(Fighter act) {
+		double hurtFactor = act.getCurrentHP() / act.getToughness();
+		if (hurtFactor <= 0.1) {
+			return 10;
+		} else if (hurtFactor <= 0.15) {
+			return 5;
+		} else if (hurtFactor <= 0.2) {
+			return 4;
+		} else if (hurtFactor <= 0.25) {
+			return 3;
+		} else if (hurtFactor <= 0.3) {
+			return 2;
+		} else if (hurtFactor <= 0.45) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	
+	public int gasTankFactor(Fighter act, double value) {
+		// Reduce the fighter's skills if he's tired
+		double reducingFactor = act.getCurrentStamina() * Sim.FATIGUECUT / (act.getConditioning() * 5);
+		return (int) Math.round(value * reducingFactor);
+	}
+	
+	/* Fim gerar fatores para luta */
+	
+	
+	
+	/* Gera bonus por ação. */
+	
+	public int actionBonus(int action) {
+		final int PUNCHES_BONUS = 5;
+		final int KICK_BONUS = -1;
+		final int CLINCH_BONUS = -2;
+
+		int result = 0;
+		if (action == Moves.ACT_PUNCHES) {
+			result = PUNCHES_BONUS;
+		} else if (action == Moves.ACT_KICKS) {
+			result = KICK_BONUS;
+		} else if (action == Moves.ACT_CLINCH) {
+			result = CLINCH_BONUS;
+		}
+		return result;
+	}
+	
+	/* Fim gerar bonus por ação. */
+	
+
+
+	
+	/* Level de ataque */
+	
+	public int attackLevel(Fighter act, Fighter pas, double atSkill, double pasSkill) {
+		final double DAZED_BONUS = 10.0;
+		double at, def;
+
+		// Attacking value
+		at = fixedRandomInt(act.getAggressiveness());
+		at += fixedRandomInt(act.getControl() / 2.0);
+		at += fixedRandomInt(act.getConditioning() / 2.0);
+		at += smallRandom() + act.getAttackBonus();
+		at += fixedRandomInt(act.getAgility() / 2.0);
+		at += fixedRandomInt(atSkill);
+
+		// Defense value
+		def = fixedRandomInt(pas.getControl());
+		def += fixedRandomInt(pas.getConditioning() / 2.0);
+		def -= fixedRandomInt(pas.getAggressiveness() / 2.0);
+		def += smallRandom() + pas.getDefenseBonus();
+		def += fixedRandomInt(act.getAgility() / 2.0);
+		def += fixedRandomInt(pasSkill);
+
+		// Resolving attack level
+		if (pas.isDazed()) {
+			at += DAZED_BONUS;
+		}
+
+		int result;
+		if (Math.round(at - def) >= 19.0) {
+			result = 3;
+		} else if (Math.round(at - def) >= 6.0) {
+			result = 2;
+		} else {
+			result = 1;
+		}
+
+		// Skill limits
+		if (result == 2 && atSkill < Sim.LEVEL2SKILL) {
+			result = 1;
+		} else if (result == 3 && atSkill < Sim.LEVEL3SKILL) {
+			result = 2;
+		}
+
+		// Increase points for technic skills
+		// act.increasePoints(Bout.getCurrentRound(), result *
+		// ApplicationUtils.ATTACKLEVELPOINTS);
+
+		return result;
+	}
+	
+	/* Level de ataque */
+	
+	
+	
+	
+	/* Gera numeros randomicos */
+	
+
+	/* Fim geração de Bonus */
+
+
+	
+	
+	/* Gera numeros randomicos */
+
+	public int randomGenerator() {
+		final int BIGRANDOM = 1000;
+		final int Randomness = 1000;
+		return (int) (Math.random() * (BIGRANDOM + Randomness)) + 1;
+	}
+
+	
+	public int fixedRandomInt(double value) {
+		if (value < 0) {
+			return 0;
+		}
+
+		int aux = (int) value;
+		double doubleValue = value - aux;
+
+		return (int) (aux / 2 + (Math.random() * (aux / 2)) + 1 + doubleValue);
+	}
+	
+	
+	public int balancedRandom(double value) {
+		if (value < 0) {
+			return 0;
+		}
+
+		final int NUM_ROUNDS = rounds;
+		int sum = 0;
+		int roundValue = (int) Math.round(value);
+
+		for (int i = 0; i < NUM_ROUNDS; i++) {
+			sum += (int) (Math.random() * roundValue);
+		}
+
+		return sum / NUM_ROUNDS;
+	}
+	
+	
+	public int smallRandom() {
+		final int SMALL_RANDOM = 10;
+		return new Random().nextInt(SMALL_RANDOM) + 1;
+	}
+
+	/* Fim gera numeros randomicos */
+	
+	
+	
+	/* Geração de comentarios */
+
+	public void doComment(Fighter act, Fighter pas, String comment) {
+
+		String updatedComment = comment.replaceAll("%act", act.getName()).replaceAll("%pas", pas.getLastName());
+
+		setPbp(updatedComment);
+	}
+
+	public void generateComment(List<String> CommentList) {
+		int listSize = CommentList.size();
+		fullComment = "";
+
+		// If CommentList has more than 0 elements
+		if (listSize > 0) {
+			while (fullComment.equals("")) {
+				Random random = new Random();
+				fullComment = CommentList.get(random.nextInt(listSize));
+			}
+		}
+
+		// Extract necessary values
+		// side = GetLeftRight(FullComment);
+		// location = GetLocationName(ExtractHitLocation(FullComment));
+	}
+	
+	public String extractFailureComment(String comment) {
+	    String[] parts = comment.split(";");
+	    return parts[2].trim();
+	}
+	
+	public int extractCounterMove1(String comment) {
+		List<String> splitFullString = splitString(comment);
+		if (splitFullString.size() > 5) {
+			return 1;
+		}
+		return 0;
+	}
+	
+	public int extractCounterMove2(String comment) {
+		List<String> splitFullString = splitString(comment);
+		if (splitFullString.size() > 6) {
+			return 1;
+		}
+		return 0;
+	}
+
+	private List<String> splitString(String comment) {
+		return Arrays.asList(comment.split("\\s+"));
+	}
+	
+	public int extractFinalFailurePosition(String comment) {
+		int result = 0;
+		String[] splitFullString = comment.split("\\s+");
+		if (splitFullString.length > 14) {
+			result = 1;
+		}
+		return result;
+	}
+	
+	public String extractComment(String comment) {
+		String[] parts = comment.split(";");
+	    return parts[0].trim();
+	}
+	
+	public int extractFinalSuccessPosition(String comment) {
+	    String[] splitFullString = splitString2(comment);
+	    int result = 0;
+
+	    if (splitFullString.length > 13) {
+	        result = 1;
+	    }
+
+	    return result;
+	}
+	
+	private String[] splitString2(String str) {
+	    return str.split("\\s+");
+	}
+	
+	public String returnComment(ArrayList<String> commentList) {
+		String comment = "";
+		int listSize = commentList.size();
+
+		if (listSize > 0) {
+			while (comment.equals("")) {
+				comment = commentList.get((int) (Math.random() * listSize));
+			}
+		}
+
+		return comment;
+	}
+	
+	public String extractMoveName(String comment) {
+		String[] splitFullString = comment.split(" ");
+		String result = Sim.UNKNOWN_STR;
+		if (splitFullString.length > 7) {
+			result = splitFullString[7];
+		}
+		return result;
+	}
+	
+	public String extractInjuryCutComment(String comment) {
+		String[] splitFullString = comment.split(" ");
+		return splitFullString[0];
+	}
+
+	public String extractInjuryCutName(String comment) {
+
+		return comment;
+	}
+	
+	/* Fim geração de comentarios */
 	
 
 }
