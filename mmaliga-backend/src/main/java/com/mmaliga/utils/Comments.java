@@ -87,20 +87,104 @@ public abstract class Comments {
 	));
 
 	public static final ArrayList<String> kicks1 = new ArrayList<String>(Arrays.asList(
-			"Low kick by %act to maintain his distance.;That hits %pas's ankle;Bad move. That was far from landing.",
-			"Low kick by %act to maintain his distance.;That hits %pas's ankle;Bad move. That was far from landing",
-			"%act moves forward and launches a low kick.;Hard blow to %pas's left thigh;%pas blocks that",
-			"%act moves forward and launches a low kick.;Hard blow to %pas's right thigh;%pas blocks that",
-			"%act is not showing a great technique with that low kick...;That one finds %pas's thigh;%pas is smart enough to block that one",
-			"Body kick by %act...;just grazes his opponent.",
-			"A high kick from %act;grazes %pas's head, but he seems okay.;falls short of the mark",
-			"A high kick from %act;glances off %pas.;misses badly. %act slips and falls!",
-			"A bunch of leg kicks from %act;are bothering his opponent.;are blocked by %pas.",
-			"%act throws a body kick.;Solid shot!;Blocked by %pas.",
-			"Good leg kicks from %act.;%pas winces a bit.;%pas defends with ease.",
-			"Every time %pas attempts to get inside;%act fires a low kick.;%act misses with a low kick",
-			"Nice low kick from %act;Loud pop!;but %pas stops it"));
+			"Low kick by %act to maintain his distance.;That hits %pas's ankle;Bad move. That was far from landing.;17;3;1;2;Low kick;1;1;-5;-5;0;1;1",
 
+			"Low kick by %act to maintain his distance.;That hits %pas's ankle;Bad move. That was far from landing.;18;3;1;2;Low kick;1;1;-5;-5;0;1;1",
+
+			"%act moves forward and launches a low kick.;Hard blow to %pas's left thigh;%pas blocks that.;15;2;1;3;Low kick;1;1;-5;-5;0;1;1",
+
+			"%act moves forward and launches a low kick.;Hard blow to %pas's right thigh;%pas blocks that.;16;2;1;3;Low kick;1;1;-5;-5;0;1;1",
+
+			"%act is not showing a great technique with that low kick...;That one finds %pas's thigh;%pas is smart enough to block that one.;16;3;3;1;Low kick;1;1;-5;-5;0;1;1",
+
+			"Body kick by %act...;just grazes his opponent.;is blocked.;11;2;1;2;Body kick;1;1;-5;-5;0;1;1",
+
+			"A high kick from %act;grazes %pas's head, but he seems okay.;falls short of the mark.;0;3;1;4;High kick;1;1;-2;-2;0;1;1",
+
+			"A high kick from %act;glances off %pas.;misses badly. %act slips and falls!;9;0;0;0;High kick;1;1;-1;-2;-2;1;3",
+
+			"A bunch of leg kicks from %act;are bothering his opponent.;are blocked by %pas.;15;2;1;2;Low kicks;3;3;-5;-3;0;1;1",
+
+			"%act throws a body kick.;Solid shot!;Blocked by %pas.;11;2;1;2;Body kick;1;1;-5;-2;0;1;1",
+
+			"Good leg kicks from %act.;%pas winces a bit.;%pas defends with ease.;16;2;1;2;Low kicks;3;3;-5;-3;0;1;1",
+
+			"Every time %pas attempts to get inside;%act fires a low kick.;%act misses with a low kick.;17;3;1;2;Low kicks;2;2;-5;-7;0;1;1",
+
+			"Nice low kick from %act;Loud pop!;but %pas stops it.;15;3;1;2;Low kick;1;1;-5;-5;0;1;1"
+			));
+
+	public static final ArrayList<String> kicks2 = new ArrayList<String>(Arrays.asList(
+			"%act launches a furious low kick!;%pas receives a hard blow on his left leg!;%pas blocks.;17;1;1;3;Low kick;1;1;-3;0;0;1;1",
+
+			"%act launches a furious low kick!;%pas receives a hard blow on his right leg!;%pas blocks;18;1;1;3;Low kick;1;1;-3;0;0;1;1",
+
+			"Good front kick from %act!;%pas stumbles backwards after that one!;%pas blocks;11;0;1;4;Front kick;1;1;0;0;0;1;1",
+
+			"Lightning fast low kick from %act!;Loud pop! I'm sure that hurts!;%pas blocks that kick with his leg.;16;0;1;3;"
+			+ "Low kick;1;1;0;0;0;1;1",
+
+			"%act fakes a move and launches a liver kick!;That almost wrenches %pas! I'm sure that his liver will be sore tomorrow."
+			+ ";%pas blocks and pushes his opponent.;10;0;1;4;Middle kick;1;1;0;1;0;1;1",
+
+			"Solid low kick from %act.;For sure, that had to hurt!;%pas deflects it.;15;1;1;2;Low kick;1;1;-3;-3;0;1;1 "
+			+ "Middle kick from %act.;%pas receives a solid kick right below his ribs.;The kick just misses.;10;2;1;2;"
+			+ "Body kick;1;1;-3;-3;0;1;1",
+
+			"Solid kick to the leg from %act;that visibly pains %pas.;%pas checks it.;17;1;1;2;Low kick;1;1;-3;-1;0;1;1",
+
+			"%act throws a low kick;He switches targets and lands a superb body kick!;%pas blocks.;11;1;2;1;Body kick;1;1;-3;-1;0;1;1",
+
+			"%act fires low kicks;punishing %pas's legs repeatedly.;that fail to land.;15;2;1;2;Low kicks;3;3;-3;-1;0;1;1",
+
+			"Inside leg kick from %act;that lands on %pas's leg.;that goes awry.;16;2;1;4;Low kick;1;1;-3;-2;0;1;1",
+
+			"%act launches a low kick;that almost wrenches %pas's knee!;that gets blocked quickly.;18;2;1;2;Low kick;1;1;-3;0;0;1;1",
+
+			"%act tries a middle kick;%pas blocks with his arm! Wow, that was loud!;%pas blocks and steps away.;14;2;2;4;"
+			+ "Middle kick;1;1;-3;-1;0;1;1",
+
+			"%act moves aside and launches a furious low kick!;Hard blow to %pas's thigh!;%pas checks the kick.;16;0;1;2;"
+			+ "Kicks;1;1;0;1;-1;0;0;"
+			));
+
+	
+	public static final ArrayList<String> kicks3 = new ArrayList<String>(Arrays.asList(
+			"%act moves forward and launches a high kick!;Vicious high kick!;%pas ducks under.;4;-2;1;3;High kick;1;1;3;3;5;1;1",
+
+			"%act tries a high kick!;%pas was covering for a middle kick but that one almost knocked off his head!;%pas blocks. "
+			+ "Wow, that could have finished this match.;4;0;1;2;High kick;1;1;2;2;7;1;1",
+
+			"Here comes %act with a vicious middle kick!;That lands hard on %pas's ribs!;%pas dodges that one moving backwards;"
+			+ "10;0;1;4;Middle kick;1;1;0;3;0;1;1",
+
+			"%act steps forward and fires a high kick!;Vicious high kick, I can't believe that landed!;%pas blocks decisively,"
+			+ " as if to say, No KO for me, thanks!;0;-1;1;4;High kick;1;1;3;2;5;1;1",
+
+			"A bad move from %pas;allows %act to land a solid head kick.;almost puts his head in the path of %act's kick.;"
+			+ "0;1;3;4;High kick;1;1;1;0;3;1;1",
+
+			"%pas moves to shoot;but %act delivers a knee that wrecks him!;%act misses a knee.;0;1;4;3;Knee;1;1;3;2;7;1;1",
+
+			"Brutal-looking high kick from %act!;You could hear the impact from the back seats!;%pas dodges!;0;-1;2;1;High kick;1;1;2;1;6;1;1",
+
+			"%pas attempts a shoot;%act hops back and delivers a powerful kick to his head!;but stops before running into %act's"
+			+ " kick.;0;1;4;2;High kick;1;1;2;2;5;1;1",
+
+			"%act wants this win. He unleashes a kick.;Brutal high kick to %pas!;His opponent is elsewhere,"
+			+ " looking to counter...;0;3;2;4;High kick;1;1;3;2;5;1;1",
+
+			"High kick from %act!;%pas seems to be done!;He misses narrowly!;0;-2;1;3;High kick;1;1;2;1;7;1;1",
+
+			"%act launches a solid middle kick;that wrenches %pas!;that whizzes past %pas.;11;0;2;4;High kick;1;1;-7;2;0;1;1",
+
+			"%act goes for a low kick..;Faster than a blinking eye, he follows up with a high kick!;%pas avoids "
+			+ "the deadly blow.;0;-1;2;4;High kick;2;2;3;3;5;1;1",
+
+			"Incredible high kick!;%pas is worried!;%pas deflects and sidesteps.;9;0;1;2;High kick;1;1;3;3;4;1;1"
+			));
+
+	
 	public static final ArrayList<String> counter = new ArrayList<String>(Arrays.asList(
 			"%act is trying to counter now!", "%pas clumsily fails here and it's time for %act to fight back!",
 			"%act tries to get some advantage after his opponent miss move...",
