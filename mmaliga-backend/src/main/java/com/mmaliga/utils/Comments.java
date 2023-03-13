@@ -195,6 +195,39 @@ public abstract class Comments {
 			
 			));
 	
+	public static final ArrayList<String> thaiClinch = new ArrayList<String>(Arrays.asList(
+			"%act moves forward looking for some grappling action;%act has his opponent in a text book double collar"
+			+ " thai clinch!;%pas pushes his opponent and keep the fight at striking range;0;0;0;0;Thai Clinch;0;0;0;0;0;12;0;",
+
+			"%act fakes a punch and launches himself over %pas;Great move by %act who pushes his opponent under a "
+			+ "troublesome thai clinch;%pas counters with a few fake punches and then backpedals;0;0;0;0;Thai Clinch;0;0;0;0;0;12;0;",
+
+			"%act jumps over his opponent and tries to grapple;%act pushes his opponent against the %holdSite in a "
+			+ "plum position;%pas sees what was coming and ducks under his opponent and moves aside;0;0;0;0;Thai Clinch;0;0;0;0;0;12;0;"
+			
+			));
+	
+	public static final ArrayList<String> clinch = new ArrayList<String>(Arrays.asList(
+			"%act wants to take the fight to his advantage and tries to clinch.;%act moves forward and holds %pas;%pas wants "
+			+ "nothing of that and pushes %act.;0;2;1;3;Clinch;1;1;0;0;0;12;1",
+
+			"%act fakes a punch and launches himself over %pas!;Nice move by %act who clinches and pushes %pas against "
+			+ "the %site;%pas is smart enough to avoid the clinch game by %act and pushes him away!;0;2;2;4;Clinch;1;1;0;0;0;12;1",
+
+			"%act tries some clinching in order to control the fight...;Well done. %act is clinching with %pas.;%pas moves "
+			+ "backwards and circles around %act.;0;2;3;7;Clinch;1;1;0;0;0;12;1",
+
+			"%act leans forwards and tries to grapple with %pas;%act shows his clinching skills. Both fighters are clinching "
+			+ "now.;%pas wants to mantain the distance and ducks that one.;0;2;1;2;Clinch;1;1;0;0;0;12;1",
+
+			"%act tries to grapple;He puts %pas in a double underhook!;%pas moves aside keeping the fight a strinking "
+			+ "range;0;0;0;0;Grappling;0;0;0;0;0;12;0;",
+
+			"%act moves forward looking for some action;%act shows some wrestling skills as he put his opponent in a "
+			+ "double overhook!;%pas struggles a bit before breaking %act's attemp of grappling;0;0;0;0;Grappling;0;0;0;0;0;12;0;"
+			
+			));
+	
 	public static final ArrayList<String> counter = new ArrayList<String>(Arrays.asList(
 			"%act is trying to counter now!", "%pas clumsily fails here and it's time for %act to fight back!",
 			"%act tries to get some advantage after his opponent miss move...",

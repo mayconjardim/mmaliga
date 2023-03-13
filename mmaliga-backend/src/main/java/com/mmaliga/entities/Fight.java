@@ -960,14 +960,14 @@ public class Fight implements Serializable {
 	    // Get clinch type and display comment
 	    Integer clinchType = getClinchType(act);
 	    switch (clinchType) {
-	        case DIRTY_BOXING:
-	            getComment(ApplicationUtils.dirtyClinch);
+	        case 0:
+	            generateComment(Comments.dirtyClinch);
 	            break;
-	        case THAI_CLINCH:
-	            getComment(ApplicationUtils.thaiClinch);
+	        case 1:
+	        	generateComment(Comments.thaiClinch);
 	            break;
-	        case SIMPLE_GRAPPLING:
-	            getComment(ApplicationUtils.clinch);
+	        case 2:
+	        	generateComment(Comments.clinch);
 	            break;
 	    }
 
