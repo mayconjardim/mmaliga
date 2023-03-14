@@ -336,6 +336,10 @@ public class Fighter implements Serializable {
 		return result;
 	}
 
+	public double getClinchMean() {
+	    return (getClinchStriking() + getClinchGrappling()) / 2;
+	}
+	
 	public double getGroundMean() {
 		double result = (getGroundGame() + getSubmission() + getGnp()) * 100 / 60;
 		return result;

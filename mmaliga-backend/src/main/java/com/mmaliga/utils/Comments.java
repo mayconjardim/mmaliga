@@ -436,6 +436,17 @@ public abstract class Comments {
 			"%act grapple with %pas and tries a Outer Leg Sweep;nice takedown %act is in side mount over %pas ; %pas manage to maintain his"
 			+ " balances and avoid the takedown;9;3;0;0;Outer Leg Sweep;0;0;0;1;1;13;0;"));
 
+	public static final ArrayList<String> breakClinch = new ArrayList<String>(Arrays.asList(
+			"%act pushes away %pas trying to keep the fight at striking range;%pas stumbles backwards and %act circles to get the center"
+			+ " of the %site;%pas doesn't want to break the clinch as he still is grappling with %act;0;0;3;9;Break Clinch;0;0;0;0;0;1;0",
+
+			"%act doesn't want to clinch as he ducks under %pas embrace and tries to move away...;Nice move from %act who put distance between"
+			+ " them;%pas pushes %act forward and doesn't allow him to break the clinch.;0;0;3;9;Break Clinch;0;0;0;0;0;1;0",
+
+			"%act tries to shrug his way out of the clinch. ;%act circles out and slips free of %pas's grip. Nice job of getting out of that"
+			+ "position.;%pas is determined to work from the clinch. He pummeled through and managed to retain his position.;0;0;3;9;Break Clinch;0;0;0;0;0;1;0;"
+			));
+	
 	public static final ArrayList<String> clinch = new ArrayList<String>(Arrays.asList(
 			"%act wants to take the fight to his advantage and tries to clinch.;%act moves forward and holds %pas;%pas wants "
 					+ "nothing of that and pushes %act.;0;2;1;3;Clinch;1;1;0;0;0;12;1",

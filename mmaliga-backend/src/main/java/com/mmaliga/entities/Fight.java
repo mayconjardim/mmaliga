@@ -219,8 +219,8 @@ public class Fight implements Serializable {
 					fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_BREAKCLINCH:
-					setPbp("ACT_BREAKCLINCH");// ActBreakClinch(fighterActiveOrPassive(fighterActive),
-												// fighterActiveOrPassive(fighterPasive));
+					actBreakClinch(fighterActiveOrPassive(fighterActive),
+					fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_GNP:
 					setPbp("ACT_GNP");// ActGnP(fighterActiveOrPassive(fighterActive),
@@ -1405,6 +1405,78 @@ public class Fight implements Serializable {
 				processCut(act, pas, injuryType);
 			}
 		}
+	}
+	
+	public void actBreakClinch(Fighter act, Fighter pas) {
+	    double at, def;
+	    
+	    String initComment = extractInitComment(getFullComment());
+	    generateComment(Comments.breakClinch);
+	    doComment(act, pas, initComment);
+
+	    // Attacking value
+	    at = fixedRandomInt(act.getClinchMean());
+	    at += act.getDefenseBonus();
+	    switch (new Random().nextInt(4)) {
+	        case 0:
+	            at += fixedRandomInt(act.getStrength() / 2);
+	            break;
+	        case 1:
+	            at += fixedRandomInt(act.getAgility() / 2);
+	            break;
+	        case 2:
+	            at += fixedRandomInt(act.getClinchGrappling() / 2);
+	            break;
+	        case 3:
+	            at += fixedRandomInt(act.getClinchStriking() / 2);
+	            break;
+	    }
+	    at += smallRandom();
+	    at = gasTankFactor(act, at);
+	    at -= hurtFactor(act);
+
+	    // Defensive value
+	    def = fixedRandomInt(pas.getClinchMean());
+	    def += pas.getAttackBonus();
+	    switch (new Random().nextInt(4)) {
+	        case 0:
+	            def += fixedRandomInt(pas.getStrength() / 2);
+	            break;
+	        case 1:
+	            def += fixedRandomInt(pas.getAgility() / 2);
+	            break;
+	        case 2:
+	            def += fixedRandomInt(pas.getClinchGrappling() / 2);
+	            break;
+	        case 3:
+	            def += fixedRandomInt(pas.getAggressiveness() / 2);
+	            break;
+	    }
+	    def += smallRandom();
+	    def = gasTankFactor(pas, def);
+	    def -= hurtFactor(pas);
+	    
+	    if (def >= at) {
+	        doComment(act, pas, extractFailureComment(getFullComment()));
+
+	        // Counter attack
+	        if (!isCounter) {
+	            isCounter = checkCounterAttack(act, pas, counterProb);
+	            if (isCounter) {
+	                doCounterAttack(pas, act);
+	            } else {
+	                processAfterMovePosition(act, pas, extractFinalFailurePosition(getFullComment()));
+	            }
+	        } else {
+	            isCounter = false;
+	            processAfterMovePosition(act, pas, extractFinalFailurePosition(getFullComment()));
+	        }
+	    } else {
+	        // Do comments
+	        doComment(act, pas, extractComment(getFullComment()));
+
+	        processAfterMovePosition(act, pas, extractFinalSuccessPosition(getFullComment()));
+	    }
 	}
 	
 	public int dirtyBoxingAction(Fighter act) {
