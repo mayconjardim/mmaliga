@@ -93,6 +93,7 @@ public class Fighter implements Serializable {
 	private Integer fancyKicks = 0;
 	private Integer fancySubmissions = 0;
 	private Integer dirtyFighting = 0;
+	private Integer stalling;
 	private boolean easySubs;
 	private boolean techSubs;
 	private boolean useKneesGround = false;

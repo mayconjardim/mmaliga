@@ -355,98 +355,137 @@ public abstract class Comments {
 
 	public static final ArrayList<String> wrestlingTD1 = new ArrayList<String>(Arrays.asList(
 			"%act is in good position and is looking to change levels for the takedown...;%act catches an ankle and %pas is tripped to the "
-			+ "mat!;%pas doesn't let %act get in on his legs.;12;2;4;9;Ankle Pick;1;1;0;0;0;6;0;",
+					+ "mat!;%pas doesn't let %act get in on his legs.;12;2;4;9;Ankle Pick;1;1;0;0;0;6;0;",
 
 			"%act gets double underhooks and looks for the takedown...;%act blocks %pas's knee and hits a perfectly executed knee tap! Nice "
-			+ "move.;%pas pummels back into position.;12;2;4;9;Knee Tap;1;1;0;0;0;6;0;",
+					+ "move.;%pas pummels back into position.;12;2;4;9;Knee Tap;1;1;0;0;0;6;0;",
 
 			"%act gets himself into good position and looks to change levels for the takedown...;%act gets hold of a leg and trips %pas to"
-			+ " the mat!;%pas doesn't let %act get in on his legs.;12;2;4;9;Single Leg Takedown;1;1;0;0;0;6;0;",
+					+ " the mat!;%pas doesn't let %act get in on his legs.;12;2;4;9;Single Leg Takedown;1;1;0;0;0;6;0;",
 
 			"%act shoots and grab one of %pas's leg, attempting to take him down with a Single Leg; %pas lose his balance and falls to"
-			+ " the mat; %pas sprawls and remain on his feet;9;3;0;0;Single Leg Takedown;0;0;0;1;1;5;0;",
+					+ " the mat; %pas sprawls and remain on his feet;9;3;0;0;Single Leg Takedown;0;0;0;1;1;5;0;",
 
 			"%act shoots and grab both of %pas's leg, attempting to take him down with a Double Leg; %act lifted %pas's off his feet and"
-			+ "throws him on the mat; %pas managed to pull back his leg from %act's grip and move away from him;9;3;0;0; Double Leg Takedown;0;0;0;0;0;5;0;",
+					+ "throws him on the mat; %pas managed to pull back his leg from %act's grip and move away from him;9;3;0;0; Double Leg Takedown;0;0;0;0;0;5;0;",
 
 			"%act tries to take %pas to the ground from the clinch...;Nicely done! %pas is with is back on the ground now.;%pas shows his "
-			+ "sprawl skills and remains on his feet.;0;0;3;3;Clinch Takedown;1;1;0;0;0;5;0",
+					+ "sprawl skills and remains on his feet.;0;0;3;3;Clinch Takedown;1;1;0;0;0;5;0",
 
 			"%act fakes a punch to %pas ribs and the tries to trip him;%pas loses balance and goes to the ground;%pas loses balance for a "
-			+ "moment but he remains on his feet after a small struggle.;0;0;3;3;Clinch Takedown;1;1;0;0;0;6;0",
+					+ "moment but he remains on his feet after a small struggle.;0;0;3;3;Clinch Takedown;1;1;0;0;0;6;0",
 
 			"%act tries to take %pas to the ground from the clinch...;Nicely done! %pas is with his back on the ground now.;%pas shows his "
-			+ "sprawl skills and remains on his feet.;0;0;3;3;Clinch Takedown;1;1;0;0;0;5;0",
+					+ "sprawl skills and remains on his feet.;0;0;3;3;Clinch Takedown;1;1;0;0;0;5;0",
 
 			"%act fakes a punch to %pas ribs and the tries to trip him;%pas loses balance and goes to the ground;%pas loses balance for a "
-			+ "moment but he remains on his feet after a small struggle.;0;0;3;3;Clinch Takedown;1;1;0;0;0;6;0",
+					+ "moment but he remains on his feet after a small struggle.;0;0;3;3;Clinch Takedown;1;1;0;0;0;6;0",
 
 			"%act is in good position and is looking to change levels for the takedown...;%act catches an ankle and %pas is tripped to the"
-			+ " mat!;%pas doesn't let %act get in on his legs.;12;2;4;9;Ankle Pick;1;1;0;0;0;6;0;",
+					+ " mat!;%pas doesn't let %act get in on his legs.;12;2;4;9;Ankle Pick;1;1;0;0;0;6;0;",
 
 			"%act gets double underhooks and looks for the takedown...;%act blocks %pas's knee and hits a perfectly executed knee tap! "
-			+ "Nice move.;%pas pummels back into position.;12;2;4;9;Knee Tap;1;1;0;0;0;6;0;",
+					+ "Nice move.;%pas pummels back into position.;12;2;4;9;Knee Tap;1;1;0;0;0;6;0;",
 
 			"%act gets himself into good position and looks to change levels for the takedown...;%act gets hold of a leg and trips %pas "
-			+ "to the mat!;%pas doesn't let %act get in on his legs.;12;2;4;9;Single Leg Takedown;1;1;0;0;0;6;0;"
-			
-			));
-	
+					+ "to the mat!;%pas doesn't let %act get in on his legs.;12;2;4;9;Single Leg Takedown;1;1;0;0;0;6;0;"
+
+	));
+
 	public static final ArrayList<String> judoTD1 = new ArrayList<String>(Arrays.asList(
 
 			"%act tries a Foot Sweep takedown on %pas ;well done %pas falls hard on the mat; %act fails to take %pas down and both man are "
-			+ "still clinching;12;2;4;9;Foot Sweep Takedown;1;1;0;0;0;2;0;",
+					+ "still clinching;12;2;4;9;Foot Sweep Takedown;1;1;0;0;0;2;0;",
 
 			"%act grab one of %pas's arm and tries a Hip Throw;with a twist of his hip %act throw %pas to the mat like a ragdoll;%pas done well "
-			+ "to maintain his balances and avoid going down;12;2;4;9;Hip Throw;1;1;0;0;0;2;0;",
+					+ "to maintain his balances and avoid going down;12;2;4;9;Hip Throw;1;1;0;0;0;2;0;",
 
 			"%act grapple with %pas and tries a Inner leg Sweep;%pas falls hard on the mat with %act on top of him;%pas managed to maintain his "
-			+ "balances and avoid the takedown;12;2;4;9;Inner leg Sweep;0;0;0;1;1;6;0;",
+					+ "balances and avoid the takedown;12;2;4;9;Inner leg Sweep;0;0;0;1;1;6;0;",
 
 			"%act grapple with %pas and tries a Outer Leg Sweep;nice takedown %act is in side mount over %pas;%pas manage to maintain his "
-			+ "balances and avoid going down;12;2;4;9;Outer Leg Sweep;0;0;0;1;1;13;0;",
+					+ "balances and avoid going down;12;2;4;9;Outer Leg Sweep;0;0;0;1;1;13;0;",
 
 			"%act and %pas are cliched up against the %site. %act steps for a throw; %pas is flat on his back. great Judo technique shown!; %pas "
-			+ "stays on his feet;12;0;4;3;Judo throw clinch;0;0;-10;0;-10;13;0;",
+					+ "stays on his feet;12;0;4;3;Judo throw clinch;0;0;-10;0;-10;13;0;",
 
 			"%act and %pas are cliched up against the %site. %act steps for a throw; %pas is gets thrown to the mat but gets right back up; %pas"
-			+ " stays on his feet;12;0;4;3;Judo throw clinch - ineffective;0;0;-10;0;-10;0;0;",
+					+ " stays on his feet;12;0;4;3;Judo throw clinch - ineffective;0;0;-10;0;-10;0;0;",
 
 			"%act and %pas are cliched up against the %site. %act hammers %pas face and hooks %pas leg; %pas is on his back after that trip; "
-			+ "%pas stays on his feet and fights off the trip;12;-5;1;3;Judo trip clinch - effective;2;2;-10;-10;-10;6;0;",
+					+ "%pas stays on his feet and fights off the trip;12;-5;1;3;Judo trip clinch - effective;2;2;-10;-10;-10;6;0;",
 
 			"%act goes for a scissor takedown. thats unusual; %pas is down after that takedown and they are scrambling for position. %act gets "
-			+ "the advantage; %act is on his back after that attempt;12;5;1;4;Judo - scissor takedown;0;0;-10;-10;-10;5;3;",
+					+ "the advantage; %act is on his back after that attempt;12;5;1;4;Judo - scissor takedown;0;0;-10;-10;-10;5;3;",
 
 			"%act shoots and grab %pas's ankle trying to take him down with a Heel Trip Reversal; %act scoop up %pas's ankle with one hand and "
-			+ "pushes his body with another forcing %pas to the mat; %pas sprawl and remain on his feet;9;3;0;0;Heel Trip Reversal;0;0;0;1;1;5;0;",
+					+ "pushes his body with another forcing %pas to the mat; %pas sprawl and remain on his feet;9;3;0;0;Heel Trip Reversal;0;0;0;1;1;5;0;",
 
 			"%act fakes a few punches and advance towards %pas trying to take him down with a Advancing Leg Sweep; %pas lose his balance and "
-			+ "falls hard on the mat; %pas pushes %act and circle away keeping himself within striking range;9;4;0;0;Advancing Leg Sweep;0;0;0;1;1;2;1;",
+					+ "falls hard on the mat; %pas pushes %act and circle away keeping himself within striking range;9;4;0;0;Advancing Leg Sweep;0;0;0;1;1;2;1;",
 
 			"%act tries a Foot Sweep takedown on %pas ;well done %pas falls hard on the mat;%act fails to take him down and both fighter are "
-			+ "still standing;9;4;0;0; Foot Sweep Takedown;0;0;0;1;1;2;1;",
+					+ "still standing;9;4;0;0; Foot Sweep Takedown;0;0;0;1;1;2;1;",
 
 			"%act grab one of %pas's arm and tries a Hip Throw; %pas landed hard on his back; %pas done well to maintain his balances and avoid "
-			+ "going down;9;5;0;0;Hip Throw;0;0;0;1;2;2;1;",
+					+ "going down;9;5;0;0;Hip Throw;0;0;0;1;2;2;1;",
 
 			"%act grapple with %pas and tries a Inner leg Sweep; %pas falls hard on the mat with %act on top of him; %pas managed to maintain "
-			+ "his balances and move away from %act ;9;4;0;0;Inner leg Sweep;0;0;0;1;1;15;1;",
+					+ "his balances and move away from %act ;9;4;0;0;Inner leg Sweep;0;0;0;1;1;15;1;",
 
 			"%act grapple with %pas and tries a Outer Leg Sweep;nice takedown %act is in side mount over %pas ; %pas manage to maintain his"
-			+ " balances and avoid the takedown;9;3;0;0;Outer Leg Sweep;0;0;0;1;1;13;0;"));
+					+ " balances and avoid the takedown;9;3;0;0;Outer Leg Sweep;0;0;0;1;1;13;0;"));
 
 	public static final ArrayList<String> breakClinch = new ArrayList<String>(Arrays.asList(
 			"%act pushes away %pas trying to keep the fight at striking range;%pas stumbles backwards and %act circles to get the center"
-			+ " of the %site;%pas doesn't want to break the clinch as he still is grappling with %act;0;0;3;9;Break Clinch;0;0;0;0;0;1;0",
+					+ " of the %site;%pas doesn't want to break the clinch as he still is grappling with %act;0;0;3;9;Break Clinch;0;0;0;0;0;1;0",
 
 			"%act doesn't want to clinch as he ducks under %pas embrace and tries to move away...;Nice move from %act who put distance between"
-			+ " them;%pas pushes %act forward and doesn't allow him to break the clinch.;0;0;3;9;Break Clinch;0;0;0;0;0;1;0",
+					+ " them;%pas pushes %act forward and doesn't allow him to break the clinch.;0;0;3;9;Break Clinch;0;0;0;0;0;1;0",
 
 			"%act tries to shrug his way out of the clinch. ;%act circles out and slips free of %pas's grip. Nice job of getting out of that"
-			+ "position.;%pas is determined to work from the clinch. He pummeled through and managed to retain his position.;0;0;3;9;Break Clinch;0;0;0;0;0;1;0;"
-			));
-	
+					+ "position.;%pas is determined to work from the clinch. He pummeled through and managed to retain his position.;0;0;3;9;Break Clinch;0;0;0;0;0;1;0;"));
+
+	public static final ArrayList<String> gnp1 = new ArrayList<String>(Arrays.asList(
+			"%act throws a flurry of punches at %pas...;A lot of them are hitting %pas's face;%pas is defending himself well. None of them connect.;5;2;7;8;GnP;5;4;1;0;0;0;0",
+
+			"%act tries to launch a few punches to %pas;Little effect. A lot of them are hitting %pas's defense;%pas is able to achieve closed guard and counter %act's punches.;9;2;8;10;GnP;3;1;0;0;0;0;6",
+
+			"%act positions himself and launches a barrage of punches.;%act is in full mount and his punches are hitting hard %pas's abdomen;%pas covers himself well;11;2;10;7;GnP;4;2;0;0;0;4;0",
+
+			"%act positions himself and launches a barrage of punches.;%act is in full mount and his punches are hitting hard %pas's ribs;%pas covers himself well;10;2;10;7;GnP;4;2;0;0;0;4;0",
+
+			"%act launches a few punches to %pas;Weak punches. He needs to improve his position!;%pas holds %act's arms and blocks the punches!;1;3;7;10;GnP;4;3;0;-1;-2;0;0",
+
+			"%act launches a few punches to %pas;Weak punches. He needs to improve his position!;%pas covers himself well and then rolls on the ground. Great reversal!;1;1;7;8;GnP;4;2;0;0;0;0;9",
+
+			"%act throws a lot of punches;some strikes get through.;with little effect. %pas is doing a great job covering himself up.;0;2;7;10;GnP;3;1;-1;-1;-2;0;0",
+
+			"Pitty-pat punches from %act;They're bothering %pas even though they aren't hurting him.;%pas doesn't flinch.;0;2;7;10;GnP;3;2;-1;-1;-2;0;0",
+
+			"Body shots by %act;Solid blows to %pas's abdomen.;%pas covers up.;11;1;8;7;GnP;2;2;-2;0;-2;0;0"));
+
+	public static final ArrayList<String> gnp2 = new ArrayList<String>(Arrays.asList(
+			"%act tries to  open %pas's guard...;Great bombs from the top by %act. %pas is unable to cover himself "
+					+ "now!;%pas breaks the lock and covers himself from %act's punches;1;0;10;7;GnP;6;4;2;0;1;0;0",
+
+			"%act gets a good position on the ground. ..;and what an incredible flurry! He's just wailing away at %pas!"
+					+ " The referee is saying he's going to stop it if %pas doesn't defend himself!;%pas holds %act arms and counters his opponent punches.;6;0;7;10;GnP;5;5;2;0;2;0;0",
+
+			"%act tries to open up %pas's defense faking a few punches.;He is aggressively and repeatedly punching %pas "
+					+ "in the side of the head;%pas wraps his arms around %act's arms and counters the punches.;1;0;10;7;GnP;4;4;2;0;1;0;0",
+
+			"%act hovers above %pas;Good punches to %pas's body.;%pas stops him from throwing strikes.;9;1;7;13;GnP;3;3;0;0;-1;0;0",
+
+			"%act fakes some punches;then lands a big punch to %pas's face!;%pas ties him up.;0;1;8;7;GnP;1;1;0;0;2;0;0",
+
+			"%act throws a few hammer fists to the face of %pas;Solid shots!;Blocked by %pas.;0;1;7;13;GnP;4;4;0;0;2;0;0",
+
+			"%act aggressively and repeatedly punches %pas.;He needs to do something soon or the referee will stop the "
+					+ "fight!;Good job by %pas blocking and slipping the blows.;0;0;10;10;GnP;5;4;2;0;1;0;0",
+
+			"Good looking punches from %act on the ground;They could take their toll on %pas.;deflected by %pas.;0;1;10;7;GnP;3;3;1;0;0;0;0"));
+
 	public static final ArrayList<String> clinch = new ArrayList<String>(Arrays.asList(
 			"%act wants to take the fight to his advantage and tries to clinch.;%act moves forward and holds %pas;%pas wants "
 					+ "nothing of that and pushes %act.;0;2;1;3;Clinch;1;1;0;0;0;12;1",
@@ -594,6 +633,23 @@ public abstract class Comments {
 
 			"Bad leg defense, %pas broke his [SIDE] ankle with that defense, this fight is over;Leg injury"));
 
+	public static final ArrayList<String> gnp3 = new ArrayList<String>(Arrays.asList(
+			"%act wants to finish his opponent on the ground;%act drills %pas's face with a huge right hand! What an"
+					+ " impact!;%act can't find an opening in his opponent's guard!;6;-1;10;7;GnP;1;1;2;2;2;0;0",
+
+			"%act moves to better his position on the ground...;%act viciously slams hammer blows to %pas's face!;%act"
+					+ " wraps his arms around his opponents' and tries to switch positions;1;0;10;7;GnP;3;3;1;2;3;0;14",
+
+			"%act leans back...;He clobbers %pas's face with a huge punch! Ouch!;%pas eyes him warily.;0;0;10;7;GnP;1;1;1;1;2;0;0",
+
+			"%act is looking to end this fight with strikes;He starts to pound away at %pas, who is barely "
+					+ "covering up!;%pas anticipates his moves and avoids danger.;0;-1;10;7;GnP;5;4;1;1;3;0;15",
+
+			"%act fires a barrage of punches at %pas's head!;This is bad! %act is just pounding on %pas's "
+					+ "head like he's a training dummy! The referee looks on anxiously!;The punches go wide.;0;0;10;7;GnP;5;4;1;1;2;0;0",
+
+			"%act throws down elbows...;He's tearing up %pas's face with those brutal elbows! %pas needs to do something! The referee is"
+					+ " threatening to stop it!;%pas is not making himself an easy target.;0;0;10;8;GnP;5;5;2;1;1;0;0"));
 	public static final ArrayList<String> armInjuries0 = new ArrayList<String>(
 			Arrays.asList("%pas Hyper-extended his [SIDE] arm;Hyper-extended arm",
 					"%pas's [SIDE] arm is getting wrenched, it appears to be injured;contused left arm"));

@@ -223,8 +223,8 @@ public class Fight implements Serializable {
 					fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_GNP:
-					setPbp("ACT_GNP");// ActGnP(fighterActiveOrPassive(fighterActive),
-										// fighterActiveOrPassive(fighterPasive));
+					actGnP(fighterActiveOrPassive(fighterActive),
+					fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_POSITIONING:
 					setPbp("ACT_POSITIONING");// ActPositioning(fighterActiveOrPassive(fighterActive),
@@ -1479,6 +1479,161 @@ public class Fight implements Serializable {
 	    }
 	}
 	
+	public void actGnP(Fighter act, Fighter pas) {
+	    double at, def, damageDone;
+	    int attackLevel, injuryType;
+
+	    attackLevel = attackLevel(act, pas, act.getGnp(), pas.getDodging());
+
+	    switch (attackLevel) {
+	        case 1:
+	            generateComment(Comments.gnp1);
+	            break;
+	        case 2:
+	            generateComment(Comments.gnp2);
+	            break;
+	        case 3:
+	            generateComment(Comments.gnp3);
+	            break;
+	    }
+
+	    doComment(act, pas, extractInitComment(fullComment));
+
+	    hitLocation = extractHitLocation(fullComment);
+
+	    //bout.updateStatistic(getFighterNumber(act), StatisticType.GNP, extractHitsLaunched(fullComment), 0);
+
+	    at = fixedRandomInt(act.getGnp()) + act.getAttackBonus() + gnPBonusByGuard();
+
+	    switch (new Random().nextInt(4)) {
+	        case 0:
+	            at += fixedRandomInt(act.getStrength() / 2);
+	            break;
+	        case 1:
+	            at += fixedRandomInt(act.getAgility() / 2);
+	            break;
+	        case 2:
+	            at += fixedRandomInt(act.getGroundGame() / 2);
+	            break;
+	        case 3:
+	            at += fixedRandomInt(act.getPunching() / 2);
+	            break;
+	    }
+
+	    at += smallRandom();
+	    at = gasTankFactor(act, at);
+	    at -= hurtFactor(act);
+
+	    def = fixedRandomInt(pas.getDodging()) + pas.getDefenseBonus();
+
+	    switch (new Random().nextInt(4)) {
+	        case 0:
+	            def += fixedRandomInt(pas.getStrength() / 2);
+	            break;
+	        case 1:
+	            def += fixedRandomInt(pas.getAgility() / 2);
+	            break;
+	        case 2:
+	            def += fixedRandomInt(pas.getDodging() / 2);
+	            break;
+	        case 3:
+	            def += fixedRandomInt(pas.getGroundGame() / 2);
+	            break;
+	    }
+
+	    def += smallRandom();
+	    def = gasTankFactor(pas, def);
+	    def -= hurtFactor(pas);
+
+	    if (def >= at) {
+	        doComment(act, pas, extractFailureComment(fullComment));
+	        act.setStalling(act.getStalling() + 1);
+
+	        if (!isCounter) {
+	            isCounter = checkCounterAttack(act, pas, counterProb);
+	            if (isCounter) {
+	                doCounterAttack(pas, act);
+	            } else {
+	                processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+	            }
+	        } else {
+	            isCounter = false;
+	            processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+	        }
+	    } else {
+	        switch (attackLevel) {
+	            case 1:
+	                doComment(act, pas, extractComment(fullComment));
+	                break;
+	            case 2:
+	                doComment(act, pas, extractComment(fullComment));
+	                break;
+	            case 3:
+	                doComment(act, pas, extractComment(fullComment));
+	                break;
+	        }
+	    }
+	    
+	    act.setStalling(0);
+
+	
+	 damageDone = (at - def) * act.getDamageBonus() * attackLevel;
+	 damageFighter(act, pas, damageDone);
+
+	
+	 if (checkKO(act, pas, damageDone, kOSubProb)) {
+	 processKO(act, pas);
+	 }
+
+	
+	  injuryType = checkInjury(act, pas, damageDone, injuryProb);
+	 if (injuryType != Sim.INJURYORCUTFALSE) {
+	 processInjury(act, pas, injuryType);
+	 }
+
+	 // Check for cut
+	 injuryType = checkCut(act, pas, damageDone, cutProb);
+	 if (injuryType != Sim.INJURYORCUTFALSE) {
+	 processCut(act, pas, injuryType);
+	 }
+
+	
+	 processAfterMovePosition(act, pas, extractFinalSuccessPosition(fullComment));
+
+	 // Update bout statistics
+	 //Bout.UpdateStatistic(GetFighterNumber(act), StatisticType.stGnP, 0, ExtractHitsLanded(FullComment));
+	    
+	}
+
+	
+	public double gnPBonusByGuard() {
+	    double result = 0;
+	    switch (guardType) {
+	        case 0:
+	            result = 3 * numHooks;
+	            break;
+	        case 1:
+	            result = 5;
+	            break;
+	        case 2:
+	            result = 1;
+	            break;
+	        case 3:
+	            result = -1;
+	            break;
+	        case 4:
+	            result = 0;
+	            break;
+	        case 5:
+	            result = -3;
+	            break;
+	        case 6:
+	            result = -5;
+	            break;
+	    }
+	    return result;
+	}
+	
 	public int dirtyBoxingAction(Fighter act) {
 		final double PUNCH_PROB = 1.25;
 		double kneeProb = act.getStratKicking() + randomGenerator();
@@ -2050,8 +2205,8 @@ public class Fight implements Serializable {
 		// checkMoreDamageOneHit(act, pas, DamageDone);
 
 		// Increase stats
-		// Bout.UpdateDamageDone(getFighterNumber(Act), DamageDone, InTheClinch,
-		// Act.OnTheGround);
+		// Bout.UpdateDamageDone(getFighterNumber(act), DamageDone, InTheClinch,
+		// act.OnTheGround);
 		// Bout.UpdateDamageReceived(getFighterNumber(Pas), DamageDone, InTheClinch,
 		// Pas.OnTheGround);
 
@@ -2063,7 +2218,7 @@ public class Fight implements Serializable {
 		}
 
 		// Increase points
-		// Act.increasePoints(Bout.CurrentRound, DamageDone /
+		// act.increasePoints(Bout.CurrentRound, DamageDone /
 		// ApplicationUtils.DAMAGECUTPOINTS);
 	}
 
@@ -2154,17 +2309,17 @@ public class Fight implements Serializable {
 		}
 	}
 
-	public int clinchType(Fighter Act) {
+	public int clinchType(Fighter act) {
 		final double NO_SKILL_PROB = 0.5;
 		double thaiClinch = randomGenerator();
 		double dirtyClinch = randomGenerator();
 		double grapplingClinch = randomGenerator();
 
-		if (!Act.isThaiClinch()) {
+		if (!act.isThaiClinch()) {
 			thaiClinch *= NO_SKILL_PROB;
 		}
 
-		if (!Act.isDirtyBoxing()) {
+		if (!act.isDirtyBoxing()) {
 			dirtyClinch *= NO_SKILL_PROB;
 		}
 
@@ -2180,7 +2335,7 @@ public class Fight implements Serializable {
 		return result;
 	}
 
-	public void processAfterMovePosition(Fighter Act, Fighter Pas, int Position) {
+	public void processAfterMovePosition(Fighter act, Fighter Pas, int Position) {
 
 		if (Position != 0) {
 			guardType = -1;
@@ -2189,109 +2344,109 @@ public class Fight implements Serializable {
 
 		switch (Position) {
 		case 1:
-			Act.setOnTheGround(false);
+			act.setOnTheGround(false);
 			Pas.setOnTheGround(false);
 			numHooks = -1;
 			break;
 		case 2:
-			Act.setOnTheGround(false);
+			act.setOnTheGround(false);
 			Pas.setOnTheGround(true);
-			fighterOnTop = fighterNumber(Act);
+			fighterOnTop = fighterNumber(act);
 			guardType = -1;
 			numHooks = -1;
 			break;
 		case 3:
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(false);
 			fighterOnTop = fighterNumber(Pas);
 			guardType = -1;
 			numHooks = -1;
 			break;
 		case 4:
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
-			fighterOnTop = fighterNumber(Act);
+			fighterOnTop = fighterNumber(act);
 			guardType = 1;
 			numHooks = -1;
 			break;
 		case 5:
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
-			fighterOnTop = fighterNumber(Act);
+			fighterOnTop = fighterNumber(act);
 			guardType = 4;
 			numHooks = -1;
 			break;
 		case 6:
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
-			fighterOnTop = fighterNumber(Act);
+			fighterOnTop = fighterNumber(act);
 			guardType = 5;
 			numHooks = -1;
 			break;
 		case 7:
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
-			fighterOnTop = fighterNumber(Act);
+			fighterOnTop = fighterNumber(act);
 			guardType = 0;
 			numHooks += 1;
 			setLimits(numHooks, 2, 0);
 			break;
 		case 8:
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
 			fighterOnTop = fighterNumber(Pas);
 			guardType = 1;
 			numHooks = -1;
 			break;
 		case 9:
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
 			fighterOnTop = fighterNumber(Pas);
 			guardType = 4;
 			numHooks = -1;
 			break;
 		case 10:
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
 			fighterOnTop = fighterNumber(Pas);
 			guardType = 5;
 			numHooks = -1;
 			break;
 		case 11:
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
 			fighterOnTop = fighterNumber(Pas);
 			guardType = 0;
 			numHooks = -1;
 			break;
 		case 12:
-			Act.setOnTheGround(false);
+			act.setOnTheGround(false);
 			Pas.setOnTheGround(false);
 			guardType = -1;
 			inTheClinch = true;
 			numHooks = -1;
 			break;
 		case 13:
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
-			fighterOnTop = fighterNumber(Act);
+			fighterOnTop = fighterNumber(act);
 			guardType = 2;
 			numHooks = -1;
 			break;
 		case 14:
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
 			fighterOnTop = fighterNumber(Pas);
 			guardType = 2;
 			numHooks = -1;
 			break;
 		case 15:
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
 			fighterOnTop = fighterNumber(Pas);
 		case 16:
 
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
 			fighterOnTop = fighterNumber(Pas);
 			guardType = 3;
@@ -2299,14 +2454,14 @@ public class Fight implements Serializable {
 			break;
 		case 17:
 
-			Act.setOnTheGround(false);
+			act.setOnTheGround(false);
 			guardType = -1;
 			numHooks = -1;
 			break;
 		case 18:
 
 			numHooks--;
-			Act.setOnTheGround(true);
+			act.setOnTheGround(true);
 			Pas.setOnTheGround(true);
 			setLimits(numHooks, 2, 0);
 			break;
