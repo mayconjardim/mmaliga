@@ -32,14 +32,13 @@ public abstract class Comments {
 			"A solid combination from %act;connects with %pas.;mostly hits air.;0;2;1;2;Punches;2;2;1;0;0;1;1",
 			"%act is measuring %pas with his jab.;Good accuracy on his part.;%pas isn't fazed.;0;1;1;2;Jabs;2;2;-1;-2;-1;1;1",
 			"Solid shot from %act to the body.;%pas didn't like that.;%pas blocks in time.;9;2;1;4;Body punch;1;1;-5;1;0;1;1",
-			"Some counter punches against %pas; %location;almost hit him as he moves away.;0;1;4;1;Punches;2;2;0;-1;0;1;1",
+			"Some counter punches against %pas; %loc;almost hit him as he moves away.;0;1;4;1;Punches;2;2;0;-1;0;1;1",
 			"Good movement from %act;moving in to strike and moving away afterwards.;who is bobbing and weaving.;0;0;1;3;Punches;2;2;1;0;0;1;1",
 			"%act fires an unorthodox punch to %pas's torso;that hits its mark.;that goes wide.;11;2;1;2;Body punch;1;1;-5;-1;-3;1;1",
 			"A punch from %act;grazes %pas's left cheek.;whizzes past %pas.;4;2;1;4;Punch;1;1;0;-1;0;1;1",
 			"A punch from %act;grazes %pas's right cheek.;gets blocked by %pas.;5;2;1;4;Punch;1;1;0;-1;0;1;1",
 			"%act jabs at %pas;hitting his chest.;to no visible effect.;9;2;1;2;Jab;1;1;-5;-1;-2;1;1",
-			"%act launches a flurry of punches;but only manages to land glancing blows.;%pas slips out of danger.;0;3;1;3;Punches;3;2;0;-1;0;1;1"
-	));
+			"%act launches a flurry of punches;but only manages to land glancing blows.;%pas slips out of danger.;0;3;1;3;Punches;3;2;0;-1;0;1;1"));
 
 	public static final ArrayList<String> punch2 = new ArrayList<String>(Arrays.asList(
 			"%act tries a hook to the body;and hits %pas's ribs hard;but %pas manages to dodge it",
@@ -79,7 +78,7 @@ public abstract class Comments {
 			"%act jabs at %pas;hitting his chest.;to no visible effect.",
 
 			"%act launches a flurry of punches;but only manages to land glancing blows.;%pas slips out of danger."
-	
+
 	));
 
 	public static final ArrayList<String> punch3 = new ArrayList<String>(Arrays.asList(
@@ -111,8 +110,7 @@ public abstract class Comments {
 
 			"Every time %pas attempts to get inside;%act fires a low kick.;%act misses with a low kick.;17;3;1;2;Low kicks;2;2;-5;-7;0;1;1",
 
-			"Nice low kick from %act;Loud pop!;but %pas stops it.;15;3;1;2;Low kick;1;1;-5;-5;0;1;1"
-			));
+			"Nice low kick from %act;Loud pop!;but %pas stops it.;15;3;1;2;Low kick;1;1;-5;-5;0;1;1"));
 
 	public static final ArrayList<String> kicks2 = new ArrayList<String>(Arrays.asList(
 			"%act launches a furious low kick!;%pas receives a hard blow on his left leg!;%pas blocks.;17;1;1;3;Low kick;1;1;-3;0;0;1;1",
@@ -122,14 +120,14 @@ public abstract class Comments {
 			"Good front kick from %act!;%pas stumbles backwards after that one!;%pas blocks;11;0;1;4;Front kick;1;1;0;0;0;1;1",
 
 			"Lightning fast low kick from %act!;Loud pop! I'm sure that hurts!;%pas blocks that kick with his leg.;16;0;1;3;"
-			+ "Low kick;1;1;0;0;0;1;1",
+					+ "Low kick;1;1;0;0;0;1;1",
 
 			"%act fakes a move and launches a liver kick!;That almost wrenches %pas! I'm sure that his liver will be sore tomorrow."
-			+ ";%pas blocks and pushes his opponent.;10;0;1;4;Middle kick;1;1;0;1;0;1;1",
+					+ ";%pas blocks and pushes his opponent.;10;0;1;4;Middle kick;1;1;0;1;0;1;1",
 
 			"Solid low kick from %act.;For sure, that had to hurt!;%pas deflects it.;15;1;1;2;Low kick;1;1;-3;-3;0;1;1 "
-			+ "Middle kick from %act.;%pas receives a solid kick right below his ribs.;The kick just misses.;10;2;1;2;"
-			+ "Body kick;1;1;-3;-3;0;1;1",
+					+ "Middle kick from %act.;%pas receives a solid kick right below his ribs.;The kick just misses.;10;2;1;2;"
+					+ "Body kick;1;1;-3;-3;0;1;1",
 
 			"Solid kick to the leg from %act;that visibly pains %pas.;%pas checks it.;17;1;1;2;Low kick;1;1;-3;-1;0;1;1",
 
@@ -142,121 +140,268 @@ public abstract class Comments {
 			"%act launches a low kick;that almost wrenches %pas's knee!;that gets blocked quickly.;18;2;1;2;Low kick;1;1;-3;0;0;1;1",
 
 			"%act tries a middle kick;%pas blocks with his arm! Wow, that was loud!;%pas blocks and steps away.;14;2;2;4;"
-			+ "Middle kick;1;1;-3;-1;0;1;1",
+					+ "Middle kick;1;1;-3;-1;0;1;1",
 
 			"%act moves aside and launches a furious low kick!;Hard blow to %pas's thigh!;%pas checks the kick.;16;0;1;2;"
-			+ "Kicks;1;1;0;1;-1;0;0;"
-			));
-	
+					+ "Kicks;1;1;0;1;-1;0;0;"));
+
 	public static final ArrayList<String> kicks3 = new ArrayList<String>(Arrays.asList(
 			"%act moves forward and launches a high kick!;Vicious high kick!;%pas ducks under.;4;-2;1;3;High kick;1;1;3;3;5;1;1",
 
 			"%act tries a high kick!;%pas was covering for a middle kick but that one almost knocked off his head!;%pas blocks. "
-			+ "Wow, that could have finished this match.;4;0;1;2;High kick;1;1;2;2;7;1;1",
+					+ "Wow, that could have finished this match.;4;0;1;2;High kick;1;1;2;2;7;1;1",
 
 			"Here comes %act with a vicious middle kick!;That lands hard on %pas's ribs!;%pas dodges that one moving backwards;"
-			+ "10;0;1;4;Middle kick;1;1;0;3;0;1;1",
+					+ "10;0;1;4;Middle kick;1;1;0;3;0;1;1",
 
 			"%act steps forward and fires a high kick!;Vicious high kick, I can't believe that landed!;%pas blocks decisively,"
-			+ " as if to say, No KO for me, thanks!;0;-1;1;4;High kick;1;1;3;2;5;1;1",
+					+ " as if to say, No KO for me, thanks!;0;-1;1;4;High kick;1;1;3;2;5;1;1",
 
 			"A bad move from %pas;allows %act to land a solid head kick.;almost puts his head in the path of %act's kick.;"
-			+ "0;1;3;4;High kick;1;1;1;0;3;1;1",
+					+ "0;1;3;4;High kick;1;1;1;0;3;1;1",
 
 			"%pas moves to shoot;but %act delivers a knee that wrecks him!;%act misses a knee.;0;1;4;3;Knee;1;1;3;2;7;1;1",
 
 			"Brutal-looking high kick from %act!;You could hear the impact from the back seats!;%pas dodges!;0;-1;2;1;High kick;1;1;2;1;6;1;1",
 
 			"%pas attempts a shoot;%act hops back and delivers a powerful kick to his head!;but stops before running into %act's"
-			+ " kick.;0;1;4;2;High kick;1;1;2;2;5;1;1",
+					+ " kick.;0;1;4;2;High kick;1;1;2;2;5;1;1",
 
 			"%act wants this win. He unleashes a kick.;Brutal high kick to %pas!;His opponent is elsewhere,"
-			+ " looking to counter...;0;3;2;4;High kick;1;1;3;2;5;1;1",
+					+ " looking to counter...;0;3;2;4;High kick;1;1;3;2;5;1;1",
 
 			"High kick from %act!;%pas seems to be done!;He misses narrowly!;0;-2;1;3;High kick;1;1;2;1;7;1;1",
 
 			"%act launches a solid middle kick;that wrenches %pas!;that whizzes past %pas.;11;0;2;4;High kick;1;1;-7;2;0;1;1",
 
 			"%act goes for a low kick..;Faster than a blinking eye, he follows up with a high kick!;%pas avoids "
-			+ "the deadly blow.;0;-1;2;4;High kick;2;2;3;3;5;1;1",
+					+ "the deadly blow.;0;-1;2;4;High kick;2;2;3;3;5;1;1",
 
-			"Incredible high kick!;%pas is worried!;%pas deflects and sidesteps.;9;0;1;2;High kick;1;1;3;3;4;1;1"
-			));
+			"Incredible high kick!;%pas is worried!;%pas deflects and sidesteps.;9;0;1;2;High kick;1;1;3;3;4;1;1"));
 
 	public static final ArrayList<String> dirtyClinch = new ArrayList<String>(Arrays.asList(
 			"%act wants to close the range and tries to grapple...;Nice move. He shoves himself over his opponent "
-			+ "and secure a single collar tie.;%pas doesn't want anything like this as he moves backwards;0;0;0;0;Dirty Boxing;0;0;0;0;0;12;0;",
+					+ "and secure a single collar tie.;%pas doesn't want anything like this as he moves backwards;0;0;0;0;Dirty Boxing;0;0;0;0;0;12;0;",
 
 			"%act tries to take the action to his favourite field as he tries to grapple;Great move by %act who pushes "
-			+ "his opponent forward with a double underhooks.;%pas swings and %act has to retreat;0;0;0;0;Dirty Boxing;0;0;0;0;0;12;0;",
+					+ "his opponent forward with a double underhooks.;%pas swings and %act has to retreat;0;0;0;0;Dirty Boxing;0;0;0;0;0;12;0;",
 
 			"%act moves forward looking for some action;He surprises %pas with a double overhooks!;%pas doesn't "
-			+ "want to engage and backpedals;0;0;0;0;Dirty Boxing;0;0;0;0;0;0;0;"
-			
-			));
-	
+					+ "want to engage and backpedals;0;0;0;0;Dirty Boxing;0;0;0;0;0;0;0;"
+
+	));
+
 	public static final ArrayList<String> thaiClinch = new ArrayList<String>(Arrays.asList(
 			"%act moves forward looking for some grappling action;%act has his opponent in a text book double collar"
-			+ " thai clinch!;%pas pushes his opponent and keep the fight at striking range;0;0;0;0;Thai Clinch;0;0;0;0;0;12;0;",
+					+ " thai clinch!;%pas pushes his opponent and keep the fight at striking range;0;0;0;0;Thai Clinch;0;0;0;0;0;12;0;",
 
 			"%act fakes a punch and launches himself over %pas;Great move by %act who pushes his opponent under a "
-			+ "troublesome thai clinch;%pas counters with a few fake punches and then backpedals;0;0;0;0;Thai Clinch;0;0;0;0;0;12;0;",
+					+ "troublesome thai clinch;%pas counters with a few fake punches and then backpedals;0;0;0;0;Thai Clinch;0;0;0;0;0;12;0;",
 
 			"%act jumps over his opponent and tries to grapple;%act pushes his opponent against the %holdSite in a "
-			+ "plum position;%pas sees what was coming and ducks under his opponent and moves aside;0;0;0;0;Thai Clinch;0;0;0;0;0;12;0;"
-			
-			));
-	
+					+ "plum position;%pas sees what was coming and ducks under his opponent and moves aside;0;0;0;0;Thai Clinch;0;0;0;0;0;12;0;"
+
+	));
+
+	public static final ArrayList<String> thaiPunch1 = new ArrayList<String>(Arrays.asList(
+			"%act throws a wild flurry of punches while in the clinch!;%pas is being hit hard here!;%pas pushes away %act and breaks the "
+					+ "clinch.;7;3;1;2;Punches;4;4;0;-2;-2;12;1",
+			"%act tries to dirty boxing while holds %pas against %site;%pas is unable to "
+					+ "defend himself and receives some punches in the ribs.;%pas is aware of his surroundings and scapes from the "
+					+ "clinch.;10;2;1;4;Punches;3;3;0;0;0;12;1",
+			"%act is grappling and launching some wild punches...;I don't know "
+					+ "how %pas is eating those punches!;Not the best move against %pas who tries to take adventage of his"
+					+ " opponent's mistakes.;4;4;3;7;Punches;3;2;0;0;1;12;12",
+			"A dirty boxing lesson by %act who is trying"
+					+ " to punish %pas's ribs with a few punches.;He scores a few hits before the pain makes %pas "
+					+ "react and defend his side.;%pas brings his opponent closer and blocks %act's "
+					+ "punches.;10;0;4;3;Punches;4;2;0;0;0;0;0;",
+			"%act tries to strikes %pas with" + "his elbow in the clinch;nicely done %pas got hit!!! again and again, "
+					+ "he have to defend himself before the ref stop this fight;%pas saw that "
+					+ "coming and block it with ease;1;2;1;4;Elbows;3;3;3;1;2;0;0;",
+			"both fighters are clinching, "
+					+ "%act react first trying to hit %pas with a right elbow strike;big elbow!!!"
+					+ " that elbow knocks %pas to the mat;%pas blocks that elbow and both man continues"
+					+ "to clinch;4;2;1;4;Elbow;1;1;3;1;2;2;0;",
+			"both fighters are clinching, %act react"
+					+ " first trying to hit %pas with a left elbow strike;big elbow!!! that elbow"
+					+ " knocks %pas to the mat;%pas blocks that elbow and both man continues"
+					+ " to clinch;5;2;1;4;Elbow;1;1;3;1;2;2;0;",
+			"%act was holding %pas against" + " the %holdSite, he swings his right arm over %pas head and tries"
+					+ " to hit him with revese elbow ;%pas is being punish here, he got "
+					+ "hit again and again the fight won't last long if this continues;%pas "
+					+ "blocks that elbow and and move out of danger;4;2;1;4;Elbows;3;3;1;3;2;0;0;",
+			"%act was holding %pas against the %holdSite, he swings his left arm over %pas head and tries to hit him with"
+					+ " revese elbow ;%pas is being punish here, he got hit again and again the fight won't last long if this "
+					+ "continues;%pas blocks that elbow and and move out of danger;5;2;1;4;Elbows;3;3;1;3;2;0;0;",
+			"%act pushes %pas against the %holdSite and tries to hit him with the back of his elbow;one hits, another "
+					+ "hits and the third one sends %pas to the mat;%pas blocks that easily and both man are still clinching;5;2;1;4;Elbows;3;3;1;3;2;2;0;",
+			"%act pushes %pas against the %holdSite and tries to hit him with the back of his elbow;one hits, another"
+					+ " hits and the third one sends %pas to the mat;%pas blocks that easily and both man are still clinching;4;2;1;4;Elbows;3;3;1;3;2;2;0;",
+			"%act grapple with %pas and tries to hit him with a elbow;left elbow, right elbow and left elbow again!!! "
+					+ "nice combination by %act, %pas was surely hurt there;%pas wants nothing to do with him and pushes %act away;1;2;1;4;Elbows;3;3;3;1;2;0;0;",
+			"%act grapple with %pas and tries to hit him with a elbow;right elbow, left elbow and right elbow again!!! "
+					+ "nice combination by %act, %pas was surely hurt there;%pas wants nothing to do with him and pushes %act away;1;2;1;4;Elbows;3;3;3;1;2;0;0;",
+			"%act is clinching with %pas's back against the %holdSite, %act tries a big elbow;bang!!! what an impact!!!"
+					+ " %pas drops to the mat;%pas blocks that one and force %act to come out with something better;1;2;1;4;Elbow;1;1;3;1;2;2;0;"
+
+	));
+
+	public static final ArrayList<String> thaiPunch2 = new ArrayList<String>(Arrays.asList(
+			"%pas's corner is turning out to be his worst enemy! %act is throwing a flurry of punches!;%pas"
+					+ " just can't get away!;%pas ducks under and circles out of the corner.;5;0;2;1;Punches;5;3;2;0;1;12;1",
+
+			"%act is launching some bone breaking punches to %pas's ribs while in the clinch.;Wow."
+					+ " You can see the pain in %pas's eyes.;%pas blocks.;10;0;3;4;Punches;3;3;0;2;0;12;12",
+
+			"%act pushes off of %pas and starts launching a flurry of hooks and body shots!;%pas stumbles"
+					+ " backwards but %act chases him and continues the rain of blows!;%pas holds his opponent tight while he tries to cool down the action.;3;0;3;9;Punches;6;4;0;1;1;12;12",
+
+			"%act postures up and launches another series of punches!;A lot of them are hitting %pas hard,"
+					+ " who may be wondering how to scape from this!;%pas pushes his opponent forward and blocks most of "
+					+ "%act's offensive.;9;0;1;3;Punches;5;3;0;0;0;0;0;"
+
+	));
+
+	public static final ArrayList<String> thaiPunch3 = new ArrayList<String>(Arrays.asList(
+			"Brutal punches to %pas's face while in the clinch!;%pas can't take many more shots like those!;%pas"
+					+ " pushes %act with all his might as tries to keep the fight in striking range.;4;-2;1;2;Punches;5;4;3;3;3;12;1",
+
+			"%act pushes %pas againts the %HoldSite and begin a relentless combination of punches. The crowd "
+					+ "is on it's feet!;%pas cannot escape %act's clinch! %act is just brutalizing %pas with punches time and time again!;%pas "
+					+ "tries to block %act punches...;6;0;3;7;Punches;4;4;2;3;4;12;12",
+
+			"%act is absolutely terrifying with his power in the clinch, and is violently punishing %pas with uppercuts!;%pas is taking "
+					+ "more than he can endure. This could end soon if %pas is unable to escape!;Nothing that %pas must fear as he blocks nicely;3;0;3;1;Punches;3;3;2;2;4;12;12",
+
+			"%act pushes %pas against the  %holdSite and launches a few sick punches;A couple of unanswered uppercuts collide with "
+					+ "%pas's chin! His legs are wobbling!;%pas blocks and pushes away his opponent creating space between them.;8;0;2;4;Uppercuts;3;2;0;0;2;0;1;",
+
+			"Sick uppercut from the clinch by %act!;That one almost breaks %pas's chin! He is knocked down!;%pas is agile enough to avoid "
+					+ "that one! Lucky you %pas! It would have finished this fight.;8;2;1;9;Uppercut;1;1;1;2;3;2;0;"
+
+	));
+
+	public static final ArrayList<String> dirtyBoxing1 = new ArrayList<String>(Arrays.asList(
+			"%act throws a wild flurry of punches while in the clinch!;%pas is being hit hard here!;%pas pushes away %act and breaks the clinch.;7;3;1;2;Punches;4;4;0;-2;-2;12;1",
+
+			"%act tries to dirty boxing while holds %pas against %site;%pas is unable to defend himself and receives some punches in the ribs.;%pas is aware of his surroundings and scapes from the clinch.;10;2;1;4;Punches;3;3;0;0;0;12;1",
+
+			"%act is grappling and launching some wild punches...;I don't know how %pas is eating those punches!;Not the best move against %pas who tries to take adventage of his opponent's mistakes.;4;4;3;7;Punches;3;2;0;0;1;12;12",
+
+			"A dirty boxing lesson by %act who is trying to punish %pas's ribs with a few punches.;He scores a few hits before the pain makes %pas react and defend his side.;%pas brings his opponent closer and blocks %act's punches.;10;0;4;3;Punches;4;2;0;0;0;0;0;",
+
+			"%act tries to control %pas in the clinch and use his dirty boxing;%act pushes the back of %pas's head with one hand and punches his head a few times with the other, that surely hurts him; %pas pushes %act away before he could try anything;0;2;1;4;Punches;3;3;0;0;0;0;1;",
+
+			"%act pushes %pas against the %site and tries to work his dirty boxing;%act controls %pas in the clinch and deliver a few uppercuts, nice shots %pas is hurt; %pas pushes %act away and circle away;8;2;1;4;Uppercuts;3;3;0;0;0;0;1;",
+
+			"%act tries to holds %pas in a clinch against the %holdSite; %act pushes back %pas's head with his forehand and tries some puches to his ribs, %pas was unable to deferece himself and those puches landed hard; %pas escapes from the clinch before %act could keep him in place;10;2;1;4;Punches;3;3;0;0;0;0;1;",
+
+			"%act is holding %pas against the %holdSite with his fingers all over %pas's face;%pas looks discomfort and tries to struggle off, %act took advantage of it and landed some big punches to the ribs;%pas looks discomfort and tries to struggle off, he slide under %act arm and move away from danger %act ;10;2;1;4;Punches;3;3;0;0;0;0;1;"
+
+	));
+
+	public static final ArrayList<String> dirtyBoxing2 = new ArrayList<String>(Arrays.asList(
+			"%pas's corner is turning out to be his worst enemy! %act is throwing a flurry anotherof punches!;%pas"
+					+ "just can't get away!;%pas ducks under and circles out of the corner.;5;0;2;1;Punches;5;3;2;0;1;12;1",
+
+			"%act is launching some bone breaking punches to %pas's ribs while in the clinch.;Wow. You can see the pain in %pas's "
+					+ "eyes.;%pas blocks.;10;0;3;4;Punches;3;3;0;2;0;12;12",
+
+			"%act pushes off of %pas and starts launching a flurry of hooks and body shots!;%pas stumbles backwards but %act chases him and "
+					+ "continues the rain of blows!;%pas holds his opponent tight while he tries to cool down the action.;3;0;3;9;Punches;6;4;0;1;1;12;12",
+
+			"%act postures up and launches another series of punches!;A lot of them are hitting %pas hard, who may be wondering how to scape "
+					+ "from this!;%pas pushes his opponent forward and blocks most of %act's offensive.;9;0;1;3;Punches;5;3;0;0;0;0;0;"));
+
+	public static final ArrayList<String> dirtyBoxing3 = new ArrayList<String>(Arrays.asList(
+			"Brutal punches to %pas's face while in the clinch!;%pas can't take many more shots like those!;%pas pushes %act with all "
+					+ "his might as tries to keep the fight in striking range.;4;-2;1;2;Punches;5;4;3;3;3;12;1",
+
+			"%act pushes %pas againts the %HoldSite and begin a relentless combination of punches. The crowd is on it's feet!;%pas cannot "
+					+ "escape %act's clinch! %act is just brutalizing %pas with punches time and time again!;%pas tries to block %act punches...;6;0;3;7;Punches;4;4;2;3;4;12;12",
+
+			"%act is absolutely terrifying with his power in the clinch, and is violently punishing %pas with uppercuts!;%pas is taking more "
+					+ "than he can endure. This could end soon if %pas is unable to escape!;Nothing that %pas must fear as he blocks nicely;3;0;3;1;Punches;3;3;2;2;4;12;12",
+
+			"%act pushes %pas against the  %holdSite and launches a few sick punches;A couple of unanswered uppercuts collide with %pas's "
+					+ "chin! His legs are wobbling!;%pas blocks and pushes away his opponent creating space between them.;8;0;2;4;Uppercuts;3;2;0;0;2;0;1;",
+
+			"Sick uppercut from the clinch by %act!;That one almost breaks %pas's chin! He is knocked down!;%pas is agile enough to avoid "
+					+ "that one! Lucky you %pas! It would have finished this fight.;8;2;1;9;Uppercut;1;1;1;2;3;2;0;"));
+
+	public static final ArrayList<String> grapplingPunch1 = new ArrayList<String>(Arrays.asList(
+			"%act launches a few punches towards %pas's ribs while holds him in a double overhooks!;%pas receives a couple of blows in the "
+					+ "ribs.;%pas seems unaffected... those punches doesn't carry any power!;10;1;3;3;Punches;4;2;0;0;0;0;0;",
+
+			"%act tries to breaks %pas's resistence with a few punches while tries to push him against oner corner.;%act launches a couple of"
+					+ " punches that leave marks in %pas's ribs.;%act doesn't find the right way... He have to improve his position for causing any"
+					+ " real damage;10;0;3;3;Punches;2;2;0;0;0;0;0;"));
+
+	public static final ArrayList<String> grapplingPunch2 = new ArrayList<String>(Arrays.asList(
+			"%act struggles and launches a few punches to %pas's head;Those punches are hitting! %pas covers his head!;Nothing from this..."
+					+ " %act seems frustrated.;0;0;3;3;Punches;3;2;0;0;0;0;0;",
+
+			"%act tries to take %pas down... %pas stumbles backwards and %act launches a few punches...;One swing hits hard %pas's jaw!;%pas "
+					+ "dodges and moves away a couple of steps...;8;1;1;9;Punch;3;1;0;0;2;0;1;",
+
+			"%act launches a few hard punches to %pas's ribs!;%pas's ribs shows the damage! %act is working his opponent ribs!;%pas struggles"
+					+ " and protects himself.;10;0;3;3;Punches;4;3;0;1;0;0;0;"));
+
+	public static final ArrayList<String> refBreakClinch = new ArrayList<String>(Arrays.asList(
+			"%ref separates the fighters and tells them to continue fighting.",
+
+			"The referee intervenes to break the clinch. %ref sees a lack of activity in the clinch and separates the fighters."));
+
 	public static final ArrayList<String> clinch = new ArrayList<String>(Arrays.asList(
 			"%act wants to take the fight to his advantage and tries to clinch.;%act moves forward and holds %pas;%pas wants "
-			+ "nothing of that and pushes %act.;0;2;1;3;Clinch;1;1;0;0;0;12;1",
+					+ "nothing of that and pushes %act.;0;2;1;3;Clinch;1;1;0;0;0;12;1",
 
 			"%act fakes a punch and launches himself over %pas!;Nice move by %act who clinches and pushes %pas against "
-			+ "the %site;%pas is smart enough to avoid the clinch game by %act and pushes him away!;0;2;2;4;Clinch;1;1;0;0;0;12;1",
+					+ "the %site;%pas is smart enough to avoid the clinch game by %act and pushes him away!;0;2;2;4;Clinch;1;1;0;0;0;12;1",
 
 			"%act tries some clinching in order to control the fight...;Well done. %act is clinching with %pas.;%pas moves "
-			+ "backwards and circles around %act.;0;2;3;7;Clinch;1;1;0;0;0;12;1",
+					+ "backwards and circles around %act.;0;2;3;7;Clinch;1;1;0;0;0;12;1",
 
 			"%act leans forwards and tries to grapple with %pas;%act shows his clinching skills. Both fighters are clinching "
-			+ "now.;%pas wants to mantain the distance and ducks that one.;0;2;1;2;Clinch;1;1;0;0;0;12;1",
+					+ "now.;%pas wants to mantain the distance and ducks that one.;0;2;1;2;Clinch;1;1;0;0;0;12;1",
 
 			"%act tries to grapple;He puts %pas in a double underhook!;%pas moves aside keeping the fight a strinking "
-			+ "range;0;0;0;0;Grappling;0;0;0;0;0;12;0;",
+					+ "range;0;0;0;0;Grappling;0;0;0;0;0;12;0;",
 
 			"%act moves forward looking for some action;%act shows some wrestling skills as he put his opponent in a "
-			+ "double overhook!;%pas struggles a bit before breaking %act's attemp of grappling;0;0;0;0;Grappling;0;0;0;0;0;12;0;"
-			
-			));
-	
+					+ "double overhook!;%pas struggles a bit before breaking %act's attemp of grappling;0;0;0;0;Grappling;0;0;0;0;0;12;0;"
+
+	));
+
 	public static final ArrayList<String> counter = new ArrayList<String>(Arrays.asList(
 			"%act is trying to counter now!", "%pas clumsily fails here and it's time for %act to fight back!",
 			"%act tries to get some advantage after his opponent miss move...",
 			"%pas gets sloppy and %act tries to take advantage...", "Poorly executed technique. %act looks to counter!",
 			"%act misses a step and %pas sees an opportunity to counter him!"));
-	
+
 	public static final ArrayList<String> takeDown1 = new ArrayList<String>(Arrays.asList(
 			"%act is holding %pas's left leg... He's trying to take him down.;%pas loses balance and goes to "
-			+ "the ground.;%pas shows great balance while pushing away %act;13;3;1;3;One leg takedown;1;1;0;0;0;13;1",
+					+ "the ground.;%pas shows great balance while pushing away %act;13;3;1;3;One leg takedown;1;1;0;0;0;13;1",
 
 			"%act is holding %pas's right leg... He's trying to take him down.;%pas loses balance and goes to "
-			+ "the ground.;%pas shows great balance while pushing away %act;14;3;1;3;One leg takedown;1;1;0;0;0;13;1",
+					+ "the ground.;%pas shows great balance while pushing away %act;14;3;1;3;One leg takedown;1;1;0;0;0;13;1",
 
 			"%act grabs his opponent by the waist and tries to take the fight to the ground;Great takedown "
-			+ "by %act;%pas struggles... %act is unable to take him down;12;1;3;1;Takedown;1;1;0;0;0;5;1",
+					+ "by %act;%pas struggles... %act is unable to take him down;12;1;3;1;Takedown;1;1;0;0;0;5;1",
 
 			"%act tries to take the fight to the ground with a one leg takedown...;%pas is unable to remain "
-			+ "on his feet and falls to the ground;%pas jumps backwards and frees his leg.;12;2;2;3;One leg takedown;1;1;0;0;0;5;1",
+					+ "on his feet and falls to the ground;%pas jumps backwards and frees his leg.;12;2;2;3;One leg takedown;1;1;0;0;0;5;1",
 
 			"%act tries to bring the fight to the ground;%pas goes down.;%pas won't budge, forcing %act to "
-			+ "pull guard.;12;0;0;0;Takedown;1;1;0;-1;0;5;10",
+					+ "pull guard.;12;0;0;0;Takedown;1;1;0;-1;0;5;10",
 
 			"%act shoots for a double leg takedown!;He hits it! %pas is taken off his feet, but he manages "
-			+ "to pull %act into his guard.;%pas sprawls and manages to stay on his feet.;12;2;7;3;Double Leg Takedown;1;1;0;0;1;6;1;",
+					+ "to pull %act into his guard.;%pas sprawls and manages to stay on his feet.;12;2;7;3;Double Leg Takedown;1;1;0;0;1;6;1;",
 
 			"%act attempts a sweep single...;%act catches %pas's far ankle and trips him to the mat! Slick"
-			+ " takedown by %act.;%pas was ready and shrugs off the takedown attempt.;12;2;2;3;Sweep Single;1;1;0;0;0;6;0;"
-			));
-	
+					+ " takedown by %act.;%pas was ready and shrugs off the takedown attempt.;12;2;2;3;Sweep Single;1;1;0;0;0;6;0;"));
+
 	public static final ArrayList<String> groundKO = new ArrayList<String>(
 			Arrays.asList("This is over! That impact from %act has left %pas laying flat on the mat!",
 					"%act turns out the lights for %pas! What an astonishing KO by %act!",
@@ -308,14 +453,13 @@ public abstract class Comments {
 			"%ref is asking %pas to defend himself! %ref jumps in between the fighters and stops the punishment for %pas."));
 
 	public static final ArrayList<String> faceCut0 = new ArrayList<String>(
-			Arrays.asList("%pas has a small cut in his %location;Small cut %location",
-					"There is a small laceration on %pas's %location;Small cut %location"));
+			Arrays.asList("%pas has a small cut in his %loc;Small cut %loc",
+					"There is a small laceration on %pas's %loc;Small cut %loc"));
 
-	public static final ArrayList<String> faceInjuries0 = new ArrayList<String>(Arrays.asList(
-			"%pas's %location is beginning to swell;%location swelling",
-			"%pas's %location is bruised after the punishement he's received!;%location bruising"
-			));
-	
+	public static final ArrayList<String> faceInjuries0 = new ArrayList<String>(
+			Arrays.asList("%pas's %loc is beginning to swell;%loc swelling",
+					"%pas's %loc is bruised after the punishement he's received!;%loc bruising"));
+
 	public static final ArrayList<String> faceInjuries1 = new ArrayList<String>(Arrays.asList(
 			"%pas can't see anything with that swollen left eye.;Swollen Eye",
 
@@ -327,29 +471,25 @@ public abstract class Comments {
 
 			"%pas can't continue fighting. %ref doesn't allow him to continue fighting with his swollen right eye!;Swollen eye",
 
-			"%pas can't continue fighting. %ref doesn't allow him to continue fighting with his swollen left eye!;Swollen eye"
-			));
-	
-	public static final ArrayList<String> bodyInjuries0 = new ArrayList<String>(Arrays.asList(
-			"Crushing shot to %pas's body! He's holding his side;Contused side",
-			"Hard blow to %pas's mid-section, he seems hurt;Contused side",
-			"%pas ribs are getting hammered, they look bad!;Hammered ribs"
-			));
-	
-	public static final ArrayList<String> bodyInjuries1 = new ArrayList<String>(Arrays.asList(
-			"%pas has a broken rib. He can't continue fighting.;Broken Rib",
-			"%pas may have a broken rib. It's painful to see him losing this way.;Broken Ribs",
-			"%pas's holding his side, he appears to be in terrible pain, he's broken a rib ;Broken Ribs"
-			));
-	
+			"%pas can't continue fighting. %ref doesn't allow him to continue fighting with his swollen left eye!;Swollen eye"));
+
+	public static final ArrayList<String> bodyInjuries0 = new ArrayList<String>(
+			Arrays.asList("Crushing shot to %pas's body! He's holding his side;Contused side",
+					"Hard blow to %pas's mid-section, he seems hurt;Contused side",
+					"%pas ribs are getting hammered, they look bad!;Hammered ribs"));
+
+	public static final ArrayList<String> bodyInjuries1 = new ArrayList<String>(
+			Arrays.asList("%pas has a broken rib. He can't continue fighting.;Broken Rib",
+					"%pas may have a broken rib. It's painful to see him losing this way.;Broken Ribs",
+					"%pas's holding his side, he appears to be in terrible pain, he's broken a rib ;Broken Ribs"));
+
 	public static final ArrayList<String> armInjuries1 = new ArrayList<String>(Arrays.asList(
 			"%pas [SIDE] arm has been Hyper-extended so much it appears its dislocated, the fight is over;Arm injury",
 
 			"Thats a joint Hyper-extension you don't want, %pas has broken his [SIDE] arm,this fight is over;Broken arm",
 
 			"He hit him so hard %pas has broken his [SIDE] hand;Broken hand "
-			+ "It appears %pas broke his [SIDE] wrist with that block;Broken wrist"
-			));
+					+ "It appears %pas broke his [SIDE] wrist with that block;Broken wrist"));
 
 	public static final ArrayList<String> legInjuries1 = new ArrayList<String>(Arrays.asList(
 			"%pas's [SIDE] leg has been hammered so much, he can't stand on it, the fight is over;Leg injury",
@@ -358,17 +498,13 @@ public abstract class Comments {
 
 			"%pas's [SIDE] knee cap just popped, he can't fight on;Leg injury",
 
-			"Bad leg defense, %pas broke his [SIDE] ankle with that defense, this fight is over;Leg injury"
-			));
-	
-	public static final ArrayList<String> armInjuries0 = new ArrayList<String>(Arrays.asList(
-			"%pas Hyper-extended his [SIDE] arm;Hyper-extended arm",
-			"%pas's [SIDE] arm is getting wrenched, it appears to be injured;contused left arm"
-			));
+			"Bad leg defense, %pas broke his [SIDE] ankle with that defense, this fight is over;Leg injury"));
 
-	public static final ArrayList<String> legInjuries0 = new ArrayList<String>(Arrays.asList(
-			"%pas hyper-extended his [SIDE] leg;hyper-extended [SIDE] leg"
-			));
+	public static final ArrayList<String> armInjuries0 = new ArrayList<String>(
+			Arrays.asList("%pas Hyper-extended his [SIDE] arm;Hyper-extended arm",
+					"%pas's [SIDE] arm is getting wrenched, it appears to be injured;contused left arm"));
 
-	
+	public static final ArrayList<String> legInjuries0 = new ArrayList<String>(
+			Arrays.asList("%pas hyper-extended his [SIDE] leg;hyper-extended [SIDE] leg"));
+
 }
