@@ -104,7 +104,9 @@ public class Fighter implements Serializable {
 	//Criacao
 	private boolean dirtyBoxing;
 	private boolean thaiClinch;
-
+	private boolean judoTD;
+    private boolean wrestlingTD;
+	
 	// Atributos do lutadores na luta
 	private Double damageMod = 0.0;
 	private Double strengthMod = 0.0;

@@ -91,7 +91,6 @@ public class Fight implements Serializable {
 	private Integer numHooks = 0;
 
 	// Constantes
-
 	// Clinch
 	private Integer CLINCH_DIRTY_BOXING = 0;
 	private Integer THAI_CLINCH = 1;
@@ -212,13 +211,12 @@ public class Fight implements Serializable {
 					actTakedown(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_DIRTYBOXING:
-					setPbp("ACT_DIRTYBOXING");// ActPunchClinch(fighterActiveOrPassive(fighterActive),
-												// fighterActiveOrPassive(fighterPasive),
-					// DIRTY_BOXING);
+					actPunchClinch(fighterActiveOrPassive(fighterActive),
+					fighterActiveOrPassive(fighterPasive), DIRTY_BOXING);
 					break;
 				case Moves.ACT_TAKEDOWNCLINCH:
-					setPbp("ACT_TAKEDOWNCLINCH");// ActClinchTakedown(fighterActiveOrPassive(fighterActive),
-													// fighterActiveOrPassive(fighterPasive));
+					 actClinchTakedown(fighterActiveOrPassive(fighterActive),
+					fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_BREAKCLINCH:
 					setPbp("ACT_BREAKCLINCH");// ActBreakClinch(fighterActiveOrPassive(fighterActive),
@@ -1145,7 +1143,7 @@ public class Fight implements Serializable {
 		}
 	}
 
-	public void ActPunchClinch(Fighter act, Fighter pas, int ClinchType) {
+	public void actPunchClinch(Fighter act, Fighter pas, int ClinchType) {
 		final double GRAPPLING_MOD = 0.6;
 		double at, def, damageDone;
 		int AttackLevel;
@@ -1302,6 +1300,113 @@ public class Fight implements Serializable {
 		}
 	}
 
+	public void actClinchTakedown(Fighter act, Fighter pas) {
+	    double at, def, damageDone;
+	    int attackLevel, injuryType;
+	    
+	    System.out.println("ActClinchTakedown: " + act.getName());
+	    
+	    attackLevel = attackLevel(act, pas, act.getClinchGrappling(), (pas.getClinchGrappling() + pas.getTakedownsDef()) / 2);
+	    
+	    if (takedownType(act) == 1) {
+	        switch (attackLevel) {
+	            case 1: generateComment(Comments.judoTD1); break;
+	            case 2: generateComment(Comments.judoTD1); break;
+	            case 3: generateComment(Comments.judoTD1); break;
+	        }
+	    } else {
+	        switch (attackLevel) {
+	            case 1: generateComment(Comments.wrestlingTD1); break;
+	            case 2: generateComment(Comments.wrestlingTD1); break;
+	            case 3: generateComment(Comments.wrestlingTD1); break;
+	        }
+	    }
+	    
+	    //Initial comment
+	    doComment(act, pas, extractInitComment(fullComment));
+	    
+	    //Modifying statistics
+	   // bout.updateStatistic(getFighterNumber(act), ST_TAKEDOWNS, extractHitsLaunched(fullComment), 0);
+	    
+	    //Attacking value
+	    at = fixedRandomInt(act.getClinchGrappling()) + act.getAttackBonus();
+	    Random rndatks = new Random();
+		int rndatk = rndatks.nextInt(4);
+	    switch (rndatk) {
+	        case 0: at += fixedRandomInt(act.getStrength() / 2); break;
+	        case 1: at += fixedRandomInt(act.getAgility() / 2); break;
+	        case 2: at += fixedRandomInt(act.getClinchStriking() / 2); break;
+	        case 3: at += fixedRandomInt(act.getTakedowns() / 2); break;
+	    }
+	    at += smallRandom();
+	    at = gasTankFactor(act, at);
+	    at -= hurtFactor(act);
+	    
+	    //Defensive value
+	    def = fixedRandomInt((pas.getTakedownsDef() + pas.getClinchGrappling()) / 2);
+	    Random rnddfs = new Random();
+		int rndfs = rnddfs.nextInt(4);
+	    def += pas.getDefenseBonus();
+	    switch (rndfs) {
+	        case 0: def += fixedRandomInt(pas.getStrength() / 2); break;
+	        case 1: def += fixedRandomInt(pas.getAgility() / 2); break;
+	        case 2: def += fixedRandomInt(pas.getDodging() / 2); break;
+	        case 3: def += fixedRandomInt(pas.getClinchGrappling() / 2); break;
+	    }
+	    def += smallRandom();
+	    def = gasTankFactor(pas, def);
+	    def -= hurtFactor(pas);
+	    
+		if (def >= at) {
+			doComment(act, pas, extractFailureComment(fullComment));
+
+			if (!isCounter) {
+				isCounter = checkCounterAttack(act, pas, counterProb);
+				if (isCounter) {
+					doCounterAttack(pas, act);
+				} else {
+					processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+					refBreakClinch(act, pas);
+				}
+			} else {
+				isCounter = false;
+				processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+			}
+		} else {
+			switch (attackLevel) {
+			case 1:
+				doComment(act, pas, extractComment(fullComment));
+				break;
+			case 2:
+				doComment(act, pas, extractComment(fullComment));
+				break;
+			case 3:
+				doComment(act, pas, extractComment(fullComment));
+				break;
+			}
+
+			damageDone = (at - def) * act.getDamageBonus() * attackLevel / 4;
+			damageFighter(act, pas, damageDone);
+
+			act.setRoundsInTheGround(Sim.MINSROUNDSINTHEGROUND);
+			processAfterMovePosition(act, pas, extractFinalSuccessPosition(fullComment));
+
+			if (checkKO(act, pas, damageDone, kOSubProb)) {
+				processKO(act, pas);
+			}
+
+			injuryType = checkInjury(act, pas, damageDone, injuryProb);
+			if (injuryType != Sim.INJURYORCUTFALSE) {
+				processInjury(act, pas, injuryType);
+			}
+
+			injuryType = checkCut(act, pas, damageDone, cutProb);
+			if (injuryType != Sim.INJURYORCUTFALSE) {
+				processCut(act, pas, injuryType);
+			}
+		}
+	}
+	
 	public int dirtyBoxingAction(Fighter act) {
 		final double PUNCH_PROB = 1.25;
 		double kneeProb = act.getStratKicking() + randomGenerator();
@@ -1446,6 +1551,22 @@ public class Fight implements Serializable {
 		}
 	}
 
+	public int takedownType(Fighter act) {
+	    final double NO_SKILL_PROB = 0.25;
+	    double wrestlingProb = randomGenerator();
+	    double judoProb = randomGenerator();
+
+	    if (act.isWrestlingTD()) {
+	        wrestlingProb *= NO_SKILL_PROB;
+	    }
+
+	    if (act.isJudoTD()) {
+	        judoProb *= NO_SKILL_PROB;
+	    }
+
+	    return (wrestlingProb > judoProb) ? 2 : 1;
+	}
+	
 	public int standUpInitiative(Fighter act, Fighter pas, int bonus1, int bonus2) {
 
 		// Get Fighter1 Initiative
