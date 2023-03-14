@@ -486,6 +486,249 @@ public abstract class Comments {
 
 			"Good looking punches from %act on the ground;They could take their toll on %pas.;deflected by %pas.;0;1;10;7;GnP;3;3;1;0;0;0;0"));
 
+	public static final ArrayList<String> inRearMountMoves = new ArrayList<String>(Arrays.asList(
+			"%pas has given his back to %act who is trying to get one hook in!;%act has one hook in!;%pas struggles in the ground trying to break"
+					+ " %act's control;0;-2;10;10;Ground move;1;1;0;0;0;7;0",
+
+			"%act tries to get a hook in!;Things get worse for %pas! %act has one hook in and keeps working!;%pas rolls on the ground and manages "
+					+ "to get a half guard!;0;-2;10;10;Ground move;1;1;0;0;0;7;15"
+
+	));
+
+	public static final ArrayList<String> inRearMountOneHookMoves = new ArrayList<String>(Arrays.asList(
+			"%act has one hook in and is trying to get the second one! If he succeed things are goint to get very bad for %pas.;Nicely done!"
+					+ "%act now has two hooks in! The end may be near!;%pas uses his leg as leverage and manages to keep himself safe for "
+					+ "now.;0;-2;0;0;Ground move;1;1;0;0;0;7;0"
+
+	));
+
+	public static final ArrayList<String> inRearMountTwoHooksMoves = new ArrayList<String>(Arrays.asList(
+			"%act is in rear mount with two hooks in! He is working on a desperate %pas, who tries to defend himself and escape from that "
+					+ "position.;%act moves looking to sink a rear naked choke and finish this.;%pas is holding his opponent arms defending well.;0;0;10;10;"
+					+ "Ground move;0;0;0;0;0;0;0;",
+			"%act tenatively looks for a way to finish his opponent! This is a nightmare for %pas!;%act has one of his arm over %pas's "
+					+ "shoulder and is ready for a RNC!;%pas rolls on the ground and he is looking at the ceiling while %act's on his back but with "
+					+ "only one hook in!;0;0;10;10;Ground move;0;0;0;0;0;0;17;",
+			"%act tenatively looks for a way to finish his opponent! This is a nightmare for %pas!;%pas adopts the turtle defense and "
+					+ "%act is ready to make his way to the victory with a round of punches!;%pas rolls on the ground and he finishes being fully"
+					+ " mounted by %act;0;0;10;10;Ground move;0;0;0;0;0;0;4;"
+
+	));
+
+	public static final ArrayList<String> defInRearMountMoves = new ArrayList<String>(Arrays.asList(
+			"%act has %pas controlling his back while on the ground. He tries to roll and find an escape...;Showing some ground skills he "
+					+ "transitions to a side mount.;%pas is unable to move under %act control.;0;2;10;8;Ground move;1;1;0;0;0;14;0",
+			"%act has %pas controlling his back while on the ground. He tries to roll and find an escape...;Showing some ground skills %act "
+					+ "manages to escape from that position and climb to his feet along %pas;%pas is unable to move under %act control.;0;2;8;6;Ground "
+					+ "move;1;1;0;0;0;1;10"
+
+	));
+
+	public static final ArrayList<String> defInRearMountOneHookMoves = new ArrayList<String>(Arrays.asList(
+			"%act is trying to escape from the rear mount.;%act holds %pas's arm over his shoulder and then rolls on the ground. "
+					+ "Incredible move to get a half mount!;%pas tries to use some of his tricky moves but %pas's is smart enough to counter "
+					+ "him.;0;3;6;8;Ground move;1;1;0;0;0;13;0",
+			"%act has to use some of his skills to escape safely from this position...;%act uses his ground skills to free one of his legs while "
+					+ "working on the ground.;%act is unable to find a way to scape from this.;0;2;8;6;Ground move;1;1;0;0;0;17;0"
+
+	));
+
+	public static final ArrayList<String> defInRearMountTwoHooksMoves = new ArrayList<String>(Arrays.asList(
+			"%act is trying to escape from the rear mount.;%act holds %pas's arm over his shoulder and then rolls on the ground. Incredible move"
+					+ " to get a half mount!;%pas tries to use some of his tricky moves but %pas's is smart enough to counter him.;0;3;6;8;Ground"
+					+ " move;1;1;0;0;0;13;0",
+			"%act has to use some of his skills to escape safely from this position...;%act uses his ground skills to free one of his legs while "
+					+ "working on the ground.;%act is unable to find a way to escape from this.;0;2;8;6;Ground move;1;1;0;0;0;17;0"
+
+	));
+
+	public static final ArrayList<String> inFullMountMoves = new ArrayList<String>(Arrays.asList(
+			"%act tries to better his position on the ground...;%act is in a great position to begin a nice round of pounding!;%pas tries to "
+					+ "roll on the ground...;0;2;7;10;Ground move;0;0;0;0;0;0;10",
+			"%pas tries to roll to his side and get to half guard...;%act rolls %pas to his stomach and takes his back!;%pas creates enough space to"
+					+ " control %act's leg.;0;0;0;0;Ground move;0;0;0;0;0;7;15;",
+			"%pas tries to roll to his side and trap %act in his guard...;%act rolls him over and takes his back!;%pas gets his hips out and gets to"
+					+ "full guard.;0;0;0;0;Ground move;0;0;0;0;0;7;6;",
+			"%act tries to keep hs position while looking to maybe begin a pounding session...;%act controls the situation despite %pas efforts for "
+					+ "escaping from the full mount.;%pas struggles and frees his leg!;0;0;0;0;Ground move;0;0;0;0;0;0;15;",
+			"%act tries to keep hs position while looking to maybe begin a pounding session...;%act controls the situation despite %pas efforts for"
+					+ " escaping from the full mount.;%pas struggles and pushes his opponent maybe a bit anxiously;0;0;10;13;Ground move;0;0;0;0;0;0;0;",
+			"%pas tries to escape from the full mount...;%act is not caught off guard and moves to side mount to keep his superior position.;%pas "
+					+ "struggles and pushes his opponent maybe a bit anxiously;0;0;10;13;Ground move;0;0;0;0;0;13;0;"
+
+	));
+
+	public static final ArrayList<String> defInFullMountMoves = new ArrayList<String>(Arrays.asList(
+			"%act tries to roll on the ground...;He makes a reversal!;%pas knows how to keep his advantage on the ground.;0;0;8;10;Ground "
+					+ "move;0;0;0;0;0;6;8",
+			"%act tries to move on the ground and escape from the full mount!;He successfully moves to half guard!;%pas doesn't want to lose his"
+					+ "adventageous position and he struggles to mantain the full mount.;10;0;8;5;Ground move;0;0;0;0;0;16;0;",
+			"%act tries to roll to his side and trap %pas in his guard...;%act moves to half guard.;%pas keeps good control and remains in full "
+					+ "mount.;0;0;0;0;Ground move;0;0;0;0;0;16;0;",
+			"%act tries to roll to his side and trap %pas in his guard...;%act gets his hip out and moves to full guard.;%pas keeps good control"
+					+ " and remains in full mount.;0;0;0;0;Ground move;0;0;0;0;0;9;0;",
+			"%act tries to roll to his side and trap %pas in his guard...;%act gets his hip out and moves to full guard.;%pas keeps good control"
+					+ " and remains in full mount.;0;0;0;0;Ground move;0;0;0;0;0;8;0;",
+			"%act is using some of his ground skills to escape from this...;He pushes %pas's knee away and tries to roll! Nice move to get half "
+					+ "guard!;%pas pushes %act down and prevents his attempts to escape;0;0;8;5;Ground Move;0;0;0;0;0;15;0;"
+
+	));
+
+	public static final ArrayList<String> inSideMountMoves = new ArrayList<String>(Arrays.asList(
+			"%act tries to move to full mount!;Nice move. He is in full mount now.;%pas won't allow him to take this position easily."
+					+ ";0;0;10;13;Ground move;0;0;0;0;0;4;13",
+			"%act looks to pass to mount...;%act slides his knee across and achieves the mount position! Tough spot for %pas.;%pas creates space and"
+					+ " scrambles back to his feet.;0;0;0;0;Side Mount Pass;0;0;0;0;0;4;1;",
+			"%act looks to mount %pas...;%act slides his knee across and gets to mount.;%pas sees an opening and locks his opponent in half"
+					+ " guard.;0;0;0;0;Ground move;0;0;0;0;0;4;15;",
+			"%act looks to mount %pas...;%act slides his knee across and gets to mount.;%pas takes advantage of his opponent's over commitment and "
+					+ "traps him in full guard.;0;0;0;0;Ground move;0;0;0;0;0;4;5;",
+			"%act looks to mount %pas...;%act slides his knee across and gets to mount.;%pas takes advantage of his opponent's over commitment and"
+					+ " traps him in full guard.;0;0;0;0;Ground move;0;0;0;0;0;4;6;"
+
+	));
+
+	public static final ArrayList<String> defInSideMountMoves = new ArrayList<String>(Arrays.asList(
+			"%act tries to show some ground skills;%act put %pas in half guard.;%pas uses his strength to keep %pas at a "
+					+ "disadvantage;0;2;10;8;Ground move;0;0;0;0;0;16;14",
+			"%act attempts to trap %pas in his guard.;%act manages to switch to half guard.;%pas keeps control and remains in side"
+					+ " mount.;0;0;0;0;Ground move;0;0;0;0;0;16;0;",
+			"%act attempts to trap %pas in his guard.;%act manages to switch to full guard.;%pas keeps control and remains in side"
+					+ " mount.;0;0;0;0;Ground move;0;0;0;0;0;9;0;",
+			"%act attempts to trap %pas in his guard.;%act manages to switch to full guard.;%pas keeps control and remains in side"
+					+ " mount.;0;0;0;0;Ground move;0;0;0;0;0;10;0;"
+
+	));
+
+	public static final ArrayList<String> inHalfGuardMoves = new ArrayList<String>(Arrays.asList(
+			"%act pushes %pas's  leg and tries to move to full mount.;Nice move by %act who is in full mount! %pas is in trouble "
+					+ "now!;%pas rolls and he's now on half guard over %act. Nice reversal.;0;0;0;0;Ground move;0;0;0;0;0;4;16",
+			"%act pushes %pas's  leg and tries to move to full mount.;Nice move by %act who is in full mount! %pas is in trouble "
+					+ "now!;%pas wraps his legs while he holds %act's head... Tight guard!;0;2;8;7;Ground move;0;0;0;0;0;4;15",
+			"%act tries to free his leg...;He moves to side mount!;%pas doesn't allow any movement here! He's cooling the fight on "
+					+ "the ground.;0;2;10;7;Ground move;0;0;0;0;0;13;0",
+			"%act sits over his knees and pushes away %pas's leg!;%act is able to put away his leg and then jumps to side mount.;%pas "
+					+ "closes his legs around %act's leg. %act is not able to move away now!;0;0;13;15;Ground move;0;0;0;0;0;13;0;",
+			"%act launches a few fake punches and tries to escape!;%pas is covering himself! %act tries to force the situation and %pas"
+					+ " clumsily gives his back!;%act is countered by %pas.;0;0;7;14;Ground move;0;0;0;0;0;7;0;",
+			"%act launches a few fake punches and tries to escape!;%pas is not able to stop %pas ground skills and %act moves to side"
+					+ " mount!;%pas rolls over himself and stands up while %act rolls on his back.;0;0;0;0;Ground move;0;0;0;0;0;13;3;",
+			"%act tries to pass %pas's guard...;%act manages to get his leg free and moves to side mount.;%act passes momentarily but "
+					+ "%pas regains half guard.;0;0;0;0;Ground move;0;0;0;0;0;13;0;",
+			"%act tries to pass %pas's guard...;%act manages to get his leg free and moves to side mount.;%act passes momentarily but "
+					+ "%pas sees and opening and traps him in full guard.;0;0;0;0;Ground move;0;0;0;0;0;13;5;",
+			"%act tries to pass %pas's guard...;%act manages to get his leg free and moves to side mount.;%act passes momentarily but "
+					+ "%pas sees and opening and traps him in full guard.;0;0;0;0;Ground move;0;0;0;0;0;13;6;",
+			"%act tries to pass %pas's guard...;%act manages to get his leg free and moves to side mount.;%pas's guard is too good and he"
+					+ "fails to pass.;0;0;0;0;Ground move;0;0;0;0;0;13;0;",
+			"%act tries to get a side mount...;He frees his leg and is now controlling %pas from the side mount!;%pas wraps his leg around"
+					+ " %act leg and prevents him from moving.;0;0;10;7;Ground move;0;0;0;0;0;13;0;",
+			"%act tries to get a side mount...;He frees his leg and is now controlling %pas from the side mount!;%pas wraps his leg around"
+					+ " %act leg and prevents him from moving.;0;0;13;10;Ground move;0;0;0;0;0;13;0;",
+			"%act tries to free his leg;%act uses some of his skill by jumping out of %pas's guard. He moves quickly to side mount!;%pas moves"
+					+ " fast and both fighters exchange some weak punches while climbing to their feet.;0;0;0;0;Ground move;0;0;0;0;0;13;1;",
+			"%act tries to free his leg;%act uses some of his skill by jumping out of %pas's guard. He moves quickly to side mount!;%pas moves"
+					+ "fast and both fighters exchange some weak punches while climbing to their feet.;0;0;0;0;Ground move;0;0;0;0;0;13;1;",
+			"%act tries to free his leg...;%act uses some of his skill by jumping out of %pas's guard. He moves quickly to full mount!;%pas rolls"
+					+ " on the ground and moves to side mount! Awesome maneuver!;0;0;0;0;Ground move;0;0;0;0;0;13;14;"
+
+	));
+
+	public static final ArrayList<String> defInHalfGuardMoves = new ArrayList<String>(Arrays.asList(
+			"%act tries to close the guard.;%act put %pas in closed guard.;Nothing from this effort.;0;2;8;10;Ground move;0;0;0;0;0;10;0",
+			"%act attempts to move to full guard;%act manages to switch to full guard.;%pas keeps good control and remains in "
+					+ "half guard.;0;0;0;0;Ground move;0;0;0;0;0;9;0;",
+			"%act attempts to move to full guard;%act manages to switch to full guard.;%pas keeps good control and remains in half "
+					+ "guard.;0;0;0;0;Ground move;0;0;0;0;0;10;0;"
+
+	));
+
+	public static final ArrayList<String> inOpenGuardMoves = new ArrayList<String>(Arrays.asList(
+			"%act tries to move to full mount;%act succeeds;%act's ground game is not enough to provide him any "
+					+ "advantage;0;2;10;8;Ground move;0;0;0;0;0;4;5",
+			"%act moves on the ground;%act moves to side mount;%act cannot take advantage in the ground;0;2;10;8;Ground "
+					+ "move;0;0;0;0;0;13;5",
+			"%act tries to jump to side mount.;%pas closed his guard around %act.;%pas jumps and show some wrestling skills as"
+					+ " he positions himself for continuing the fight in side control.;0;0;0;0;Ground move;0;0;0;0;0;13;10;",
+			"%act pushes %pas against the %HoldSite and then tries to improve his position.;%act jumps and tries to free his leg! "
+					+ "%pas doesn't allow this but %act is able to get half guard here.;%pas struggles not allowing %act improve his position.;0;0;10;13;Ground move;0;0;0;0;0;15;0;",
+			"%act tries to pass to half guard...;%pas can't prevent his opponent from passing. %act looks to work from half guard.;%pas's"
+					+ " guard is too good and he fails to pass.;0;0;0;0;Ground move;0;0;0;0;0;15;0;",
+			"%act tries to pass to half guard...;%pas can't prevent his opponent from passing. %act looks to work from half guard.;%pas's "
+					+ "closes his guard to prevent the pass.;0;0;0;0;Ground move;0;0;0;0;0;15;6;",
+			"%act moves on the ground..;He gets half guard.;...he makes no progress.;0;0;10;8;Ground move;0;0;0;0;0;15;5",
+			"%act moves on the ground...;..and gets to half guard.;He remains in open guard.;0;0;10;8;Ground move;0;0;0;0;0;15;5",
+			"%act tries to improve position.;He frees a leg.;%pas adjusts and closes his guard.;0;0;10;8;Ground move;0;0;0;0;0;15;6"
+
+	));
+
+	public static final ArrayList<String> defInOpenGuardMoves = new ArrayList<String>(Arrays.asList(
+			"%a2 tries to close his guard around %d2;He succeeds!;He is not able to do it;0;2;0;0;Ground move;0;0;0;0;0;10;9"
+
+	));
+
+	public static final ArrayList<String> inClosedGuardMoves = new ArrayList<String>(Arrays.asList(
+			"%act tries to better his position on the ground...;%act breaks the closed guard of %pas and moves to half guard;%pas "
+					+ "holds %act's head against his chin in the closed guard.;0;2;7;10;Ground move;0;0;0;0;0;13;6",
+			"%act struggles on the ground and tries to break %pas's guard...;%act is in %pas open guard now;%pas doesn't want to free his"
+					+ " opponent and %act continues in closed guard;0;2;10;7;Ground move;0;0;0;0;0;5;6",
+			"%act tries to escape from the closed guard;%act succeeds and he's now in open guard... he takes a second to breathe;%act any "
+					+ "adventage in the ground.;0;2;7;10;Ground move;0;0;0;0;0;5;6",
+			"%act tries to improve his position on the ground as he sits on his knees and tries to break the closed guard.;%act fakes a few "
+					+ "punches and then slips one leg to get the half mount.;%pas leans and gets %act's arms as he brings him to the ground again.;11;0;10;7;Ground move;0;0;0;0;0;15;0;",
+			"%act tries to escape from closed guard...;%act struggles to liberate his leg and jumps to half guard!;%pas waits for the moment and "
+					+ "tries to roll! Too late for %act! He is reversed and nor %pas is on half guard!;0;0;0;0;Ground move;0;0;0;0;0;15;16;",
+			"%act use some of his wrestling skills to escape from the closed guard!;After a few tentative moves, he jumps to side mount! The crowd "
+					+ "in %venue is cheering him!;%pas holds %act and prevents him from moving to a better position!;0;0;7;10;Ground move;0;0;0;0;0;13;0;",
+			"%act looks to posture up and open %pas's guard... ;%act forces %pas to open his guard.;%pas has a solid guard and keeps his ankles "
+					+ "locked.;0;0;0;0;Ground move;0;0;0;0;0;5;0;",
+			"%act is looking to pass %pas's guard...;%act gets his hips free and moves to half guard.;%pas has a solid guard and keeps his ankles "
+					+ "locked.;0;0;0;0;Ground move;0;0;0;0;0;15;0;",
+			"%act tries to pass %pas's guard...;%act manages to get his leg free and moves to half guard.;%act passes momentarily but %pas regains "
+					+ "full guard.;0;0;0;0;Ground move;0;0;0;0;0;15;0;"
+
+	));
+
+	public static final ArrayList<String> defInClosedGuardMoves = new ArrayList<String>(Arrays.asList(
+			"%pas is in closed guard... %act tries to roll on the ground!;Nice reversal! He is now in full mount over %pas!;%pas uses "
+					+ "his leg to keep his position on the ground;0;1;8;10;Ground Move;0;0;0;0;0;4;10"
+
+	));
+
+	public static final ArrayList<String> inButterflyGuardMoves = new ArrayList<String>(Arrays.asList(
+			"%act looks to pass the guard of %pas...;%act pushes down on %pas's leg and passes to half guard.;%pas blocks %act's hand and "
+					+ "retains his position.;0;0;0;0;Butterfly Pass;0;0;0;0;0;15;0;",
+
+			"%act looks to pass the guard of %pas...;%act removes the hook and steps over into %pas's half guard.;%act leaves himself open and "
+					+ "is swept onto his back!;0;0;0;0;Butterfly Pass;0;0;0;0;0;15;9;"
+
+	));
+
+	public static final ArrayList<String> defInButterflyGuardMoves = new ArrayList<String>(Arrays.asList(
+			"%pas is in %act's butterfly guard...;%act extends his legs and sweeps %pas to his back! "
+					+ "He gains side mount.;%pas kicks his leg back and resets.;0;1;8;10;Ground Move;0;0;0;0;0;13;0;",
+
+			"%pas is in %act's butterfly guard...;%act extends his legs and sweeps %pas to his back! He gains "
+					+ "side mount.;%pas shifts his hips and frees himself of the hooks.;0;1;8;10;Ground Move;0;0;0;0;0;13;10;"
+
+	));
+
+	public static final ArrayList<String> vazio4 = new ArrayList<String>(Arrays.asList(
+
+	));
+
+	public static final ArrayList<String> vazio5 = new ArrayList<String>(Arrays.asList(
+
+	));
+
+	public static final ArrayList<String> vazio6 = new ArrayList<String>(Arrays.asList(
+
+	));
+
+	public static final ArrayList<String> vazio7 = new ArrayList<String>(Arrays.asList(
+
+	));
+
 	public static final ArrayList<String> clinch = new ArrayList<String>(Arrays.asList(
 			"%act wants to take the fight to his advantage and tries to clinch.;%act moves forward and holds %pas;%pas wants "
 					+ "nothing of that and pushes %act.;0;2;1;3;Clinch;1;1;0;0;0;12;1",
@@ -650,6 +893,7 @@ public abstract class Comments {
 
 			"%act throws down elbows...;He's tearing up %pas's face with those brutal elbows! %pas needs to do something! The referee is"
 					+ " threatening to stop it!;%pas is not making himself an easy target.;0;0;10;8;GnP;5;5;2;1;1;0;0"));
+
 	public static final ArrayList<String> armInjuries0 = new ArrayList<String>(
 			Arrays.asList("%pas Hyper-extended his [SIDE] arm;Hyper-extended arm",
 					"%pas's [SIDE] arm is getting wrenched, it appears to be injured;contused left arm"));
