@@ -1129,8 +1129,23 @@ public abstract class Comments {
 			+ "initiative.;11;1;3;3;Groin Knee;1;1;0;0;0;0;0"
 			));
 	
-	public static final ArrayList<String> vazio2321232 = new ArrayList<String>(Arrays.asList(
-
+	public static final ArrayList<String> slam = new ArrayList<String>(Arrays.asList(
+			"%act lifts his opponent off the ground and tries to slam him!;Down goes %pas! Brilliant slam!;%pas "
+			+ "shows nice sprawl skills and remains on his feet.;12;1;3;1;Slam;1;1;0;2;1;5;0",
+			"%act lifts his opponent off the ground!;Brilliant side slam!;%pas struggles and shows"
+			+ " nice sprawl skills;10;0;3;1;Slam;1;1;0;0;0;13;1",
+			"%act grabs %pas;He lifts him up and slams him hard to the mat!;%pas shakes him off.;10;1;0;3;Slam;1;1;0;2;1;5;1",
+			"%act lifts %pas up off the ground;...big slam!;...before putting him back down.;12;1;3;1;Slam;1;1;0;2;1;5;0",
+			"The fighters briefly tie up...;%pas goes up and comes down hard as %act scores a brutal slam!;%pas slips out of"
+			+ " %act's hooks.;12;1;3;1;Slam;1;1;0;2;1;5;0",
+			"%act gets a grip on his opponent;and barrels forward, spiking him on his head!;but can't get the slam.;0;2;3;1;Spike;1;1;1;0;2;5;0",
+			"%act goes for the suplex...;Wow, incredible!;His attempt goes nowhere.;12;2;4;9;Suplex;1;1;0;2;1;5;0",
+			"%pas is grappling.;Bad idea! %act lifts him up and launches him to the mat!;He looks for an opening to "
+			+ "attack.;10;1;4;3;Slam;1;1;0;2;1;5;0",
+			"%act is trying to lift %pas!;Brilliant side slam!;%pas maneuvers out of the potential slam.;10;1;9;3;Slam;1;1;0;1;0;13;1",
+			"%act is setting up a throw;He nearly drops %pas on his head!;No dice, %pas breaks free.;9;2;4;9;Throw;1;1;-1;2;2;5;0",
+			"%act grabs %pas;%pas gets thrown to the mat.;%pas loosens %act's hold.;10;2;4;9;Throw;1;1;0;1;1;5;0",
+			"%act sets up a throw;%pas flies through the air!;He fumbles and falls down!;12;0;0;0;Throw;1;1;0;1;1;5;9"
 			));
 	
 	public static final ArrayList<String> vazio23ffa2 = new ArrayList<String>(Arrays.asList(
