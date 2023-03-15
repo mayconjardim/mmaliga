@@ -134,7 +134,7 @@ public class Fighter implements Serializable {
 	private boolean onTheGround = false;
 	private boolean dazed = false;
 	private boolean useElbows;
-	private Integer dirtyMoveMalus = 0;
+	private Long dirtyMoveMalus = 0L;
 	private Integer rush = 0;
 	private Integer actionsInGround = 0;
 	private Integer actionsInClinch = 0;

@@ -984,7 +984,6 @@ public abstract class Comments {
 	public static final ArrayList<String> legInjuries0 = new ArrayList<String>(
 			Arrays.asList("%pas hyper-extended his [SIDE] leg;hyper-extended [SIDE] leg"));
 
-	
 	public static final ArrayList<String> sideMountSub1 = new ArrayList<String>(Arrays.asList(
 			"%act tries a kimura;Nicely done! %pas must tap!;%pas breaks the lock.;13;0;10;7;kimura;1;1;0;0;0;13;13",
 			"%act goes for an americana!;He locks it in! %pas is forced to tap!;%pas breaks free.;13;0;10;7;Americana;1;1;0;0;0;0;0;",
@@ -1087,11 +1086,62 @@ public abstract class Comments {
 			+ "passes over his head.;8;3;1;2;Spinning back fist;1;1;0;1;4;0;0"
 			));
 	
-	public static final ArrayList<String> vazio3237 = new ArrayList<String>(Arrays.asList(
+	public static final ArrayList<String> refAware = new ArrayList<String>(Arrays.asList(
+			"%ref has seen that!",
+			"%ref saw it! "
+			));
+	
+	
+	public static final ArrayList<String> headbutt = new ArrayList<String>(Arrays.asList(
+			"%act is moving on the ground...;Ouch! That was a headbutt! Did he do that intentionally?;%pas tries"
+			+ " to counter %act's moves on the ground.;0;0;10;10;Headbutt;1;1;3;3;3;0;0"
+			));
+	
+	public static final ArrayList<String> groundEyePoke = new ArrayList<String>(Arrays.asList(
+			"%act works on the ground with his fingers over %pas's's face;He seems to have encountered the eye! What a "
+			+ "classless move!;%pas's shakes his head and continues fighting on the ground.;2;0;0;0;Eye poke;1;1;0;0;0;0;0",
+			"%act works on the ground with his fingers over %pas's face;He seems to have encountered the "
+			+ "eye! What a classless move!;%pas's shakes his head and continues fighting on the ground.;3;0;0;0;Eye poke;1;1;0;0;0;0;0"
+			));
+	
+	public static final ArrayList<String> standingEyePoke = new ArrayList<String>(Arrays.asList(
+			"%act works on the ground with his fingers over %pas's face;He seems to have encountered the eye! "
+			+ "What a classless move!;%pas shakes his head and continues fighting on the ground.;2;0;0;0;Eye poke;1;1;0;0;0;0;0",
+
+			"%act works on the ground with his fingers over %pas's face;He seems to have encountered the eye! What a "
+			+ "classless move!;%pas shakes his head and continues fighting on the ground.;3;0;0;0;Eye poke;1;1;0;0;0;0;0"
+			));
+	
+	public static final ArrayList<String> restOnGround = new ArrayList<String>(Arrays.asList(
+			"%act takes a few seconds to recover his breath..."
+			));
+	
+	public static final ArrayList<String> rest = new ArrayList<String>(Arrays.asList(
+			"%act takes a few seconds to recover his breath...",
+			"%act steps backwards away from %pas. He seems to be cooling down the fight a bit.",
+			"%act pushes %pas and moves away from him. He seems to be recovering his breath."
+			));
+	
+	public static final ArrayList<String> groinKnee = new ArrayList<String>(Arrays.asList(
+			"%act tries a knee to the midsection...;Ouch! That seems to have landed on %pas's groin! Was that unintentional?;%pas blocks "
+			+ "that knee;11;1;3;3;Groin Knee;1;1;0;0;0;0;0",
+			"%act launches a furious knee!;Bang! It clearly hits %pas's groin!;%pas blocks and struggles while trying to take the "
+			+ "initiative.;11;1;3;3;Groin Knee;1;1;0;0;0;0;0"
+			));
+	
+	public static final ArrayList<String> vazio2321232 = new ArrayList<String>(Arrays.asList(
 
 			));
 	
-	public static final ArrayList<String> vazio232 = new ArrayList<String>(Arrays.asList(
+	public static final ArrayList<String> vazio23ffa2 = new ArrayList<String>(Arrays.asList(
+
+			));
+	
+	public static final ArrayList<String> vazio2fv32 = new ArrayList<String>(Arrays.asList(
+
+			));
+	
+	public static final ArrayList<String> vazio2çç32 = new ArrayList<String>(Arrays.asList(
 
 			));
 }
