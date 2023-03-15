@@ -93,7 +93,7 @@ public class Fighter implements Serializable {
 	private Integer fancyKicks = 0;
 	private Integer fancySubmissions = 0;
 	private Integer dirtyFighting = 0;
-	private Integer stalling;
+	private Integer stalling = 0;
 	private boolean easySubs;
 	private boolean techSubs;
 	private boolean useKneesGround = false;
@@ -101,13 +101,13 @@ public class Fighter implements Serializable {
 	private boolean useSoccerKicks = false;
 	private boolean pullsGuard;
 	private Integer clinchType;
-	
-	//Criacao
+
+	// Criacao
 	private boolean dirtyBoxing;
 	private boolean thaiClinch;
 	private boolean judoTD;
-    private boolean wrestlingTD;
-	
+	private boolean wrestlingTD;
+
 	// Atributos do lutadores na luta
 	private Double damageMod = 0.0;
 	private Double strengthMod = 0.0;
@@ -141,7 +141,7 @@ public class Fighter implements Serializable {
 	private Integer actionsInStandUp = 0;
 	private Double tempDamageGround = 0.0;
 	private Double tempDamageClinch = 0.0;
-	private Integer roundsInTheGround;
+	private Integer roundsInTheGround = 0;
 	private Double trainingStatus = 0.0;
 	private Double koResistanceMod = 0.0;
 	private Integer injuryResistance = 0;
@@ -338,9 +338,9 @@ public class Fighter implements Serializable {
 	}
 
 	public double getClinchMean() {
-	    return (getClinchStriking() + getClinchGrappling()) / 2;
+		return (getClinchStriking() + getClinchGrappling()) / 2;
 	}
-	
+
 	public double getGroundMean() {
 		double result = (getGroundGame() + getSubmission() + getGnp()) * 100 / 60;
 		return result;
@@ -365,5 +365,11 @@ public class Fighter implements Serializable {
 	public double getDefenseMean() {
 		double result = (getDodging() + getTakedownsDef() + getSubDefense()) * 100 / 60;
 		return result;
+	}
+
+	public void recoverStamina(double staminaRecovered) {
+
+		currentStamina += staminaRecovered;
+
 	}
 }

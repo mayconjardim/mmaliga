@@ -179,6 +179,16 @@ public abstract class Comments {
 
 			"Incredible high kick!;%pas is worried!;%pas deflects and sidesteps.;9;0;1;2;High kick;1;1;3;3;4;1;1"));
 
+	public static final ArrayList<String> fancyKick1 = new ArrayList<String>(Arrays.asList(
+			"%act jumps in the air and tries a flying knee!;Crushing shot! %pas's mouthpiece flies out of "
+			+ "his mouth;%pas blocks with his arms and moves laterally looking for a counter;7;2;0;8;Flying "
+			+ "knee;1;1;0;2;3;0;0;",
+			"%act spins around and tries a spinning back kick!;%pas was not expecting something like that! It lands on "
+			+ "his chin! Is this over?;%pas ducks under and hesitates for a moment...;8;2;0;3;Spinning back kick;1;1;0;2;3;0;0;",
+			"%act spins around and tries a spinning back kick!;%act hits hard %pas ribs with that one! %pas's just wrenches like a little branch.;%pas blocks with his arms and leg;10;2;1;2;Spinning back kick;1;1;0;2;3;0;0;"
+
+	));
+
 	public static final ArrayList<String> dirtyClinch = new ArrayList<String>(Arrays.asList(
 			"%act wants to close the range and tries to grapple...;Nice move. He shoves himself over his opponent "
 					+ "and secure a single collar tie.;%pas doesn't want anything like this as he moves backwards;0;0;0;0;Dirty Boxing;0;0;0;0;0;12;0;",
@@ -713,22 +723,95 @@ public abstract class Comments {
 
 	));
 
-	public static final ArrayList<String> vazio4 = new ArrayList<String>(Arrays.asList(
-
+	public static final ArrayList<String> slamOut = new ArrayList<String>(Arrays.asList(
+			"%act tries to break the lock slamming %pas against the mat!;After a couple of slams, %pas loses the lock! What an impressive power "
+			+ "demonstration!;%pas doesn't allow %act to escape. He is tightening the %movename;10;0;0;0;Slam;1;1;0;1;1;2;0;",
+			"%act lifts his opponent from the ground displaying great power! And down he goes!;%pas loses the lock after that incredible blow "
+			+ "against the mat! What a slam!;%pas doesn't break the lock and %act is running out of time!;9;0;0;0;Slam;1;1;0;1;1;5;0;"
 	));
 
-	public static final ArrayList<String> vazio5 = new ArrayList<String>(Arrays.asList(
+	public static final ArrayList<String> lockingSubmission = new ArrayList<String>(Arrays.asList(
 
+			"%%act is locking that %movename...",
+			"Crippling lock!",
+			"You can see the pain reflected in %%pas's eyes...",
+			"That %movename from %%act appears to be unbreakable",
+			"%pas struggles to free himself",
+			"Punishing hold!",
+			"That %movename looks tight... "
 	));
 
-	public static final ArrayList<String> vazio6 = new ArrayList<String>(Arrays.asList(
-
+	public static final ArrayList<String> subRefStoppage = new ArrayList<String>(Arrays.asList(
+			"%ref breaks %act's lock! This is over! %pas didn't want to tap but the ref decided he wouldn't be able to escape from it!",
+			"%act secures the lock while %pas refuses to tap... %ref jumps in and breaks the lock!"
 	));
 
-	public static final ArrayList<String> vazio7 = new ArrayList<String>(Arrays.asList(
-
+	public static final ArrayList<String> closedGuardSub1 = new ArrayList<String>(Arrays.asList(
+			"%act moves to high guard and tries to close an armbar!;That was incredible! %pas is tapping out before knowing what happened"
+			+ ".;%pas breaks the lock, rolls on the ground and stands up quickly.;13;1;10;8;armbar;1;1;0;0;0;10;3",
+			"%act tries an armbar from the bottom!;That was incredible! %pas is tapping out before knowing what happened.;%pas breaks the "
+			+ "lock and moves himself to side control.;13;1;10;11;armbar;1;1;0;0;0;10;14",
+			"%act throws up a triangle attempt!;He locks it in! %pas is in trouble! He struggles for a few seconds before tapping. That's "
+			+ "all she wrote, folks.;%pas postures up and breaks the triangle.;0;1;10;8;Triangle;1;1;0;0;0;0;0;",
+			"%act slides his legs high and tries to apply a triangle!;%pas didn't realize how much danger he was in and is caught! He knows"
+			+ " now and quickly taps!;%pas cuts to the side and manages to pass to side mount!;0;1;10;5;Triangle;1;1;0;0;0;0;14;",
+			"%act sits up and gets an arm around %pas's neck!;He wraps up a tight guillotine! %pas tries to roll but cannot relieve the "
+			+ "pressure on his neck. %pas is forced to tap to that guillotine! The fight is over, just like that!;%pas pushes %act back to the ground.;0;2;8;10;Guillotine;1;1;0;0;0;0;0;",
+			"%act reaches under and rolls for a kneebar!;%act gets his hips extended and %pas is grimacing in pain. %pas can take the"
+			+ " pain no longer and taps!;%pas blocks the attempt and uses the opportunity to seize half guard.;17;2;10;8;Kneebar;1;1;0;0;0;0;16;",
+			"%act reaches under and rolls for a kneebar!;%act gets his hips extended and %pas is grimacing in pain. %pas can take the "
+			+ "pain no longer and taps!;%pas blocks the attempt and uses the opportunity to seize half guard.;18;2;10;8;Kneebar;1;1;0;0;0;0;16;",
+			"%act isolates an arm in a kimura attempt! ;%act locks his hands together and rotates %pas's right arm! Great move! %pas has no "
+			+ "choice but to tap.;%pas blocks the hold and uses the opportunity to pass %act's guard.;14;1;10;8;Kimura;1;1;0;0;0;0;16;",
+			"%act isolates an arm in a kimura attempt! ;%act locks his hands together and rotates %pas's left arm! Great move! %pas has no "
+			+ "choice but to tap.;%pas blocks the hold and uses the opportunity to pass %act's guard.;13;1;10;8;Kimura;1;1;0;0;0;0;16;",
+			"%act throws his legs up in a triangle attempt!;He locks it in! He locks in an armbar for good measure that forces %pas to tap out"
+			+ " rather than have his arm broken!;%pas realizes the danger and stands up to avoid the attack.;14;1;11;14;Triangle Armbar;1;1;0;0;0;0;3;",
+			"%act throws his legs up in a triangle attempt!;He locks it in! He locks in an armbar for good measure that forces %pas to tap out "
+			+ "rather than have his arm broken!;%pas realizes the danger and stands up to avoid the attack.;13;1;11;14;Triangle Armbar;1;1;0;0;0;0;3;",
+			"%act attempts a triangle from bottom! %pas slips out. %act quickly turns his hips over and switches to the armbar! He's throwing "
+			+ "everything at him.;%pas tries to roll out but it's too deep and he taps! Awesome technique!;%pas slips out and backs away to avoid danger.;14;2;11;14;Triangle to Armbar;2;1;0;0;0;0;3;",
+			"%act attempts a triangle from bottom! %pas slips out. %act quickly turns his hips over and switches to the armbar! He's throwing "
+			+ "everything at him.;%pas tries to roll out but it's too deep and he taps! Awesome technique!;%pas slips out and backs away to avoid danger.;13;2;11;14;Triangle to Armbar;2;1;0;0;0;0;3;",
+			"%act gets an arm and tries to apply an armbar. %pas spins out, but %act was ready for that and quickly switches to a triangle "
+			+ "choke!;The triangle looks deep! Incredible BJJ skills! %pas holds out as long as he can before he is forced to tap.;%pas is too good and managed to back out of danger.;0;1;11;14;Armbar to Triangle;2;1;0;0;0;0;3;",
+			"%act overhooks an arm and starts cranking! Interesting meneuver.;%act begins rotating %pas's elbow deeper and deeper. %pas screams "
+			+ "in pain and taps until the referee separates the fighters! The fight is over, just like that!;%pas pulls his arm out of danger.;14;3;8;10;Shoulder Lock;1;1;0;0;0;0;0;",
+			"%act overhooks an arm and starts cranking! Interesting meneuver.;%act begins rotating %pas's elbow deeper and deeper. %pas screams "
+			+ "in pain and taps until the referee separates the fighters! The fight is over, just like that!;%pas pulls his arm out of danger.;13;3;8;10;Shoulder Lock;1;1;0;0;0;0;0;",
+			"%act switches to high guard just before trying to sink a triangle!;%pas taps with his remaining strength before going to sleep. "
+			+ "Beatiful move by %act.;%pas struggles and his head turns red from the choke, but he manages to slip his head of the lock!;0;0;10;15;Triangle Choke;0;0;0;-1;0;0;0;",
+			"%act switches to high guard just before trying to sink a triangle!;%pas taps with his remaining strength before going to sleep. "
+			+ "Beatiful move by %act.;%pas struggles and his head turns red from the choke, but he manages to slip his head of the lock!;0;0;8;10;Triangle Choke;0;0;0;-1;0;0;0;"
 	));
 
+	public static final ArrayList<String> standUpSub1 = new ArrayList<String>(Arrays.asList(
+			"Big mistake from %pas! %act tries to finish him off with a RNC!;%pas struggles helplessly but that choke by %act seems "
+			+ "to be unbreakable! He is out!;%act is unable to lock that and %pas breaks the lock;0;0;1;3;Rear Nacked Choke;1;1;0;0;1;0;0",
+			"%act tries to finish this with a rear naked chocke!;%act closes the choke! %pas's face is turning crimson red! He taps!;%pas "
+			+ "ducks under and pushes away his opponent.;0;0;1;3;rear naked chocke;1;1;0;0;0;0;1",
+			"%act locks up a guillotine with an arm in...;He brings %pas down to the mat and it looks deep! %pas quickly taps before passing"
+			+ " out!;%pas brings %act down to the ground and pulls his head out.;0;3;10;8;Arm-in Guillotine;1;1;-1;-2;0;0;10;",
+			"%act locks up a guillotine and tries to pull guard...;It's deep! %pas cannot escape and taps before going out!;%pas slips his"
+			+ " head out and ends up in %act's guard.;0;3;15;10;Standing Guillotine;1;1;-2;0;0;0;10;",
+			"%act gets control of %pas's neck and attempts a guillotine!;%pas tries to wriggle free but it's deep. He can't slip out and has "
+			+ "to tap!;%pas shakes him off and staves off danger.;0;3;1;10;Standing Guillotine;1;1;-2;0;0;0;0;"
+			));
+	
+	public static final ArrayList<String> openGuardSub1 = new ArrayList<String>(Arrays.asList(
+			"%act tries to finish with a leg lock!;This is over! %pas can't stand the pain and taps!;%pas is able to break the "
+			+ "lock.;19;0;10;7;leglock;1;1;0;0;0;5;0",
+			"%act tries to finish with a leg lock!;This is over! %pas can't stand the pain and taps!;%pas is able to break the "
+			+ "lock.;20;0;10;7;leglock;1;1;0;0;0;5;0",
+			"%act is in open guard over %pas... he fakes a move and then tries a kneebar!;%pas screams in pain and taps! %ref "
+			+ "forces %act to break the lock.;%pas rolls on the ground trying to get free and after a few kicks of his own he "
+			+ "escapes.;17;2;7;15;Kneebar;1;1;0;0;0;0;3;",
+			"%act is in open guard over %pas... he fakes a move and then tries a kneebar!;%pas screams in pain and taps! %ref"
+			+ " forces %act to break the lock.;%pas rolls on the ground trying to get free and after a few kicks of his own he "
+			+ "escapes.;18;2;7;15;Kneebar;1;1;0;0;0;0;3;"
+
+			));
+	
 	public static final ArrayList<String> clinch = new ArrayList<String>(Arrays.asList(
 			"%act wants to take the fight to his advantage and tries to clinch.;%act moves forward and holds %pas;%pas wants "
 					+ "nothing of that and pushes %act.;0;2;1;3;Clinch;1;1;0;0;0;12;1",
@@ -901,4 +984,114 @@ public abstract class Comments {
 	public static final ArrayList<String> legInjuries0 = new ArrayList<String>(
 			Arrays.asList("%pas hyper-extended his [SIDE] leg;hyper-extended [SIDE] leg"));
 
+	
+	public static final ArrayList<String> sideMountSub1 = new ArrayList<String>(Arrays.asList(
+			"%act tries a kimura;Nicely done! %pas must tap!;%pas breaks the lock.;13;0;10;7;kimura;1;1;0;0;0;13;13",
+			"%act goes for an americana!;He locks it in! %pas is forced to tap!;%pas breaks free.;13;0;10;7;Americana;1;1;0;0;0;0;0;",
+			"%act goes for an americana!;He locks it in! %pas is forced to tap!;%pas breaks free.;14;0;10;7;Americana;1;1;0;0;0;0;0;",
+			"%act isolates %pas's arm and neck looking for an arm triangle;%act locks it in and circles towards %pas's head."
+			+ " It's deep and %pas is forced to tap out!;%pas is able to relieve the pressure on his neck and slip out of the hold.;0;0;10;7;Arm Triangle;1;1;0;0;0;0;0;",
+			"%act hooks %pas's left leg and sits back for a kneebar!;%act extends his hips and it's deep. %pas taps! Smart move,"
+			+ " %pas could have been seriously injured by that punishing lock.;%pas manages to kick %act away and scrambles on top!;17;2;8;10;Kneebar;1;1;0;0;0;0;9;",
+			"%act hooks %pas's right leg and sits back for a kneebar!;%act extends his hips and it's deep. %pas taps! Smart move, "
+			+ "%pas could have been seriously injured by that punishing lock.;%pas manages to kick %act away and scrambles on top!;18;2;8;10;Kneebar;1;1;0;0;0;0;9;",
+			"%act shifts to north-south position and tries to finish with a lock!;%pas is out! %ref breaks the lock and %pas lies "
+			+ "flat on the mat! Awesome move by %act.;%pas pushes %act forward against his back and breaks the lock!;0;0;0;0;North South Choke;0;0;0;0;0;0;10;",
+			"%act isolates %pas's right arm looking for an armbar... ;%pas tries to hold onto his own arm but %act breaks his grip "
+			+ "and extends his arm for the tap!;%pas manages to sit up and pull his arm out of danger! %act lost his dominant position.;14;1;15;8;armbar;1;1;-1;1;0;0;9;",
+			"%act isolates %pas's left arm looking for an armbar... ;%pas tries to hold onto his own arm but %act breaks his grip "
+			+ "and extends his arm for the tap!;%pas manages to sit up and pull his arm out of danger! %act lost his dominant position.;13;1;15;8;armbar;1;1;-1;1;0;0;9;",
+			"%pas tries to turn away and scramble out. %act takes his back and locks up a rear naked choke!;%pas is trying to find "
+			+ "an escape but it's too deep! He's forced to tap out before going to sleep!;He can't lock it up. %pas spins out and gets back to his feet.;0;1;9;3;rear naked choke;1;1;-2;0;0;0;1;",
+			"%pas tries to turn in and scramble out. %act timed him perfectly and locks up a guillotine!;%pas can't find a way out! "
+			+ "His face is turning purple and he taps before going to sleep!;%pas slips his head out and manages to gain top control.;0;1;15;8;guillotine;1;1;-2;0;0;0;9;"
+			));
+	
+	public static final ArrayList<String> fullMountSub1 = new ArrayList<String>(Arrays.asList(
+			"%act tries to finish the fight with an armbar from the top;The pain forces %pas to tap! This is over!;%pas is smart "
+			+ "enough to avoid the submission attempt;13;0;10;8;armbar;1;1;0;0;0;0;0",
+			"%act tries to finish the fight with an armbar from the top;The pain forces %pas to tap! This is over!;%pas is smart "
+			+ "enough to avoid the submission attempt;14;0;10;8;armbar;1;1;0;0;0;0;0",
+			"%act catch %pas's left arm and tries a kimura;%pas's arm is bent at an awful angle! %pas's taps again and again;%pas"
+			+ " holds his own arm and struggles until he gets free;13;0;10;8;kimura;1;1;0;0;0;0;0",
+			"%act catch %pas's right arm and tries a kimura;%pas's arm is bent at an awful angle! %pas's taps again and "
+			+ "again;%pas holds his own arm and struggles until he gets free;14;0;10;8;kimura;1;1;0;0;0;0;0",
+			"%act isolates %pas's arm and neck looking for an arm triangle;%act locks it in and circles towards %pas's head."
+			+ " It's deep and %pas is forced to tap out!;%pas is able to relieve the pressure on his neck and slip out of the"
+			+ " hold.;0;0;10;8;Arm Triangle;1;1;0;0;0;0;0;",
+			"%act sits high on %pas's chest and pulls his leg underneath %pas's head. There's the triangle attempt!;%pas tries "
+			+ "to roll out, but %act is way ahead of him and already has the triangle locked in. It's tight and %pas taps out!;%pas tries to roll out. He's too quick for %act and manages to slip out! That was a risky move by %act and it cost him top position.;0;0;10;8;Triangle from Mount;1;1;0;0;0;0;10;",
+			"%act fakes a few punches and after a brief struggle he catches %pas's arm and tries an armbar!;%act launches a couple"
+			+ " of strikes with his heels over %pas's face and then launches himself backwards with all his might! %pas taps with a pained grin.;%pas hold his own hand and breaks %act's lock. He rolls over himself and launches over %act.;14;0;0;0;Armbar;0;0;0;0;1;0;14;",
+			"%act fakes a few punches and after a brief struggle he catches %pas's arm and tries an armbar!;%act launches a couple "
+			+ "of strikes with his hooks over %pas's face and then launches himself backwards with all his might! %pas taps with a pained grin.;%pas holds his own hand and with pure strength he breaks %pas's lock. He rolls over himself and launches over %act.;13;0;0;0;Armbar;0;0;0;0;1;0;14;",
+			"%act goes for an armbar!;%pas taps out after a text book armbar!;%pas breaks the lock and pushes away %act, who rolls "
+			+ "over his back and gets to standing position.;13;0;0;0;Armbar;0;0;0;0;0;0;2;",
+			"%act goes for an armbar!;%pas taps out after a text book armbar!;%pas breaks the lock and pushes away %act, who rolls "
+			+ "over his back and gets to standing position.;14;0;0;0;Armbar;0;0;0;0;0;0;2;",
+			"%act takes a deep breath as he passes his arm over %pas shoulder and pushes his [SIDE] arm againts the mat!;%act shows a"
+			+ " pained grimace and he repeatedly taps out after a perfect americana!;%pas breaks that americana attempt!;14;1;13;10;Americana;0;0;0;0;0;0;0;",
+			"%act takes a deep breath as he passes his arm over %pas shoulder and pushes his [SIDE] arm againts the mat!;%act shows a"
+			+ " pained grimace and he repeatedly taps out after a perfect americana!;%pas breaks that americana attempt!;13;1;13;10;Americana;0;0;0;0;0;0;0;",
+			"%act suddenly holds %pas's arm and tries an armbar!;%pas almost dind't see what was happening before tap!;%pas can break "
+			+ "the lock and now he is in a closed guard over %act!;13;0;0;0;Armbar;1;1;0;0;0;0;10;",
+			"%act suddenly holds %pas's arm and tries an armbar!;%pas almost dind't see what was happening before tap!;%pas can break "
+			+ "the lock and now he is in a closed guard over %act!;14;0;0;0;Armbar;1;1;0;0;0;0;10;",
+			"%act throws the leg over and rolls it over into an armbar!;That's more than %pas can stand! His arm is outstretched and he "
+			+ "taps before getting an injury.;%pas breaks the lock showing some skills...;14;0;10;15;Armbar;1;1;0;1;0;0;0;",
+			"%act throws the leg over and rolls it over into an armbar!;That's more than %pas can stand! His arm is outstretched and he"
+			+ " taps before getting an injury.;%pas breaks the lock showing some skills...;13;0;10;15;Armbar;1;1;0;1;0;0;0;"
+			));
+	
+	public static final ArrayList<String> rearSub1 = new ArrayList<String>(Arrays.asList(
+			"%act tries to end this with a RNC!;%pas is turning blue as the iron lock is closed around his neck. %pas is blacking out "
+			+ "and he taps before going to sleep!;%pas manages to roll on the ground and break the lock;-1;-3;10;10;RNC;1;1;0;0;2;0;16",
+			"%act isolates an arm looking for an armbar from the back...;%act throws his leg over and %pas is in serious trouble! %act "
+			+ "extends his hips and %pas is forced to tapout to the crafty armbar!;%pas locks his hands and forces his weight on top of %act unil he can pull his arm free! %act lost his dominant position.;14;2;10;8;Armbar;1;1;0;0;0;0;10;",
+			"%act isolates an arm looking for an armbar from the back...;%act throws his leg over and %pas is in serious trouble! %act"
+			+ " extends his hips and %pas is forced to tapout to the crafty armbar!;%pas locks his hands and forces his weight on top of %act unil he can pull his arm free! %act lost his dominant position.;13;2;10;8;Armbar;1;1;0;0;0;0;10;",
+			"%act slides his arm under %pas's chin and locks in a rear naked choke!;%pas can't defend any longer and has to tap!;%pas "
+			+ "pushes up and slides %act's arm over his chin.;0;1;10;0;Rear Naked Choke;1;1;-1;-1;0;0;0;",
+			"%act slides his arm under %pas's chin and locks the rear naked choke!;%pas's face turns completely red before he taps out!;%pas"
+			+ " pulls down on %act's hand and staves off danger;0;1;10;0;Rear Naked Choke;1;1;-1;-1;0;0;0;",
+			"%act tries to get his arm under %pas's chin but can't do it. He locks his arms over %pas's neck and tries to finish him with a "
+			+ "neck crank! ;%pas's neck is twisted at a nasty angle. He tries to hold on but the pain is too much for him. He taps out!;%pas easily defends the attempt.;0;1;10;0;Neck Crank;1;1;-1;-1;0;0;0;",
+			"%act throws his leg over %pas's arm leaving him with only one arm to defend himself from %act's rear naked choke attempt! ;%pas"
+			+ " cannot defend with only one arm and taps to the choke!;%pas frees his arm and defends the choke. He manages to turn into %act"
+			+ " and ends up on top!;0;1;10;0;Rear Naked Choke;1;1;-3;-3;0;0;10;"
+			));
+	
+	public static final ArrayList<String> standUp = new ArrayList<String>(Arrays.asList(
+			"%act tries to stand up!;he is now on his feet;%pas doesn't allow him!",
+			"%act doesn't want to continue the fight in this position and tries to get back on his feet;He moves "
+			+ "fast and now he is standing;He can't do it because of %pas's moves."
+			));
+	
+	public static final ArrayList<String> lnp = new ArrayList<String>(Arrays.asList(
+			"%act shows not much action on the ground... He seems happy to let the time pass.;%act is cooling the fight on the"
+			+ " ground;%pas doesn't like the idea of just stalling on the ground;0;0;10;8;LnP;0;0;0;0;0;0;0",
+			"%act takes advantage of the situation to take a breather.;%act breaths deeply while on the ground;%act struggles "
+			+ "to not give his opponent a chance to recover;0;0;10;7;LnP;0;0;0;0;0;0;0",
+			"%act seems content to just hold this position.;%act is taking this opportunity to rest.;%pas is getting frustrated "
+			+ "here.;0;0;10;7;LnP;0;0;0;0;0;0;0;"
+			));
+	
+	public static final ArrayList<String> fancyPunch1 = new ArrayList<String>(Arrays.asList(
+			"%act moves forward and tries a Superman punch!;Bang! That crushes %pas's face and maybe his hopes of winning this "
+			+ "fight too!;%pas dodges just moving aside. %act has created a big hole that %pas could use now!;5;2;1;4;Superman punch;1;1;1;2;4;0;0",
+			"%act suddenly spins around...;and he connects with a spinning back fist just on %pas's chin!;%pas was aware of "
+			+ "that move and blocks it with confidence.;8;3;9;1;Spinning back fist;1;1;0;0;5;0;0",
+			"%act put some serious power behind that superman punch!;That's just incredible! That punch hits %pas's face like "
+			+ "a wrecking ball!;That punch barely misses as %pas steps backwards!;6;2;2;1;Superman punch;1;1;0;1;5;0;0",
+			"%act spins around suddenly...;...and his backfist connects flush with %pas's chin!;%pas ducks under and that just "
+			+ "passes over his head.;8;3;1;2;Spinning back fist;1;1;0;1;4;0;0"
+			));
+	
+	public static final ArrayList<String> vazio3237 = new ArrayList<String>(Arrays.asList(
+
+			));
+	
+	public static final ArrayList<String> vazio232 = new ArrayList<String>(Arrays.asList(
+
+			));
 }

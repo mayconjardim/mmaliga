@@ -87,8 +87,11 @@ public class Fight implements Serializable {
 	private String side;
 	private String location;
 	private String injuryComment;
+	private Integer subLocation;
 	private Integer injuryFreq = 0;
 	private Integer numHooks = 0;
+	private Integer subFreq = 0;
+	private boolean isLockingASub;
 
 	// Constantes
 	// Clinch
@@ -224,23 +227,23 @@ public class Fight implements Serializable {
 					actGnP(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_POSITIONING:
-					actPositioning(fighterActiveOrPassive(fighterActive),fighterActiveOrPassive(fighterPasive));
+					actPositioning(fighterActiveOrPassive(fighterActive), fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_SUBMISSION:
-					setPbp("ACT_SUBMISSION");// ActSubmission(fighterActiveOrPassive(fighterActive),
-												// fighterActiveOrPassive(fighterPasive));
+					actSubmission(fighterActiveOrPassive(fighterActive),
+					fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_STANDUP:
-					setPbp("ACT_STANDUP");// ActStandUp(fighterActiveOrPassive(fighterActive),
-											// fighterActiveOrPassive(fighterPasive));
+					actStandUp(fighterActiveOrPassive(fighterActive),
+					fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_LNP:
-					setPbp("ACT_LNP");// ActLnP(fighterActiveOrPassive(fighterActive),
-										// fighterActiveOrPassive(fighterPasive));
+					actLnP(fighterActiveOrPassive(fighterActive),
+					fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_FANCYPUNCH:
-					setPbp("ACT_FANCYPUNCH");// ActFancyPunch(fighterActiveOrPassive(fighterActive),
-												// fighterActiveOrPassive(fighterPasive));
+					actFancyPunch(fighterActiveOrPassive(fighterActive),
+					fighterActiveOrPassive(fighterPasive));
 					break;
 				case Moves.ACT_FANCYKICK:
 					setPbp("ACT_FANCYKICK");// ActFancyKick(fighterActiveOrPassive(fighterActive),
@@ -1776,6 +1779,699 @@ public class Fight implements Serializable {
 		}
 	}
 
+	public void actSubmission(Fighter act, Fighter pas) {
+		double At, Def, DamageDone;
+
+		if (act.getName().equals(fighterActiveOrPassive(fighterOnTop).getName())) {
+			switch (guardType) {
+			case 0:
+				generateComment(Comments.rearSub1);
+				break;
+			case 1:
+				generateComment(Comments.fullMountSub1);
+				break;
+			case 2:
+			case 3:
+				generateComment(Comments.sideMountSub1);
+				break;
+			case 4:
+				generateComment(Comments.openGuardSub1);
+				break;
+			default:
+				actPositioning(act, pas);
+				return;
+			}
+		} else {
+			switch (guardType) {
+			case -1:
+				generateComment(Comments.standUpSub1);
+				break;
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+				generateComment(Comments.closedGuardSub1);
+				break;
+			default:
+				actPositioning(act, pas);
+				return;
+			}
+		}
+
+		subLocation = extractHitLocation(fullComment);
+		doComment(act, pas, extractInitComment(fullComment));
+
+		hitLocation = extractHitLocation(fullComment);
+		// Bout.UpdateStatistic(GetFighterNumber(act), StatisticType.stSubmission, 1,
+		// 0);
+
+		At = fixedRandomInt(act.getSubmission()) + act.getAttackBonus() + subBonusByGuard();
+
+		int randomIndex = new Random().nextInt(4);
+		switch (randomIndex) {
+		case 0:
+			At += fixedRandomInt(act.getStrength() / 2);
+			break;
+		case 1:
+			At += fixedRandomInt(act.getAgility() / 2);
+			break;
+		case 2:
+			At += fixedRandomInt(act.getGroundGame() / 2);
+			break;
+		case 3:
+			At += fixedRandomInt(act.getSubDefense() / 2);
+			break;
+		}
+
+		At += smallRandom();
+		At = gasTankFactor(act, At);
+		At -= hurtFactor(act);
+		At -= Sim.SUBMALUS;
+
+		Def = fixedRandomInt(pas.getSubDefense()) + act.getDefenseBonus();
+
+		int randomIndex2 = new Random().nextInt(4);
+		switch (randomIndex2) {
+		case 0:
+			Def += fixedRandomInt(pas.getStrength() / 2);
+			break;
+		case 1:
+			Def += fixedRandomInt(pas.getAgility() / 2);
+			break;
+		case 2:
+			Def += fixedRandomInt(pas.getSubmission() / 2);
+			break;
+		case 3:
+			Def += fixedRandomInt(pas.getGroundGame() / 2);
+			break;
+		}
+
+		Def += smallRandom();
+		Def = gasTankFactor(pas, Def);
+		Def -= hurtFactor(pas);
+
+		if (Def >= At) {
+			doComment(act, pas, extractFailureComment(fullComment));
+
+			if (act.isOnTheGround()) {
+				act.setStalling(act.getStalling() + 1);
+			}
+
+			if (isCounter == false) {
+				isCounter = checkCounterAttack(act, pas, counterProb);
+				if (isCounter == true) {
+					doCounterAttack(pas, act);
+				} else {
+					processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+				}
+			} else {
+				isCounter = false;
+				processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+			}
+		} else {
+			DamageDone = (At - Def) * act.getDamageBonus();
+			damageFighter(act, pas, DamageDone);
+
+			if (act.isOnTheGround()) {
+				act.setStalling(0);
+			}
+
+			// act.increasePoints(Bout.getCurrentRound(),
+			// ApplicationUtils.LOCKINSUBMISSIONPOINTS);
+			hitLocation = extractHitLocation(fullComment);
+
+			if (checkSubmission(act, pas, DamageDone, extractKOSubProb(fullComment))) {
+				doComment(act, pas, extractComment(fullComment));
+				boutFinished = true;
+				finishedType = Comments.misc.get(Sim.SUB);
+				finishMode = Sim.RES_SUB;
+				finishedDescription = extractMoveName(fullComment);
+				fighterWinner = fighterNumber(act);
+			} else {
+				actLockSubmission(act, pas);
+			}
+
+			processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+			// Bout.UpdateStatistic(GetFighterNumber(act), StatisticType.st
+
+		}
+	}
+
+	public void actLockSubmission(Fighter act, Fighter pas) {
+		double at, def, damageDone;
+		boolean lockedSub = true;
+		int breakProb = 0;
+		String failureComment;
+
+		failureComment = extractFailureComment(fullComment);
+
+		while (lockedSub && !boutFinished) {
+			at = fixedRandomInt(act.getSubmission()) + act.getAttackBonus();
+
+			int randomIndex = new Random().nextInt(4);
+			switch (randomIndex) {
+			case 0:
+				at += fixedRandomInt(act.getStrength() / 2);
+				break;
+			case 1:
+				at += fixedRandomInt(act.getAgility() / 2);
+				break;
+			case 2:
+				at += fixedRandomInt(act.getGroundGame() / 2);
+				break;
+			case 3:
+				at += fixedRandomInt(act.getSubDefense() / 2);
+				break;
+			}
+			at += smallRandom();
+			at = gasTankFactor(act, at);
+			at -= hurtFactor(act);
+
+			def = fixedRandomInt(pas.getSubDefense()) + act.getDefenseBonus() + breakProb * 2;
+			def += fixedRandomInt(act.getControl() / 2);
+			int randomIndex2 = new Random().nextInt(4);
+			switch (randomIndex2) {
+			case 0:
+				def += fixedRandomInt(pas.getStrength() / 2);
+				break;
+			case 1:
+				def += fixedRandomInt(pas.getAgility() / 2);
+				break;
+			case 2:
+				def += fixedRandomInt(pas.getSubmission() / 2);
+				break;
+			case 3:
+				def += fixedRandomInt(pas.getGroundGame() / 2);
+				break;
+			}
+			def += smallRandom();
+			def = gasTankFactor(pas, def);
+			def -= hurtFactor(pas);
+
+			if (def > at || breakProb >= Sim.MAXLOCKINSUBMISSION) {
+				doComment(act, pas, failureComment);
+				lockedSub = false;
+			} else {
+				damageDone = (at - def + breakProb) * act.getDamageBonus();
+				damageFighter(act, pas, damageDone);
+
+				int injuryType = checkInjury(act, pas, damageDone, injuryProb);
+				if (injuryType != Sim.INJURYORCUTFALSE) {
+					processInjury(act, pas, injuryType);
+				}
+
+				if (!boutFinished && checkSubmission(act, pas, damageDone, extractKOSubProb(fullComment))) {
+					doComment(act, pas, extractComment(fullComment));
+					boutFinished = true;
+					finishedType = Comments.misc.get(Sim.SUB);
+					finishMode = Sim.RES_SUB;
+					finishedDescription = moveName;
+					fighterWinner = fighterNumber(act);
+				} else if (checkRefSubStoppage(breakProb)) {
+					doComment(act, pas, returnComment(Comments.subRefStoppage));
+					boutFinished = true;
+					finishedType = Comments.misc.get(Sim.RES_SUB);
+					finishMode = Sim.RES_SUB;
+					finishedDescription = moveName;
+					fighterWinner = fighterNumber(act);
+				} else if (!boutFinished) {
+					doComment(act, pas, returnComment(Comments.lockingSubmission));
+					breakProb++;
+					if (checkTryToSlamOutSub(pas, act, breakProb)) {
+						lockedSub = !actSlamOutSubmission(pas, act);
+					}
+				}
+			}
+		}
+	}
+
+	public boolean actSlamOutSubmission(Fighter act, Fighter pas) {
+		final double SLAM_OUT_CUT = 1.25;
+		double at, def, damageDone;
+		int attackLevel, injuryType;
+		String tempMoveName = "";
+
+		attackLevel = attackLevel(act, pas, (act.getTakedowns() + act.getStrength()) / 2, pas.getTakedownsDef());
+		generateComment(Comments.slamOut);
+		tempMoveName = moveName;
+
+		// Initial comment
+		doComment(act, pas, extractInitComment(fullComment));
+
+		// Return Hit location
+		hitLocation = extractHitLocation(fullComment);
+
+		// Modifying statistics
+		// bout.getStatistics().get(getFighterNumber(act)).setTakedownsAttemps(extractHitsLaunched(fullComment));
+
+		// Attacking value
+		at = fixedRandomInt(act.getStrength()) + act.getAttackBonus();
+		int randomIndex = new Random().nextInt(4);
+		switch (randomIndex) {
+		case 0:
+			at += fixedRandomInt(act.getStrength() / 2);
+			break;
+		case 1:
+			at += fixedRandomInt(act.getAgility() / 2);
+			break;
+		case 2:
+			at += fixedRandomInt(act.getConditioning() / 2);
+			break;
+		case 3:
+			at += fixedRandomInt(act.getClinchGrappling() / 2);
+			break;
+		}
+		at += smallRandom();
+		at = gasTankFactor(act, at);
+		at -= hurtFactor(act);
+		at /= SLAM_OUT_CUT;
+
+		// Defensive value
+		def = fixedRandomInt(pas.getSubmission()) + pas.getDefenseBonus();
+		int randomIndex2 = new Random().nextInt(4);
+		switch (randomIndex2) {
+		case 0:
+			def += fixedRandomInt(pas.getStrength() / 2);
+			break;
+		case 1:
+			def += fixedRandomInt(pas.getAgility() / 2);
+			break;
+		case 2:
+			def += fixedRandomInt(pas.getDodging() / 2);
+			break;
+		case 3:
+			def += fixedRandomInt(pas.getClinchGrappling() / 2);
+			break;
+		}
+		def += smallRandom();
+		def = gasTankFactor(pas, def);
+		def -= hurtFactor(pas);
+
+		// Checking damage
+		if (def >= at) {
+			doComment(act, pas, extractFailureComment(fullComment));
+			return false;
+		} else {
+			// Do comments
+			doComment(act, pas, extractComment(fullComment));
+
+			// Damage
+			damageDone = ((at - def) * act.getDamageBonus() * attackLevel) / 2;
+			damageFighter(act, pas, damageDone);
+
+			// Increase points for takedown
+			// act.increasePoints(bout.getCurrentRound(), Sim.SUCCESSFULTAKEDOWNPOINTS);
+
+			// Check KO
+			if (checkKO(act, pas, damageDone, kOSubProb)) {
+				processKO(act, pas);
+			}
+
+			processAfterMovePosition(act, pas, extractFinalSuccessPosition(fullComment));
+
+			injuryType = checkInjury(act, pas, damageDone, injuryProb);
+			if (injuryType != Sim.INJURYORCUTFALSE) {
+				processInjury(act, pas, injuryType);
+			}
+
+			// Check Cut
+			injuryType = checkCut(act, pas, damageDone, cutProb);
+			if (injuryType != Sim.INJURYORCUTFALSE) {
+				processCut(act, pas, injuryType);
+			}
+
+			// Modifying statistics
+			// Bout.Statistics[GetFighterNumber(act)].TakedownsAchieved =
+			// ExtractHitsLanded(FullComment);
+
+			return true;
+
+		}
+
+	}
+
+	public void actStandUp(Fighter act, Fighter pas) {
+	    generateComment(Comments.standUp);
+
+	    doComment(act, pas, extractInitComment(fullComment));
+
+	    double at = fixedRandomInt(act.getAgility()) + act.getDefenseBonus();
+	    at += fixedRandomInt(act.getControl() / 2);
+
+	    switch (new Random().nextInt(4)) {
+	        case 0:
+	            at += fixedRandomInt(act.getStrength() / 2);
+	            break;
+	        case 1:
+	            at += fixedRandomInt(act.getGroundGame() / 2);
+	            break;
+	        case 2:
+	            at += fixedRandomInt(act.getDodging() / 2);
+	            break;
+	        case 3:
+	            at += fixedRandomInt(act.getClinchGrappling() / 2);
+	            break;
+	    }
+
+	    at += smallRandom();
+	    at = gasTankFactor(act, at);
+	    at -= hurtFactor(act);
+
+	    double def = fixedRandomInt(pas.getAggressiveness()) + pas.getAttackBonus();
+
+	    switch (new Random().nextInt(4)) {
+	        case 0:
+	            def += fixedRandomInt(pas.getStrength() / 2);
+	            break;
+	        case 1:
+	            def += fixedRandomInt(pas.getAgility() / 2);
+	            break;
+	        case 2:
+	            def += fixedRandomInt(pas.getKicking() / 2);
+	            break;
+	        case 3:
+	            def += fixedRandomInt(pas.getGroundGame() / 2);
+	            break;
+	    }
+
+	    def += smallRandom();
+	    def = gasTankFactor(pas, def);
+	    def -= hurtFactor(pas);
+
+	    if (def >= at) {
+	    	doComment(act, pas, extractFailureComment(fullComment));
+	        pas.setStalling(pas.getStalling() + 1);
+	    } else {
+	    	doComment(act, pas, extractComment(fullComment));
+	        processAfterMovePosition(act, pas, 17);
+
+	        if ((randomGenerator() < gasTankFactor(pas, pas.getAgility())) 
+	            && (act.isOnTheGround() == false) && (pas.isOnTheGround())) {
+	            actStandUp(pas, act);
+	        }
+	    }
+	}
+	
+	public void actLnP(Fighter act, Fighter pas) {
+	    double at, def;
+
+	    generateComment(Comments.lnp);
+
+	    // Attacking value
+	    at = fixedRandomInt(act.getGroundGame()) + act.getAttackBonus();
+	    at += fixedRandomInt(act.getControl() / 2);
+	    switch (new Random().nextInt(4)) {
+	        case 0:
+	            at += fixedRandomInt(act.getStrength() / 2);
+	            break;
+	        case 1:
+	            at += fixedRandomInt(act.getAgility() / 2);
+	            break;
+	        case 2:
+	            at += fixedRandomInt(act.getSubDefense() / 2);
+	            break;
+	        case 3:
+	            at += fixedRandomInt(act.getSubmission() / 2);
+	            break;
+	    }
+	    at += randomGenerator();
+	    at = gasTankFactor(act, at);
+	    at -= hurtFactor(act);
+
+	    // Defensive value
+	    def = fixedRandomInt(pas.getGroundGame()) + pas.getDefenseBonus();
+	    // def += fixedRandomInt(pas.getControl() / 2); // commented out
+	    switch (new Random().nextInt(4)) {
+	        case 0:
+	            def += fixedRandomInt(pas.getStrength() / 2);
+	            break;
+	        case 1:
+	            def += fixedRandomInt(pas.getSubDefense() / 2);
+	            break;
+	        case 2:
+	            def += fixedRandomInt(pas.getAggressiveness() / 2);
+	            break;
+	        case 3:
+	            def += fixedRandomInt(pas.getSubmission() / 2);
+	            break;
+	    }
+	    def += smallRandom();
+	    def = gasTankFactor(pas, def);
+	    def -= hurtFactor(pas);
+
+	    // Checking damage
+	    if (def >= at) {
+	        doComment(act, pas, extractFailureComment(fullComment));
+
+	        // Counter attack
+	        if (!isCounter) {
+	        	isCounter = checkCounterAttack(act, pas, counterProb);
+	            if (isCounter) {
+	                doCounterAttack(pas, act);
+	            } else {
+	                processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+	            }
+	        } else {
+	        	isCounter = false;
+	            processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+	        }
+	    } else {
+	        // Do comments
+	        doComment(act, pas, extractComment(fullComment));
+
+	        act.setStalling(act.getStalling() + 2);
+
+	        // LnP recovers stamina
+	        act.recoverStamina(2);
+
+	        processAfterMovePosition(act, pas, extractFinalSuccessPosition(fullComment));
+	    }
+	}
+	
+	public void actFancyPunch(Fighter act, Fighter pas) {
+	    final double FANCY_PUNCH_DAMAGE_BONUS = 1.25;
+	    double at, def, damageDone;
+	    int attackLevel, hitLocation, injuryType;
+	    String fullComment = "";
+
+	    //Suspeito
+	    
+	    attackLevel = attackLevel(act, pas, act.getPunching(), pas.getDodging());
+
+	    switch (attackLevel) {
+	        case 1:
+	            generateComment(Comments.punch1);
+	            break;
+	        case 2:
+	        case 3:
+	        	generateComment(Comments.fancyPunch1);
+	            break;
+	    }
+
+	    doComment(act, pas, extractInitComment(fullComment));
+
+	    //bout.updateStatistic(getFighterNumber(act), StatisticType.PUNCHES, extractHitsLaunched(fullComment), 0);
+
+	    hitLocation = extractHitLocation(fullComment);
+
+	    at = fixedRandomInt(act.getPunching()) + act.getAttackBonus();
+	    switch (new Random().nextInt(4)) {
+	        case 0:
+	            at += fixedRandomInt(act.getStrength() / 2);
+	            break;
+	        case 1:
+	            at += fixedRandomInt(act.getAgility() / 2);
+	            break;
+	        case 2:
+	            at += fixedRandomInt(act.getDodging() / 2);
+	            break;
+	        case 3:
+	            at += fixedRandomInt(act.getClinchStriking() / 2);
+	            break;
+	    }
+	    at += smallRandom();
+
+	    def = fixedRandomInt(pas.getDodging());
+	    def += pas.getDefenseBonus();
+	    switch (new Random().nextInt(4)) {
+	        case 0:
+	            def += fixedRandomInt(pas.getStrength() / 2);
+	            break;
+	        case 1:
+	            def += fixedRandomInt(pas.getAgility() / 2);
+	            break;
+	        case 2:
+	            def += fixedRandomInt(pas.getDodging() / 2);
+	            break;
+	        case 3:
+	            def += fixedRandomInt(pas.getControl() / 2);
+	            break;
+	    }
+	    def += smallRandom();
+
+	    if (def >= at) {
+	        doComment(act, pas, extractFailureComment(fullComment));
+	     //   act.getStatistics().setPerfomanceBonus(ApplicationUtils.FANCY_MOVE_ATTEMP_EXCITEMENT_BONUS);
+
+	        if (!isCounter) {
+	            isCounter = checkCounterAttack(act, pas, counterProb);
+	            if (isCounter) {
+	                doCounterAttack(pas, act);
+	            } else {
+	                processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+	            }
+	        } else {
+	            isCounter = false;
+	            processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+	        }
+	    } else {
+	        switch (attackLevel) {
+	            case 1:
+	            case 2:
+	            case 3:
+	                doComment(act, pas, extractComment(fullComment));
+	                break;
+	        }
+	       // act.getStatistics().setPerfomanceBonus(ApplicationUtils.FANCY_MOVE_SUCCESS_EXCITEMENT_BONUS);
+
+	        damageDone = (at - def) * (act.getDamageBonus() + FANCY_PUNCH_DAMAGE_BONUS) * attackLevel;
+	        damageFighter(act, pas, damageDone);
+
+	        processAfterMovePosition(act, pas, extractFinalSuccessPosition(fullComment));
+
+	        	// Check KO
+				if (checkKO(act, pas, damageDone, kOSubProb)) {
+				processKO(act, pas);
+				}
+	        
+	        		injuryType = checkInjury(act, pas, damageDone, injuryProb);
+				if (injuryType != Sim.INJURYORCUTFALSE) {
+					processInjury(act, pas, injuryType);
+				}
+
+				injuryType = checkCut(act, pas, damageDone, cutProb);
+				if (injuryType != Sim.INJURYORCUTFALSE) {
+					processCut(act, pas, injuryType);
+				}
+
+	        //bout.updateStatistic(getFighterNumber(act), StatisticType.PUNCHES, 0, extractHitsLanded(fullComment));
+	    }
+	}
+
+	public void actFancyKick(Fighter act, Fighter pas) {
+		  final double FANCY_KICK_DAMAGE_BONUS = 1.75;
+		  double at, def, damageDone;
+		  int attackLevel, hitLocation, injuryType;
+
+		  //Revisar
+		  
+		  attackLevel = attackLevel(act, pas, act.getKicking(), pas.getDodging());
+
+		  switch (attackLevel) {
+		    case 1:
+		      generateComment(Comments.kicks1);
+		      break;
+		    case 2:
+		    case 3:
+		      generateComment(Comments.fancyKick1);
+		      break;
+		  }
+
+		  doComment(act, pas, extractInitComment(fullComment));
+
+		  //bout.updateStatistic(getFighterNumber(act), StatisticType.KICKS, extractHitsLaunched(fullComment), 0);
+
+		  hitLocation = extractHitLocation(fullComment);
+
+		  at = fixedRandomInt(act.getKicking()) + act.getAttackBonus();
+		  //at += fixedRandomInt(act.getAggressiveness() / 2);
+		  at -= Sim.KICKMALUS * attackLevel;
+		  switch (new Random().nextInt(4)) {
+		    case 0:
+		      at += fixedRandomInt(act.getStrength() / 2);
+		      break;
+		    case 1:
+		      at += fixedRandomInt(act.getAgility() / 2);
+		      break;
+		    case 2:
+		      at += fixedRandomInt(act.getDodging() / 2);
+		      break;
+		    case 3:
+		      at += fixedRandomInt(act.getClinchStriking() / 2);
+		      break;
+		  }
+		  at += smallRandom();
+
+		  def = fixedRandomInt(pas.getDodging());
+		  def += pas.getDefenseBonus();
+		  switch (new Random().nextInt(4)) {
+		    case 0:
+		      def += fixedRandomInt(pas.getStrength() / 2);
+		      break;
+		    case 1:
+		      def += fixedRandomInt(pas.getAgility() / 2);
+		      break;
+		    case 2:
+		      def += fixedRandomInt(pas.getDodging() / 2);
+		      break;
+		    case 3:
+		      def += fixedRandomInt(pas.getClinchStriking() / 2);
+		      break;
+		  }
+		  def += smallRandom();
+
+		  if (def >= at) {
+		    doComment(act, pas, extractFailureComment(fullComment));
+		   // act.getStatistics().setPerformanceBonus(ApplicationUtils.FANCY_MOVE_ATTEMP_EXCITEMENT_BONUS);
+
+		    if (!isCounter) {
+		      isCounter = checkCounterAttack(act, pas, counterProb);
+		      if (isCounter) {
+		        doCounterAttack(pas, act);
+		      } else {
+		        processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+		      }
+		    } else {
+		      isCounter = false;
+		      processAfterMovePosition(act, pas, extractFinalFailurePosition(fullComment));
+		    }
+		  } else {
+		    switch (attackLevel) {
+		      case 1:
+		      case 2:
+		      case 3:
+		        doComment(act, pas, extractComment(fullComment));
+		        break;
+		    }
+		    //act.getStatistics().setPerformanceBonus(ApplicationUtils.FANCY_MOVE_SUCCESS_EXCITEMENT_BONUS);
+
+		    damageDone = (at - def) * (act.getDamageBonus() + FANCY_KICK_DAMAGE_BONUS) * attackLevel + 0.5;
+		    damageFighter(act, pas, damageDone);
+
+		    processAfterMovePosition(act, pas, extractFinalSuccessPosition(fullComment));
+
+			// Check KO
+			if (checkKO(act, pas, damageDone, kOSubProb)) {
+				processKO(act, pas);
+			}
+
+			injuryType = checkInjury(act, pas, damageDone, injuryProb);
+			if (!(Sim.INJURYORCUTFALSE == injuryType)) {
+				 processInjury(act, pas, injuryType);
+			}
+
+			// Check Cut
+			injuryType = checkCut(act, pas, damageDone, cutProb);
+			if (!(Sim.INJURYORCUTFALSE == injuryType)) {
+				processCut(act, pas, injuryType);
+			}
+		    
+		   // bout.updateStatistic(getFighterNumber(act), StatisticType.KICKS, 0, extractHitsLanded(fullComment));
+		 
+		    }
+		}
+	
+
 	public double gnPBonusByGuard() {
 		double result = 0;
 		switch (guardType) {
@@ -1900,7 +2596,7 @@ public class Fight implements Serializable {
 					break;
 				}
 			} else {
-				// ActClinch(act, pas);
+				actClinch(act, pas);
 			}
 			break;
 		case 4:
@@ -2097,6 +2793,34 @@ public class Fight implements Serializable {
 		return result;
 	}
 
+	public boolean checkRefSubStoppage(int lockIns) {
+
+		boolean result = false;
+		int refSubAwareness = 12 - 8;
+		if (lockIns > refSubAwareness) {
+			if (randomGenerator() < Sim.REFSUBFREQUENCY) {
+				result = true;
+			}
+		}
+		return result;
+	}
+
+	public boolean checkTryToSlamOutSub(Fighter act, Fighter pas, int locks) {
+		boolean result = false;
+
+		// Only when the fighter is on top he can slam out his opponent and not if the
+		// submission is in the legs!
+		if (act.getName().equals(fighterActiveOrPassive(fighterOnTop).getName()) && act.getStrength() > 14 + locks
+				&& act.isOnTheGround() && pas.isOnTheGround() && getHitLocation() < 15) {
+
+			if (randomGenerator() < gasTankFactor(act, act.getStrength() - hurtFactor(act))) {
+				result = true;
+			}
+		}
+
+		return result;
+	}
+
 	public boolean isSubmissionAvailable(Fighter act) {
 		if (act.isTechSubs()) {
 			return true;
@@ -2178,6 +2902,53 @@ public class Fight implements Serializable {
 			if (balancedRandom(Sim.TKOFREQUENCY) < 7) { // 7 = Referee.TKOAwareness
 				result = true;
 			}
+		}
+
+		return result;
+	}
+
+	public boolean checkSubmission(Fighter act, Fighter pas, double damageDone, int prob) {
+		double at = damageDone / submissionFrequency() + prob;
+		double def = (pas.getSubDefense() + fixedRandomInt(pas.getMoral() + pas.getCurrentStamina() / 10))
+				/ Sim.SUBDEFENSECUT;
+		def = def - hurtFactor(pas);
+
+		if (at > def) {
+			if (fixedRandomInt(at) > 1.5 * fixedRandomInt(def)) {
+				// checkSOTN(damageDone);
+				return true;
+			} else if (fixedRandomInt(at) > fixedRandomInt(def)) {
+				isLockingASub = true;
+				return false;
+			}
+		}
+
+		return false;
+	}
+
+	public double subBonusByGuard() {
+		double result = 0;
+
+		switch (guardType) {
+		case 0:
+			result = 3 * numHooks;
+			break;
+		case 1:
+			result = 3;
+			break;
+		case 2:
+			result = 1;
+			break;
+		case 3:
+		case 4:
+			result = 0;
+			break;
+		case 5:
+			result = -3;
+			break;
+		case 6:
+			result = -5;
+			break;
 		}
 
 		return result;
@@ -2407,6 +3178,10 @@ public class Fight implements Serializable {
 
 	public int injuryFrequency() {
 		return Sim.INJURYCUT + injuryFreq;
+	}
+
+	public int submissionFrequency() {
+		return Sim.SUBDIFFICULT + subFreq;
 	}
 
 	public void processCut(Fighter act, Fighter pas, int cutType) {
@@ -2964,6 +3739,15 @@ public class Fight implements Serializable {
 		// Split the comment using the ';' separator and return the second part
 		List<String> splitFullString = splitString(comment);
 		return splitFullString.get(1);
+	}
+
+	public int extractKOSubProb(String comment) {
+		int result = 0;
+		List<String> splitFullString = Arrays.asList(comment.split(";"));
+		if (splitFullString.size() > 12) {
+			result = Integer.parseInt(splitFullString.get(12));
+		}
+		return result;
 	}
 
 	public int extractInjuryProb(String comment) {
